@@ -1,0 +1,1073 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>WeSwim — 기록하기</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0,0&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  :root{
+    --navy:#1B3A5C; --navy-dark:#142D47; --navy-light:#E8EEF4;
+    --aqua:#0096A0; --aqua-hover:#00A8B5; --aqua-dark:#006970;
+    --aqua-light:#E6F6F7; --aqua-whisper:#F2FBFC;
+    --coral:#E8734A; --coral-dark:#C45A33; --coral-light:#FDF0EB;
+    --mint:#7DD3C8; --mint-light:#E8F7F4;
+    --sun:#F4B740; --sun-light:#FCF1D8;
+    --bg:#F5F7FA; --white:#FFFFFF;
+    --gray-50:#F5F7FA; --gray-100:#ECEFF4; --gray-200:#D0D7E2;
+    --gray-300:#B4BECD; --gray-500:#6B7A99; --gray-700:#3D4A66;
+    --text-main:#1A1A2E;
+    --error:#E54B4B; --success:#00A37A;
+    --r-sm:6px; --r-md:8px; --r-lg:10px; --r-xl:12px; --r-2xl:16px; --r-full:999px;
+    --shadow-1:0 1px 2px rgba(20,45,71,.04);
+    --shadow-2:0 4px 16px rgba(20,45,71,.06);
+    --font-sans:'Pretendard Variable','Pretendard','Helvetica Neue','Apple SD Gothic Neo',sans-serif;
+    --font-display:'Helvetica Neue','Pretendard Variable','Pretendard',sans-serif;
+  }
+  html,body{height:100%}
+  body{font-family:var(--font-sans);color:var(--text-main);background:var(--bg);-webkit-font-smoothing:antialiased;font-feature-settings:"ss06","ss03"}
+  .ms{font-family:'Material Symbols Rounded';font-weight:500;font-style:normal;display:inline-flex;align-items:center;justify-content:center;line-height:1;text-transform:none;letter-spacing:normal;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale;font-feature-settings:'liga';vertical-align:middle;font-size:20px;font-variation-settings:'opsz' 24,'wght' 500,'FILL' 0,'GRAD' 0}
+  button{font-family:inherit}
+  a{color:inherit;text-decoration:none}
+
+  /* ============ GNB ============ */
+  .gnb{height:64px;background:var(--navy);color:#fff;position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(255,255,255,.05)}
+  .gnb-inner{max-width:1320px;margin:0 auto;height:100%;padding:0 32px;display:flex;align-items:center;gap:32px}
+  .gnb-logo{font-family:var(--font-display);font-size:22px;font-weight:800;letter-spacing:-.04em;line-height:1}
+  .gnb-logo .We{color:#fff} .gnb-logo .Swim{color:var(--aqua-hover)}
+  .gnb-nav{display:flex;gap:2px}
+  .gnb-nav a{padding:8px 14px;font-size:14px;font-weight:600;color:rgba(255,255,255,.5);border-radius:8px;transition:all .15s ease}
+  .gnb-nav a:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.06)}
+  .gnb-nav a.on{color:#fff;background:rgba(255,255,255,.1)}
+  .gnb-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+  .icon-btn{width:38px;height:38px;border-radius:99px;border:none;background:transparent;color:rgba(255,255,255,.7);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;position:relative}
+  .icon-btn:hover{background:rgba(255,255,255,.08);color:#fff}
+  .icon-btn .ms{font-size:22px}
+  .icon-btn .badge{position:absolute;top:6px;right:6px;background:var(--coral);color:#fff;font-size:9px;font-weight:800;min-width:14px;height:14px;padding:0 4px;border-radius:99px;display:flex;align-items:center;justify-content:center;border:2px solid var(--navy)}
+  .gnb-avatar{width:36px;height:36px;border-radius:50%;background:var(--aqua);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;cursor:pointer;border:2px solid rgba(255,255,255,.15)}
+
+  /* ============ Page ============ */
+  .page{max-width:1240px;margin:0 auto;padding:32px 32px 80px}
+
+  .crumb{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--gray-500);margin-bottom:14px}
+  .crumb .ms{font-size:14px}
+  .crumb a{color:var(--gray-500);font-weight:500}
+  .crumb a:hover{color:var(--aqua)}
+  .crumb .sep{color:var(--gray-300)}
+  .crumb b{color:var(--navy);font-weight:700}
+
+  .page-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:24px;flex-wrap:wrap}
+  .page-head h1{font-size:30px;font-weight:800;color:var(--navy);letter-spacing:-.025em;line-height:1.15;margin-bottom:4px}
+  .page-head h1 .accent{color:var(--aqua)}
+  .page-head .sub{font-size:13px;color:var(--gray-500)}
+  .page-head .sub b{color:var(--navy);font-weight:700}
+  .timer-chip{
+    display:inline-flex;align-items:center;gap:6px;
+    font-size:12px;color:var(--coral-dark);font-weight:700;
+    background:var(--coral-light);padding:7px 12px;border-radius:99px;
+    border:1px solid var(--coral);
+  }
+  .timer-chip .ms{font-size:14px}
+
+  /* Timer chip + infinite scheduling bar */
+  .timer-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:6px}
+  .timer-bar{
+    width:200px;height:4px;
+    background:var(--coral-light);border-radius:99px;
+    overflow:hidden;position:relative;
+    border:1px solid rgba(232,115,74,.15);
+  }
+  .timer-fill{
+    position:absolute;left:0;top:0;bottom:0;
+    width:0%;border-radius:99px;
+    background:linear-gradient(90deg, var(--aqua) 0%, var(--coral) 100%);
+    animation:timerFill 30s linear infinite;
+  }
+  @keyframes timerFill{
+    0%{width:0%;opacity:1}
+    95%{width:100%;opacity:1}
+    100%{width:100%;opacity:0}
+  }
+  .timer-bar-meta{
+    display:flex;justify-content:space-between;align-items:center;
+    width:200px;font-size:10px;font-weight:600;color:var(--gray-500);
+    letter-spacing:.04em;
+  }
+  .timer-bar-meta b{font-family:var(--font-display);color:var(--coral-dark);font-weight:800}
+
+  /* ============ 킥파니 캐릭터 (kickboard character) ============ */
+  .fanny{
+    width:28px;height:28px;flex-shrink:0;
+    display:inline-flex;align-items:center;justify-content:center;
+    filter:drop-shadow(0 2px 4px rgba(0,150,160,.2));
+  }
+  .fanny.sm{width:22px;height:22px}
+  .fanny.lg{width:44px;height:44px}
+  .fanny-tag{
+    display:inline-flex;align-items:center;gap:5px;
+    font-size:10px;font-weight:800;letter-spacing:.04em;
+    background:linear-gradient(135deg, var(--aqua) 0%, var(--aqua-hover) 100%);
+    color:#fff;padding:3px 9px 3px 5px;border-radius:99px;
+  }
+  .fanny-tag .fanny{width:18px;height:18px;filter:none}
+
+  /* ============ Main 2-col ============ */
+  .main{
+    display:grid;
+    grid-template-columns:minmax(0, 1.6fr) minmax(0, 1fr);
+    gap:20px;
+    align-items:start;
+  }
+
+  /* ============ LEFT — Form ============ */
+  .form-panel{
+    background:#fff;border:1px solid var(--gray-200);border-radius:18px;
+    overflow:hidden;display:flex;flex-direction:column;
+  }
+
+  /* === Hero distance === */
+  .hero-dist{
+    background:linear-gradient(160deg, var(--navy) 0%, #0E2540 100%);
+    color:#fff;padding:28px 32px 32px;
+    position:relative;overflow:hidden;
+  }
+  .hero-dist::before{
+    content:"";position:absolute;right:-80px;top:-80px;
+    width:280px;height:280px;border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, rgba(0,168,181,.4) 0%, transparent 65%);
+    filter:blur(8px);
+  }
+  /* Lane lines decoration */
+  .hero-dist::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:60px;
+    background:
+      linear-gradient(180deg, transparent 0%, transparent 80%, rgba(125,211,200,.15) 100%),
+      repeating-linear-gradient(180deg, transparent 0px, transparent 12px, rgba(125,211,200,.08) 12px, rgba(125,211,200,.08) 13px);
+    pointer-events:none;
+  }
+  .hero-dist > *{position:relative;z-index:2}
+
+  .meta-row{display:flex;align-items:center;gap:8px;margin-bottom:20px;flex-wrap:wrap}
+  .meta-pill{
+    display:inline-flex;align-items:center;gap:5px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.12);
+    padding:6px 12px;border-radius:99px;
+    font-size:12px;font-weight:600;color:rgba(255,255,255,.85);
+  }
+  .meta-pill .ms{font-size:14px;color:var(--aqua-hover)}
+  .meta-pill.editable{cursor:pointer;transition:background .15s ease}
+  .meta-pill.editable:hover{background:rgba(255,255,255,.14)}
+  .meta-pill.lock .ms{color:rgba(255,255,255,.4)}
+
+  .dist-label{
+    font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+    font-weight:700;color:rgba(255,255,255,.5);margin-bottom:10px;
+  }
+  .dist-display{
+    display:flex;align-items:baseline;gap:8px;
+    margin-bottom:16px;flex-wrap:wrap;
+  }
+  .dist-number{
+    font-family:var(--font-display);
+    font-size:88px;font-weight:800;line-height:1;
+    letter-spacing:-.04em;color:#fff;
+    font-variant-numeric:tabular-nums;
+    cursor:text;
+    background:transparent;border:none;color:#fff;outline:none;
+    width:auto;font-family:inherit;
+    min-width:80px;
+  }
+  .dist-number-text{
+    font-family:var(--font-display);
+    font-size:88px;font-weight:800;line-height:1;
+    letter-spacing:-.04em;color:#fff;
+    font-variant-numeric:tabular-nums;
+    cursor:text;
+    transition:opacity .15s ease;
+  }
+  .dist-number-text.empty{color:rgba(255,255,255,.25)}
+  .dist-unit{font-family:var(--font-display);font-size:32px;font-weight:700;color:rgba(255,255,255,.55);letter-spacing:-.01em}
+  .dist-actions-tiny{
+    margin-left:auto;display:flex;gap:4px;
+  }
+  .dist-step{
+    width:32px;height:32px;border-radius:8px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.12);
+    color:rgba(255,255,255,.75);cursor:pointer;
+    display:inline-flex;align-items:center;justify-content:center;
+  }
+  .dist-step:hover{background:rgba(255,255,255,.16);color:#fff}
+  .dist-step .ms{font-size:18px}
+
+  .quick-row{display:flex;gap:8px;margin-bottom:18px;flex-wrap:wrap}
+  .quick-btn{
+    flex:1;min-width:90px;
+    padding:11px 16px;border-radius:10px;
+    background:rgba(255,255,255,.1);
+    border:1.5px solid rgba(255,255,255,.18);
+    color:#fff;font-size:14px;font-weight:700;font-family:inherit;
+    cursor:pointer;transition:all .15s ease;
+    display:inline-flex;align-items:center;justify-content:center;gap:5px;
+  }
+  .quick-btn:hover{background:rgba(0,168,181,.25);border-color:var(--aqua-hover);transform:translateY(-1px)}
+  .quick-btn:active{transform:translateY(0);background:var(--aqua)}
+  .quick-btn b{font-family:var(--font-display);font-weight:800;letter-spacing:-.01em}
+
+  /* Hero progress bar */
+  .hero-progress{margin-top:8px}
+  .hp-row{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:8px;font-size:11px;color:rgba(255,255,255,.55);letter-spacing:.04em}
+  .hp-row b{font-family:var(--font-display);font-size:14px;color:#fff;font-weight:800;letter-spacing:-.005em}
+  .hp-row .pct{color:var(--mint);font-family:var(--font-display);font-weight:800}
+  .hp-bar{height:8px;background:rgba(255,255,255,.1);border-radius:99px;overflow:hidden;position:relative}
+  .hp-fill{
+    height:100%;border-radius:99px;
+    background:linear-gradient(90deg, var(--aqua) 0%, var(--mint) 100%);
+    transition:width .5s cubic-bezier(.22,.61,.36,1);
+    position:relative;
+  }
+  .hp-fill::after{
+    content:"";position:absolute;right:0;top:0;bottom:0;width:24px;
+    background:linear-gradient(90deg, transparent, rgba(255,255,255,.6));
+    border-radius:99px;
+  }
+
+  /* === Form body === */
+  .form-body{padding:24px 32px 28px;display:flex;flex-direction:column;gap:22px}
+
+  .field-label{
+    display:flex;align-items:center;gap:6px;
+    font-size:12px;font-weight:800;color:var(--navy);
+    margin-bottom:10px;letter-spacing:-.005em;
+  }
+  .field-label .ms{font-size:16px;color:var(--aqua)}
+  .field-label .opt{font-size:11px;color:var(--gray-500);font-weight:500;margin-left:auto}
+
+  .stroke-row{display:flex;flex-wrap:wrap;gap:8px}
+  .stroke{
+    padding:10px 18px;border-radius:99px;
+    font-size:13px;font-weight:700;
+    border:1.5px solid var(--gray-200);color:var(--gray-500);
+    background:#fff;cursor:pointer;transition:all .12s ease;
+    font-family:inherit;
+    display:inline-flex;align-items:center;gap:6px;
+  }
+  .stroke:hover{border-color:var(--aqua);color:var(--aqua-dark)}
+  .stroke.on{border-color:var(--aqua);background:var(--aqua-light);color:var(--aqua-dark);box-shadow:0 0 0 3px var(--aqua-whisper)}
+  .stroke .emoji{font-size:14px}
+
+  .memo-wrap{
+    border:1.5px solid var(--gray-200);border-radius:12px;
+    background:#fff;transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .memo-wrap:focus-within{border-color:var(--aqua);box-shadow:0 0 0 4px var(--aqua-light)}
+  .memo-wrap textarea{
+    width:100%;border:none;outline:none;resize:none;background:transparent;
+    padding:14px 16px;font-family:inherit;font-size:14px;color:var(--text-main);line-height:1.55;
+    min-height:84px;
+  }
+  .memo-wrap textarea::placeholder{color:var(--gray-300)}
+  .memo-footer{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:8px 16px;border-top:1px dashed var(--gray-100);
+    font-size:11px;color:var(--gray-500);
+  }
+  .memo-footer .emoji-btn{
+    background:transparent;border:none;color:var(--gray-500);
+    font-size:11px;font-weight:600;cursor:pointer;
+    display:inline-flex;align-items:center;gap:4px;padding:4px 8px;border-radius:6px;
+    font-family:inherit;
+  }
+  .memo-footer .emoji-btn:hover{background:var(--aqua-light);color:var(--aqua-dark)}
+  .memo-count{font-family:var(--font-display);font-weight:700;color:var(--gray-300)}
+  .memo-count.warn{color:var(--coral-dark)}
+
+  /* Privacy segment */
+  .privacy-row{
+    display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;
+  }
+  .priv{
+    display:flex;flex-direction:column;align-items:center;gap:5px;
+    padding:14px 12px;border-radius:12px;
+    border:1.5px solid var(--gray-200);background:#fff;
+    cursor:pointer;transition:all .12s ease;
+    font-family:inherit;
+  }
+  .priv:hover{border-color:var(--aqua)}
+  .priv.on{border-color:var(--aqua);background:var(--aqua-light);box-shadow:0 0 0 3px var(--aqua-whisper)}
+  .priv .ms{font-size:24px;color:var(--gray-500);transition:color .12s ease}
+  .priv.on .ms{color:var(--aqua)}
+  .priv .lbl{font-size:13px;font-weight:800;color:var(--gray-700)}
+  .priv.on .lbl{color:var(--aqua-dark)}
+  .priv .desc{font-size:10px;color:var(--gray-500);text-align:center;line-height:1.4}
+  .priv.recommended{position:relative}
+  .priv.recommended::after{
+    content:"기본";position:absolute;top:-7px;right:10px;
+    background:var(--aqua);color:#fff;font-size:9px;font-weight:800;
+    padding:2px 7px;border-radius:99px;letter-spacing:.04em;
+  }
+
+  /* Action buttons */
+  .actions{
+    display:grid;grid-template-columns:1fr 1.4fr;gap:10px;
+    padding:0 32px 28px;
+  }
+  .btn{
+    height:56px;border-radius:14px;border:none;
+    font-size:15px;font-weight:800;font-family:inherit;cursor:pointer;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    transition:all .15s ease;
+  }
+  .btn-aq{background:var(--aqua);color:#fff}
+  .btn-aq:hover:not(:disabled){background:var(--aqua-hover);transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,150,160,.28)}
+  .btn-aq:disabled{opacity:.4;cursor:not-allowed}
+  .btn-co{background:var(--coral);color:#fff}
+  .btn-co:hover{background:var(--coral-dark);transform:translateY(-1px);box-shadow:0 8px 20px rgba(232,115,74,.28)}
+  .btn .ms{font-size:20px}
+  .btn .sub{font-size:11px;font-weight:500;opacity:.85;margin-left:4px}
+
+  /* ============ Success State (overlays form) ============ */
+  .success-state{
+    display:none;
+    padding:36px 32px;
+    flex-direction:column;align-items:stretch;text-align:center;
+    background:linear-gradient(180deg, var(--aqua-whisper) 0%, #fff 50%);
+    flex:1;
+  }
+  body[data-state="success"] .success-state{display:flex}
+  body[data-state="success"] .hero-dist, body[data-state="success"] .form-body, body[data-state="success"] .actions{display:none}
+
+  .succ-check{
+    width:88px;height:88px;border-radius:50%;
+    background:linear-gradient(135deg, var(--aqua-hover) 0%, var(--aqua) 100%);
+    margin:0 auto 20px;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 0 8px var(--aqua-light), 0 16px 32px rgba(0,150,160,.32);
+    animation:pop .5s cubic-bezier(.34,1.56,.64,1);
+  }
+  @keyframes pop{from{transform:scale(.5);opacity:0}to{transform:scale(1);opacity:1}}
+  .succ-check .ms{font-size:48px;color:#fff;font-variation-settings:'wght' 700}
+
+  .succ-title{font-size:24px;font-weight:800;color:var(--navy);letter-spacing:-.02em;margin-bottom:6px}
+  .succ-title .km{color:var(--aqua-dark);font-family:var(--font-display)}
+  .succ-sub{font-size:13px;color:var(--gray-500);margin-bottom:24px}
+
+  /* Streak / Stats row */
+  .succ-stats{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:24px;
+  }
+  .ss-cell{
+    background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:14px 10px;
+    display:flex;flex-direction:column;align-items:center;gap:4px;
+  }
+  .ss-cell .v{font-family:var(--font-display);font-size:20px;font-weight:800;color:var(--navy);letter-spacing:-.01em}
+  .ss-cell .l{font-size:11px;color:var(--gray-500);font-weight:600}
+  .ss-cell .ms{font-size:16px;color:var(--aqua);margin-bottom:2px}
+  .ss-cell.flame .ms{color:var(--coral)}
+  .ss-cell.medal .ms{color:var(--sun)}
+
+  /* Bot preview */
+  .bot-preview-label{
+    font-size:11px;color:var(--gray-500);font-weight:700;letter-spacing:.06em;
+    text-transform:uppercase;margin-bottom:8px;text-align:left;
+    display:flex;align-items:center;gap:6px;
+  }
+  .bot-preview-label .ms{font-size:14px;color:var(--aqua)}
+
+  .bot-preview{
+    background:linear-gradient(180deg, var(--aqua-light) 0%, var(--aqua-whisper) 100%);
+    border:1px solid var(--aqua);border-left:3px solid var(--aqua);
+    border-radius:12px;padding:14px 16px;text-align:left;
+    margin-bottom:24px;
+    position:relative;overflow:hidden;
+  }
+  .bot-preview::after{
+    content:"";position:absolute;right:-30px;top:-30px;
+    width:80px;height:80px;border-radius:50%;
+    background:radial-gradient(circle, rgba(0,150,160,.18) 0%, transparent 70%);
+  }
+  .bot-preview > *{position:relative;z-index:2}
+  .bp-head{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+  .bp-av{width:24px;height:24px;border-radius:50%;background:var(--navy);color:var(--aqua-hover);display:flex;align-items:center;justify-content:center}
+  .bp-av .ms{font-size:13px}
+  .bp-tag{font-size:10px;font-weight:800;color:var(--aqua-hover);background:var(--navy);padding:2px 7px;border-radius:99px;letter-spacing:.04em}
+  .bp-where{font-size:11px;color:var(--gray-500);margin-left:auto}
+  .bp-body{font-size:14px;color:var(--navy);line-height:1.5;margin-bottom:6px}
+  .bp-body b.user{font-weight:800;color:var(--aqua-dark)}
+  .bp-body .km{font-family:var(--font-display);font-weight:800;color:var(--aqua-dark);font-size:18px;letter-spacing:-.01em}
+
+  .succ-actions{display:grid;grid-template-columns:1fr 1.6fr;gap:10px}
+
+  .secondary-link{
+    display:inline-flex;align-items:center;gap:4px;margin-top:18px;
+    font-size:12px;color:var(--aqua);font-weight:700;cursor:pointer;justify-content:center;
+  }
+  .secondary-link:hover{text-decoration:underline}
+  .secondary-link .ms{font-size:14px}
+
+
+  /* ============ RIGHT — Insights ============ */
+  .insights{display:flex;flex-direction:column;gap:14px}
+  .widget{background:#fff;border:1px solid var(--gray-200);border-radius:14px;padding:18px}
+  .w-title{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:800;color:var(--navy);margin-bottom:14px}
+  .w-title .ms{font-size:16px;color:var(--aqua)}
+  .w-title .more{margin-left:auto;font-size:11px;font-weight:600;color:var(--gray-500);cursor:pointer}
+  .w-title .more:hover{color:var(--aqua)}
+
+  /* Monthly goal hero */
+  .goal-hero{
+    background:linear-gradient(135deg, var(--aqua-light) 0%, var(--mint-light) 100%);
+    border:1px solid var(--mint);
+  }
+  .goal-row{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:10px}
+  .goal-val{font-family:var(--font-display);font-size:32px;font-weight:800;letter-spacing:-.02em;color:var(--navy)}
+  .goal-val .unit{font-size:14px;color:var(--gray-500);font-weight:600;margin-left:4px}
+  .goal-total{font-size:12px;color:var(--gray-500);text-align:right;line-height:1.4}
+  .goal-total b{display:block;font-family:var(--font-display);font-size:13px;color:var(--navy);font-weight:800}
+  .goal-bar{height:8px;background:rgba(255,255,255,.6);border-radius:99px;overflow:hidden}
+  .goal-fill{height:100%;border-radius:99px;background:linear-gradient(90deg, var(--aqua) 0%, var(--mint) 100%);transition:width .5s ease}
+  .goal-foot{display:flex;justify-content:space-between;align-items:center;font-size:11px;color:var(--gray-700);margin-top:8px}
+  .goal-foot .pct{font-family:var(--font-display);font-size:13px;color:var(--aqua-dark);font-weight:800}
+
+  /* Recent records */
+  .records-list{display:flex;flex-direction:column;gap:0}
+  .rec-row{
+    display:flex;align-items:center;gap:12px;padding:10px 0;
+    border-bottom:1px dashed var(--gray-100);
+  }
+  .rec-row:last-child{border-bottom:none}
+  .rec-date{
+    font-family:var(--font-display);font-size:13px;font-weight:800;
+    color:var(--navy);min-width:42px;letter-spacing:-.005em;
+  }
+  .rec-date .day{display:block;font-size:10px;color:var(--gray-500);font-weight:600;letter-spacing:.04em;margin-top:1px}
+  .rec-info{flex:1;min-width:0}
+  .rec-d{font-family:var(--font-display);font-size:16px;font-weight:800;color:var(--aqua-dark);letter-spacing:-.01em}
+  .rec-d .unit{font-size:11px;color:var(--gray-500);font-weight:600;margin-left:2px}
+  .rec-s{font-size:11px;color:var(--gray-500);margin-top:1px}
+  .rec-vs{
+    font-size:10px;font-weight:700;
+    padding:3px 7px;border-radius:6px;
+    background:var(--aqua-light);color:var(--aqua-dark);
+    display:inline-flex;align-items:center;gap:2px;
+  }
+  .rec-vs.down{background:var(--coral-light);color:var(--coral-dark)}
+  .rec-vs .ms{font-size:12px}
+  .rec-row.today{
+    background:linear-gradient(90deg, var(--aqua-whisper), transparent);
+    margin:0 -18px;padding:10px 18px;border-radius:8px;border-bottom:none;
+  }
+  .rec-row.today .rec-date{color:var(--aqua-dark)}
+
+  /* Milestone */
+  .milestone{
+    display:flex;align-items:center;gap:12px;
+    background:linear-gradient(135deg, var(--sun-light) 0%, #FFF7E5 100%);
+    border:1px solid var(--sun);border-radius:12px;padding:14px;
+  }
+  .milestone .ms-ico{
+    width:42px;height:42px;border-radius:50%;
+    background:linear-gradient(135deg, var(--sun) 0%, #E89906 100%);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+    box-shadow:0 4px 12px rgba(244,183,64,.4);
+  }
+  .milestone .ms-ico .ms{font-size:22px;color:#fff;font-variation-settings:'wght' 700,'FILL' 1}
+  .milestone .ms-info{flex:1;min-width:0}
+  .milestone .ms-t{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:2px}
+  .milestone .ms-s{font-size:11px;color:var(--gray-700);line-height:1.45}
+  .milestone .ms-bar{height:5px;background:rgba(255,255,255,.65);border-radius:99px;margin-top:6px;overflow:hidden}
+  .milestone .ms-fill{height:100%;border-radius:99px;background:linear-gradient(90deg, var(--sun) 0%, #E89906 100%);width:74%;transition:width .5s ease}
+
+  /* ============ Badge Collection ============ */
+  .badge-widget{
+    background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:10px 12px;
+  }
+  .bw-head{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:8px;
+  }
+  .bw-title{display:flex;align-items:center;gap:4px;font-size:11px;font-weight:800;color:var(--navy)}
+  .bw-title .ms{font-size:14px;color:var(--aqua)}
+  .bw-progress{font-size:11px;font-weight:800;color:var(--gray-500)}
+  .bw-progress b{color:var(--aqua-dark)}
+
+  /* 가로 아이콘 나열 */
+  .badges-grid{display:flex;flex-wrap:wrap;gap:6px}
+
+  .rec-badge{
+    width:36px;height:36px;border-radius:8px;flex-shrink:0;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;
+    position:relative;cursor:pointer;
+    transition:transform .15s;
+  }
+  .rec-badge:hover{transform:scale(1.1)}
+  .rec-badge .ms{font-size:16px;color:#fff;font-variation-settings:'wght' 700,'FILL' 1}
+  .rec-badge .b-lbl{font-size:7px;font-weight:800;color:rgba(255,255,255,.92);line-height:1}
+
+  .rec-badge.earned{background:linear-gradient(135deg,var(--aqua),var(--mint));box-shadow:0 2px 6px rgba(0,150,160,.25)}
+  .rec-badge.earned.sun{background:linear-gradient(135deg,var(--sun),#E89906);box-shadow:0 2px 6px rgba(244,183,64,.3)}
+  .rec-badge.earned.coral{background:linear-gradient(135deg,var(--coral),var(--coral-dark));box-shadow:0 2px 6px rgba(232,115,74,.25)}
+  .rec-badge.earned.nv{background:linear-gradient(135deg,var(--navy),#0E2540);box-shadow:0 2px 6px rgba(20,45,71,.25)}
+  .rec-badge.locked{background:var(--gray-100);border:1.5px dashed var(--gray-300)}
+  .rec-badge.locked .ms{color:var(--gr-400,#8896B0);opacity:.7;font-variation-settings:'wght' 500,'FILL' 0}
+  .rec-badge.locked .b-lbl{color:var(--gr-400,#8896B0)}
+
+  /* ×N 카운트 */
+  .b-cnt{
+    position:absolute;top:-4px;right:-4px;
+    min-width:15px;height:15px;border-radius:8px;
+    background:var(--navy);color:#fff;
+    font-size:8px;font-weight:800;
+    display:flex;align-items:center;justify-content:center;
+    padding:0 3px;border:1.5px solid #fff;line-height:1;
+  }
+  /* 신규 획득 dot */
+  .b-new{
+    position:absolute;top:-2px;right:-2px;
+    width:6px;height:6px;border-radius:50%;
+    background:var(--coral);border:1.5px solid #fff;
+    animation:pulse 2s ease infinite;
+  }
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.85)}}
+
+  .badge-foot{
+    margin-top:8px;padding-top:8px;
+    border-top:1px dashed var(--gray-100);
+    display:flex;align-items:center;gap:5px;
+    font-size:10px;color:var(--gray-500);
+  }
+  .badge-foot .ms{font-size:13px;color:var(--coral)}
+  .badge-foot a{color:var(--aqua);font-weight:700;margin-left:auto}
+  .badge-foot a:hover{text-decoration:underline}
+
+  /* Lane log mini calendar */
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+  .cal-grid .hd{font-size:9px;font-weight:700;color:var(--gray-300);text-align:center;letter-spacing:.04em;padding:2px 0}
+  .cal-grid .cd{
+    aspect-ratio:1;border-radius:6px;
+    background:var(--bg);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-display);font-size:11px;font-weight:700;color:var(--gray-300);
+  }
+  .cal-grid .cd.sw{background:var(--aqua);color:#fff;box-shadow:inset 0 -2px 4px rgba(20,45,71,.2)}
+  .cal-grid .cd.lt{background:var(--aqua-light);color:var(--aqua-dark);border:1px solid var(--aqua)}
+  .cal-grid .cd.td{background:#fff;border:2px solid var(--coral);color:var(--coral-dark);box-shadow:0 0 0 3px var(--coral-light)}
+  .cal-grid .cd.future{color:var(--gray-300);background:#fff;border:1px dashed var(--gray-200)}
+  .cal-grid .cd.empty{background:transparent}
+
+  .cal-legend{
+    display:flex;gap:14px;margin-top:10px;
+    font-size:10px;color:var(--gray-500);font-weight:600;
+  }
+  .cal-legend .lg{display:flex;align-items:center;gap:4px}
+  .cal-legend .lg span:first-child{width:10px;height:10px;border-radius:3px}
+
+  /* Demo state toggle */
+  .state-toggle{
+    position:fixed;bottom:20px;left:50%;transform:translateX(-50%);
+    background:#fff;border:1px solid var(--gray-200);border-radius:99px;
+    padding:4px;display:flex;gap:2px;
+    box-shadow:0 4px 16px rgba(20,45,71,.08);z-index:60;
+  }
+  .state-toggle .label{padding:6px 10px 6px 12px;color:var(--gray-300);font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+  .state-toggle button{border:none;background:transparent;padding:6px 14px;border-radius:99px;font-size:11px;font-weight:700;color:var(--gray-500);cursor:pointer;font-family:inherit}
+  .state-toggle button.on{background:var(--aqua);color:#fff}
+
+  @media (max-width:1024px){
+    .main{grid-template-columns:1fr}
+    .insights{order:1}
+    .form-panel{order:2}
+    .sb,.sidebar,.side-panel{display:none}
+  }
+
+  /* ===== 반응형 공통 ===== */
+  .gnb{position:sticky;top:0;z-index:100}
+  .gnb-hamburger{display:none;width:38px;height:38px;border:none;border-radius:8px;background:transparent;color:rgba(255,255,255,.85);cursor:pointer;flex-shrink:0;align-items:center;justify-content:center}
+  .gnb-hamburger .ms{font-size:24px;line-height:1}
+  .drw-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300}
+  .drw-ov.on{display:block}
+  .drw{position:fixed;top:0;right:-290px;width:280px;height:100dvh;background:#1B3A5C;z-index:301;display:flex;flex-direction:column;transition:right .25s ease;box-shadow:-4px 0 20px rgba(0,0,0,.25)}
+  .drw.on{right:0}
+  .drw-hd{display:flex;align-items:center;justify-content:space-between;padding:0 18px;height:64px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.1)}
+  .drw-logo{font-weight:800;font-size:18px;letter-spacing:-.03em;line-height:1}
+  .drw-logo .We{color:#fff}.drw-logo .Sw{color:#00A8B5}
+  .drw-x{width:32px;height:32px;border-radius:7px;border:none;background:rgba(255,255,255,.1);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .drw-x .ms{font-size:18px}
+  .drw-bd{flex:1;overflow-y:auto;padding:10px}
+  .drw-sec{font-size:10px;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.12em;text-transform:uppercase;padding:12px 12px 4px}
+  .drw-it{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;font-size:15px;font-weight:700;color:rgba(255,255,255,.6);border:none;background:transparent;width:100%;font-family:inherit;text-align:left;cursor:pointer;transition:background .15s,color .15s}
+  .drw-it:hover,.drw-it.on{background:rgba(255,255,255,.1);color:#fff}
+  .drw-it .ms{font-size:20px}
+  .drw-hr{height:1px;background:rgba(255,255,255,.08);margin:6px 0}
+  .mob-tabs{display:none;background:#fff;border-bottom:1px solid #D0D7E2;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;position:sticky;top:64px;z-index:90;padding:0 8px}
+  .mob-tabs::-webkit-scrollbar{display:none}
+  .mob-tab{display:inline-flex;align-items:center;gap:5px;padding:11px 12px;font-size:13px;font-weight:700;color:#6B7A99;border:none;background:transparent;border-bottom:2.5px solid transparent;margin-bottom:-1px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .15s}
+  .mob-tab.on{color:#0096A0;border-bottom-color:#0096A0}
+  .mob-tab .ms{font-size:15px}
+
+  
+  @media(max-width:880px){
+    .gnb-nav{display:none}
+    .gnb-hamburger{display:inline-flex}
+    .main{padding:16px 16px 60px}
+  }
+
+  /* == record-detail sidebar styles == */
+  /* === 우측 사이드바 === */
+  .sidebar{display:flex;flex-direction:column;gap:16px;position:sticky;top:88px}
+  .widget{background:var(--white);border:1px solid var(--gray-200);border-radius:12px;padding:16px}
+  .widget-title{font-size:12px;font-weight:700;color:var(--gray-500);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+  .widget-title .ms{font-size:15px;color:var(--aqua)}
+  /* 뱃지 위젯 */
+  .badge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+  .badge-item{display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 8px;border-radius:10px;background:var(--bg);position:relative}
+  .badge-item.earned{background:var(--aqua-light)}
+  .badge-ico{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--gray-200)}
+  .badge-item.earned .badge-ico{background:linear-gradient(135deg,var(--aqua),var(--navy))}
+  .badge-ico .ms{font-size:20px;color:var(--gray-500)}
+  .badge-item.earned .badge-ico .ms{color:#fff}
+  .badge-lbl{font-size:10px;font-weight:700;color:var(--gray-500);text-align:center;line-height:1.3}
+  .badge-item.earned .badge-lbl{color:var(--aqua-dark)}
+  .badge-count{position:absolute;top:6px;right:6px;background:var(--aqua);color:#fff;font-size:9px;font-weight:800;padding:1px 5px;border-radius:99px;font-family:var(--font-display)}
+  .badge-new{position:absolute;top:6px;right:6px;width:8px;height:8px;border-radius:50%;background:var(--coral);animation:pulse 1.5s infinite}
+  /* 관련 기록 위젯 */
+  .rec-mini{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--gray-100)}
+  .rec-mini:last-child{border-bottom:none}
+  .rec-mini-dist{font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--navy);min-width:70px}
+  .rec-mini-dist span{font-size:12px;color:var(--gray-500);font-weight:500}
+  .rec-mini-info{flex:1;min-width:0}
+  .rec-mini-date{font-size:12px;color:var(--gray-500)}
+  .rec-mini-stroke{font-size:12px;font-weight:600;color:var(--aqua-dark)}
+  .sidebar{order:1;position:static;margin-bottom:0}
+</style>
+</head>
+<body data-state="form" data-screen-label="07 Record (PC)">
+
+  <!-- ============ GNB ============ -->
+  <header class="gnb">
+    <div class="gnb-inner">
+      <a href="home.html" class="gnb-logo"><span class="We">We</span><span class="Swim">Swim</span></a>
+      <nav class="gnb-nav">
+      <a href="home.html" >홈</a>
+      <a href="group.html" >우리반</a>
+      <a href="record.html" class="on">기록</a>
+      <a href="my.html" >마이</a>
+    </nav>
+      <div class="gnb-right">
+      <button class="icon-btn" aria-label="검색" onclick="location.href='search.html'">
+        <span class="ms" aria-hidden="true">search</span>
+      </button>
+      <button class="icon-btn" aria-label="알림" onclick="location.href='notifications.html'">
+        <span class="ms" aria-hidden="true">notifications</span>
+        <span class="badge">3</span>
+      </button>
+      <div class="gnb-avatar" title="이레인" onclick="location.href='my.html'">이</div>
+      <button class="gnb-hamburger" id="drwBtn" aria-label="메뉴"><span class="ms">menu</span></button>
+    </a>
+    </div>
+  </header>
+<div class="drw-ov" id="drwOv"></div>
+<aside class="drw" id="drwPanel">
+  <div class="drw-hd">
+    <div class="drw-logo"><span class="We">We</span><span class="Sw">Swim</span></div>
+    <button class="drw-x" id="drwClose"><span class="ms">close</span></button>
+  </div>
+    <div class="drw-bd">
+    <div class="drw-sec">메뉴</div>
+    <button class="drw-it" onclick="location.href='home.html'"><span class="ms">home</span>홈</button>
+    <button class="drw-it" onclick="location.href='group.html'"><span class="ms">groups</span>우리반</button>
+    <button class="drw-it on" onclick="location.href='record.html'"><span class="ms">pool</span>기록</button>
+    <button class="drw-it" onclick="location.href='my.html'"><span class="ms">account_circle</span>마이</button>
+    <div class="drw-hr"></div>
+    <div class="drw-sec">기타</div>
+    <button class="drw-it" onclick="location.href='notifications.html'"><span class="ms">notifications</span>알림</button>
+    <button class="drw-it" onclick="location.href='my-settings.html'"><span class="ms">settings</span>설정</button>
+  </div>
+</aside>
+
+
+  <!-- State Toggle -->
+  <div class="state-toggle">
+    <span class="label">화면 상태</span>
+    <button id="stForm" class="on">기록 입력</button>
+    <button id="stSuccess">저장 완료</button>
+  </div>
+
+
+  <!-- ============ Page ============ -->
+  <div class="page">
+
+    <div class="crumb">
+      <a href="home.html">홈</a>
+      <span class="ms sep" aria-hidden="true">chevron_right</span>
+      <a href="#">기록</a>
+      <span class="ms sep" aria-hidden="true">chevron_right</span>
+      <b>오늘의 기록</b>
+    </div>
+
+    <div class="page-head">
+      <div>
+        <h1>오늘의 <span class="accent">레인</span> 기록</h1>
+        <div class="sub">탈의실에서 <b>30초</b>면 끝나요. 빠른 추가 버튼으로 거리를 채워보세요.</div>
+      </div>
+      <div class="timer-wrap">
+        <div class="timer-chip">
+          <span class="ms" aria-hidden="true">timer</span>
+          목표: <b style="margin-left:2px">30초</b> 안에 입력하기
+        </div>
+        <div class="timer-bar"><div class="timer-fill"></div></div>
+        <div class="timer-bar-meta">
+          <span>00:00</span>
+          <span>도전 <b>🙌</b></span>
+          <span>00:30</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Main 2-col -->
+    <div class="main">
+
+      <!-- ===== LEFT — Form / Success ===== -->
+      <section class="form-panel">
+
+        <!-- Hero Distance (FORM state) -->
+        <div class="hero-dist">
+          <div class="meta-row">
+            <span class="meta-pill editable" title="날짜 변경">
+              <span class="ms" aria-hidden="true">event</span>
+              2026년 5월 28일 <span style="color:rgba(255,255,255,.4)">·</span> 목
+            </span>
+            <span class="meta-pill lock" title="소속 반 기준 자동 입력">
+              <span class="ms" aria-hidden="true">pool</span>
+              잠실실내수영장 <span style="color:rgba(255,255,255,.4)">·</span> 중급반
+              <span class="ms" style="font-size:13px;margin-left:2px;color:rgba(255,255,255,.4)" aria-hidden="true">lock</span>
+            </span>
+          </div>
+
+          <div class="dist-label">총 수영 거리</div>
+          <div class="dist-display">
+            <span id="distText" class="dist-number-text">1,500</span>
+            <span class="dist-unit">m</span>
+            <div class="dist-actions-tiny">
+              <button class="dist-step" data-step="-50" title="-50m"><span class="ms" aria-hidden="true">remove</span></button>
+              <button class="dist-step" data-step="50" title="+50m"><span class="ms" aria-hidden="true">add</span></button>
+              <button class="dist-step" data-step="reset" title="초기화"><span class="ms" aria-hidden="true">refresh</span></button>
+            </div>
+          </div>
+
+          <div class="quick-row">
+            <button class="quick-btn" data-add="100"><b>+ 100</b>m</button>
+            <button class="quick-btn" data-add="500"><b>+ 500</b>m</button>
+            <button class="quick-btn" data-add="1000"><b>+ 1,000</b>m</button>
+          </div>
+
+          <div class="hero-progress">
+            <div class="hp-row">
+              <span>이번 달 목표까지 <b id="goalRemain">5,000m</b></span>
+              <span><b id="goalCurr">20,000</b> / 25,000m <span class="pct" style="margin-left:6px" id="goalPct">80%</span></span>
+            </div>
+            <div class="hp-bar"><div class="hp-fill" id="goalFill" style="width:80%"></div></div>
+          </div>
+        </div>
+
+        <!-- Form body -->
+        <div class="form-body">
+
+          <!-- Stroke -->
+          <div>
+            <div class="field-label">
+              <span class="ms" aria-hidden="true">waves</span>
+              주요 영법
+              <span class="opt">복수 선택 가능</span>
+            </div>
+            <div class="stroke-row" id="strokeRow">
+              <button class="stroke on" data-s="자유형"><span class="emoji">🏊</span>자유형</button>
+              <button class="stroke" data-s="배영"><span class="emoji">🛟</span>배영</button>
+              <button class="stroke on" data-s="평영"><span class="emoji">🐸</span>평영</button>
+              <button class="stroke" data-s="접영"><span class="emoji">🦋</span>접영</button>
+              <button class="stroke" data-s="혼합"><span class="emoji">🌀</span>혼합</button>
+            </div>
+          </div>
+
+          <!-- Memo -->
+          <div>
+            <div class="field-label">
+              <span class="ms" aria-hidden="true">edit_note</span>
+              한 줄 메모
+              <span class="opt">선택 · 100자</span>
+            </div>
+            <div class="memo-wrap">
+              <textarea id="memo" placeholder="오늘 어땠나요? 턴이 좋았는지, 컨디션은 어땠는지 짧게 남겨봐요" maxlength="100">오늘 턴 동작이 좀 나아진 것 같다 ✨ 평영 다리는 아직 어색하지만 점점 익숙해지는 중!</textarea>
+              <div class="memo-footer">
+                <button class="emoji-btn"><span class="ms" style="font-size:14px" aria-hidden="true">mood</span> 이모지</button>
+                <span class="memo-count"><span id="memoLen">42</span> / 100</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Privacy -->
+          <div>
+            <div class="field-label">
+              <span class="ms" aria-hidden="true">visibility</span>
+              공개 범위
+              <span class="opt">기본 — 우리 반에 자동 공유</span>
+            </div>
+            <div class="privacy-row" id="privacyRow">
+              <button class="priv" data-p="private">
+                <span class="ms" aria-hidden="true">lock</span>
+                <span class="lbl">나만 보기</span>
+                <span class="desc">마이페이지에만 기록</span>
+              </button>
+              <button class="priv on recommended" data-p="lane">
+                <span class="ms" aria-hidden="true">groups</span>
+                <span class="lbl">우리 반</span>
+                <span class="desc">잡담탭에 메시지 게시</span>
+              </button>
+              <button class="priv" data-p="public">
+                <span class="ms" aria-hidden="true">public</span>
+                <span class="lbl">전체 공개</span>
+                <span class="desc">마이페이지 공개 기록</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Actions -->
+        <div class="actions">
+          <button class="btn btn-aq" id="saveBtn">
+            <span class="ms" aria-hidden="true">save</span> 레인에 저장
+          </button>
+          <button class="btn btn-co" id="saveShareBtn">
+            <span class="ms" aria-hidden="true">share</span> 저장 후 우리반에 공유
+          </button>
+        </div>
+
+
+        <!-- ============ SUCCESS STATE ============ -->
+        <div class="success-state">
+          <div class="succ-check"><span class="ms" aria-hidden="true">check</span></div>
+          <div class="succ-title"><span class="km">1,500m</span> 기록이 레인에 저장됐어요!</div>
+          <div class="succ-sub">2026년 5월 28일 · 잠실실내수영장 · 자유형 + 평영</div>
+
+          <div class="succ-stats">
+            <div class="ss-cell"><span class="ms" aria-hidden="true">trending_up</span><div class="v">20,000</div><div class="l">이달 누적 (m)</div></div>
+            <div class="ss-cell flame"><span class="ms" aria-hidden="true">local_fire_department</span><div class="v">14일</div><div class="l">연속 운동</div></div>
+            <div class="ss-cell medal"><span class="ms" aria-hidden="true">workspace_premium</span><div class="v">D-7</div><div class="l">500km 뱃지까지</div></div>
+          </div>
+
+          <div class="bot-preview-label">
+            <span class="ms" aria-hidden="true">auto_awesome</span>
+            잠실 중급반 잡담탭에 킥파니가 축하해줘요!
+          </div>
+          <div class="bot-preview">
+            <div class="bp-head">
+              <span class="fanny" aria-hidden="true">
+                <svg viewBox="0 0 32 32" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                  <rect x="6" y="5" width="20" height="24" rx="6" fill="#00A8B5"/>
+                  <rect x="9" y="8" width="14" height="2.5" rx="1.25" fill="rgba(255,255,255,.4)"/>
+                  <circle cx="12" cy="17" r="2.2" fill="#fff"/>
+                  <circle cx="20" cy="17" r="2.2" fill="#fff"/>
+                  <circle cx="12.5" cy="17" r="1" fill="#1B3A5C"/>
+                  <circle cx="20.5" cy="17" r="1" fill="#1B3A5C"/>
+                  <path d="M 11 22 Q 16 26 21 22" stroke="#1B3A5C" stroke-width="1.6" fill="none" stroke-linecap="round"/>
+                  <circle cx="9" cy="20" r="1.2" fill="rgba(232,115,74,.45)"/>
+                  <circle cx="23" cy="20" r="1.2" fill="rgba(232,115,74,.45)"/>
+                </svg>
+              </span>
+              <span class="fanny-tag">킥파니</span>
+              <span class="bp-where">기록 축하 · 방금</span>
+            </div>
+            <div class="bp-body">
+              🎉 오늘도 구다구는 <b class="user">이레인</b>님! <span class="km">1,500m</span> 완주했어요. 다음 용월수금에도 구다구다 만나요!
+            </div>
+          </div>
+
+          <div class="succ-actions">
+            <button class="btn btn-aq"><span class="ms" aria-hidden="true">forum</span> 우리반 가기</button>
+            <button class="btn btn-co"><span class="ms" aria-hidden="true">share</span> 우리반에 지금 공유하기</button>
+          </div>
+
+          <div class="secondary-link" id="recordAgain">
+            <span class="ms" aria-hidden="true">restart_alt</span> 새 기록 작성하기
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- ===== RIGHT — Insights ===== -->
+  <div class="sidebar">
+
+    <!-- 진행 중 뱃지 -->
+    <div class="widget">
+      <div class="widget-title"><span class="ms">military_tech</span> 진행 중 뱃지</div>
+      <div class="badge-grid">
+        <div class="badge-item earned">
+          <div class="badge-ico"><span class="ms">local_fire_department</span></div>
+          <div class="badge-lbl">주 6회</div>
+          <div class="badge-count">×4</div>
+        </div>
+        <div class="badge-item earned">
+          <div class="badge-ico"><span class="ms">pool</span></div>
+          <div class="badge-lbl">누적 10km</div>
+          <div class="badge-new"></div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-ico"><span class="ms">emoji_events</span></div>
+          <div class="badge-lbl">Gold<br/>7/20</div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-ico"><span class="ms">calendar_month</span></div>
+          <div class="badge-lbl">주 3회<br/>11/12월</div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-ico"><span class="ms">water_drop</span></div>
+          <div class="badge-lbl">누적 30km</div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-ico"><span class="ms">star</span></div>
+          <div class="badge-lbl">퍼펙트<br/>먼스</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 최근 기록 -->
+    <div class="widget">
+      <div class="widget-title"><span class="ms">history</span> 최근 기록</div>
+      <div class="rec-mini">
+        <div class="rec-mini-dist">1,500<span>m</span></div>
+        <div class="rec-mini-info">
+          <div class="rec-mini-date">오늘 · 5/22</div>
+          <div class="rec-mini-stroke">자유형 · 배영</div>
+        </div>
+      </div>
+      <div class="rec-mini">
+        <div class="rec-mini-dist">2,000<span>m</span></div>
+        <div class="rec-mini-info">
+          <div class="rec-mini-date">5/20 화요일</div>
+          <div class="rec-mini-stroke">자유형</div>
+        </div>
+      </div>
+      <div class="rec-mini">
+        <div class="rec-mini-dist">1,200<span>m</span></div>
+        <div class="rec-mini-info">
+          <div class="rec-mini-date">5/18 일요일</div>
+          <div class="rec-mini-stroke">혼합</div>
+        </div>
+      </div>
+      <div class="rec-mini">
+        <div class="rec-mini-dist">1,800<span>m</span></div>
+        <div class="rec-mini-info">
+          <div class="rec-mini-date">5/15 목요일</div>
+          <div class="rec-mini-stroke">자유형 · 평영</div>
+        </div>
+      </div>
+    </div>
+
+
+
+    </div>
+
+  </div>
+
+
+  <script>
+    // ============ Distance handling ============
+    const distText = document.getElementById('distText');
+    const goalFill = document.getElementById('goalFill');
+    const goalCurr = document.getElementById('goalCurr');
+    const goalPct = document.getElementById('goalPct');
+    const goalRemain = document.getElementById('goalRemain');
+    const GOAL = 25000;
+    const ACCUM_BEFORE = 18500;
+    let dist = 1500;
+
+    function fmt(n){return n.toLocaleString('en-US')}
+    function render(){
+      distText.textContent = fmt(dist);
+      distText.classList.toggle('empty', dist === 0);
+      const total = ACCUM_BEFORE + dist;
+      const pct = Math.min(100, Math.round((total/GOAL)*100));
+      goalFill.style.width = pct + '%';
+      goalCurr.textContent = fmt(total);
+      goalPct.textContent = pct + '%';
+      goalRemain.textContent = fmt(Math.max(0, GOAL - total)) + 'm';
+    }
+    document.querySelectorAll('.quick-btn').forEach(b => {
+      b.addEventListener('click', () => {
+        dist += parseInt(b.dataset.add, 10);
+        if(dist > 99999) dist = 99999;
+        render();
+      });
+    });
+    document.querySelectorAll('.dist-step').forEach(b => {
+      b.addEventListener('click', () => {
+        const s = b.dataset.step;
+        if(s === 'reset') dist = 0;
+        else dist = Math.max(0, dist + parseInt(s, 10));
+        render();
+      });
+    });
+
+    // ============ Stroke chips (multi-select) ============
+    document.querySelectorAll('#strokeRow .stroke').forEach(c => {
+      c.addEventListener('click', () => c.classList.toggle('on'));
+    });
+
+    // ============ Privacy segment (single-select) ============
+    document.querySelectorAll('#privacyRow .priv').forEach(p => {
+      p.addEventListener('click', () => {
+        document.querySelectorAll('#privacyRow .priv').forEach(x => x.classList.remove('on'));
+        p.classList.add('on');
+      });
+    });
+
+    // ============ Memo counter ============
+    const memo = document.getElementById('memo');
+    const memoLen = document.getElementById('memoLen');
+    function updateMemo(){
+      memoLen.textContent = memo.value.length;
+      memoLen.parentElement.classList.toggle('warn', memo.value.length >= 90);
+    }
+    memo.addEventListener('input', updateMemo);
+    updateMemo();
+
+    // ============ State Toggle ============
+    function setState(s){
+      document.body.dataset.state = s;
+      document.getElementById('stForm').classList.toggle('on', s === 'form');
+      document.getElementById('stSuccess').classList.toggle('on', s === 'success');
+    }
+    document.getElementById('stForm')?.addEventListener('click', () => setState('form'));
+    document.getElementById('stSuccess')?.addEventListener('click', () => setState('success'));
+    document.getElementById('saveBtn')?.addEventListener('click', () => setState('success'));
+    document.getElementById('saveShareBtn')?.addEventListener('click', () => setState('success'));
+    document.getElementById('recordAgain')?.addEventListener('click', () => setState('form'));
+
+    render();
+  
+  (function(){
+    var btn=document.getElementById('drwBtn');
+    var drw=document.getElementById('drwPanel');
+    var ov=document.getElementById('drwOv');
+    var cls=document.getElementById('drwClose');
+    if(!btn||!drw||!ov) return;
+    function open(){drw.classList.add('on');ov.classList.add('on');document.body.style.overflow='hidden'}
+    function close(){drw.classList.remove('on');ov.classList.remove('on');document.body.style.overflow=''}
+    btn.addEventListener('click',open);
+    ov.addEventListener('click',close);
+    if(cls) cls.addEventListener('click',close);
+    drw.querySelectorAll('.drw-it').forEach(function(el){el.addEventListener('click',close)});
+  })();
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>WeSwim — 우리반 (미소속)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0,0&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --navy:#1B3A5C;--navy-dark:#142D47;--navy-light:#E8EEF4;
+    --aqua:#0096A0;--aqua-hover:#00A8B5;--aqua-dark:#006970;
+    --aqua-light:#E6F6F7;--aqua-whisper:#F2FBFC;
+    --coral:#E8734A;--coral-dark:#C45A33;--coral-light:#FDF0EB;
+    --mint:#7DD3C8;--mint-light:#E8F7F4;
+    --bg:#F5F7FA;--white:#FFFFFF;
+    --gray-100:#ECEFF4;--gray-200:#D0D7E2;--gray-300:#B4BECD;
+    --gray-500:#6B7A99;--gray-700:#3D4A66;--text-main:#1A1A2E;
+    --font-sans:'Pretendard Variable','Pretendard','Helvetica Neue','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-display:'Helvetica Neue','Pretendard Variable','Pretendard',sans-serif;
+  }
+  html,body{height:100%}
+  body{font-family:var(--font-sans);color:var(--text-main);background:var(--bg);-webkit-font-smoothing:antialiased;font-feature-settings:"ss06","ss03"}
+  .ms{font-family:'Material Symbols Rounded';font-weight:500;font-style:normal;display:inline-flex;align-items:center;justify-content:center;line-height:1;text-transform:none;letter-spacing:normal;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;font-feature-settings:'liga';vertical-align:middle;font-size:20px;font-variation-settings:'opsz' 24,'wght' 500,'FILL' 0,'GRAD' 0}
+  button{font-family:inherit;cursor:pointer}
+  a{color:inherit;text-decoration:none}
+
+  /* === GNB === */
+  .gnb{height:64px;background:var(--navy);color:#fff;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.05)}
+  .gnb-inner{max-width:1320px;margin:0 auto;height:100%;padding:0 32px;display:flex;align-items:center;gap:32px}
+  .gnb-logo{font-family:var(--font-display);font-size:22px;font-weight:800;letter-spacing:-.04em}
+  .gnb-logo .We{color:#fff}.gnb-logo .Swim{color:var(--aqua-hover)}
+  .gnb-nav{display:flex;gap:2px}
+  .gnb-nav a{padding:8px 14px;font-size:14px;font-weight:600;color:rgba(255,255,255,.5);border-radius:8px;transition:all .15s}
+  .gnb-nav a.on{color:#fff;background:rgba(255,255,255,.1)}
+  .gnb-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+  .icon-btn{width:38px;height:38px;border-radius:99px;border:none;background:transparent;color:rgba(255,255,255,.7);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:all .15s}
+  .icon-btn:hover{background:rgba(255,255,255,.08);color:#fff}
+  .icon-btn .ms{font-size:22px}
+  .icon-btn .badge{position:absolute;top:6px;right:6px;background:var(--coral);color:#fff;font-size:9px;font-weight:800;min-width:14px;height:14px;padding:0 4px;border-radius:99px;display:flex;align-items:center;justify-content:center;border:2px solid var(--navy)}
+  .gnb-avatar{width:36px;height:36px;border-radius:50%;background:var(--aqua);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;border:2px solid rgba(255,255,255,.15)}
+  .gnb-hamburger{display:none;width:38px;height:38px;border-radius:8px;border:none;background:transparent;color:rgba(255,255,255,.85);align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+  .gnb-hamburger .ms{font-size:24px}
+
+  /* === 페이지 래퍼 === */
+  .page{max-width:1320px;margin:0 auto;padding:40px 32px 80px;display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:start}
+
+  /* === 메인 — 미소속 유도 카드 === */
+  .empty-card{background:var(--white);border:1px solid var(--gray-200);border-radius:20px;padding:64px 48px;text-align:center}
+
+  /* 일러스트 영역 */
+  .empty-illust{width:120px;height:120px;border-radius:50%;background:var(--aqua-light);display:flex;align-items:center;justify-content:center;margin:0 auto 28px}
+  .empty-illust .ms{font-size:56px;color:var(--aqua)}
+
+  .empty-title{font-size:24px;font-weight:800;color:var(--navy);letter-spacing:-.02em;margin-bottom:12px}
+  .empty-desc{font-size:15px;color:var(--gray-500);line-height:1.7;margin-bottom:32px}
+  .empty-desc b{color:var(--navy);font-weight:700}
+
+  /* CTA 버튼 */
+  .cta-btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;background:var(--aqua);color:#fff;border:none;border-radius:12px;font-size:15px;font-weight:700;cursor:pointer;transition:all .15s;text-decoration:none}
+  .cta-btn:hover{background:var(--aqua-hover);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,150,160,.25)}
+  .cta-btn .ms{font-size:20px}
+
+  /* 홈 둘러보기 보조 버튼 */
+  .sub-btn{display:inline-flex;align-items:center;gap:6px;padding:11px 20px;background:transparent;color:var(--gray-500);border:1.5px solid var(--gray-200);border-radius:10px;font-size:14px;font-weight:600;cursor:pointer;transition:all .15s;margin-left:10px}
+  .sub-btn:hover{border-color:var(--gray-300);color:var(--navy)}
+  .sub-btn .ms{font-size:17px}
+
+  /* 오리발 대기방 안내 */
+  .waiting-box{background:var(--aqua-whisper);border:1px solid var(--aqua-light);border-radius:14px;padding:20px 24px;margin-top:32px;text-align:left;display:flex;align-items:flex-start;gap:16px}
+  .waiting-ico{width:44px;height:44px;border-radius:12px;background:var(--aqua);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .waiting-ico .ms{font-size:24px;color:#fff}
+  .waiting-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:4px}
+  .waiting-desc{font-size:13px;color:var(--gray-500);line-height:1.6}
+  .waiting-desc b{color:var(--aqua-dark);font-weight:700}
+
+  /* 단계 안내 */
+  .steps{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-top:40px}
+  .step-item{background:var(--bg);border-radius:12px;padding:18px;text-align:center}
+  .step-num{width:28px;height:28px;border-radius:50%;background:var(--aqua);color:#fff;font-size:12px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 10px;font-family:var(--font-display)}
+  .step-label{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px}
+  .step-sub{font-size:12px;color:var(--gray-500);line-height:1.5}
+
+  /* 화살표 */
+  .steps-wrap{position:relative}
+  .step-arrow{position:absolute;top:50%;transform:translateY(-50%);color:var(--gray-300);pointer-events:none}
+
+  /* === 우측 사이드바 === */
+  .sidebar{display:flex;flex-direction:column;gap:16px;position:sticky;top:88px}
+  .sidebar-widget{background:var(--white);border:1px solid var(--gray-200);border-radius:12px;padding:18px}
+  .widget-title{font-size:12px;font-weight:700;color:var(--gray-500);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+  .widget-title .ms{font-size:15px;color:var(--aqua)}
+
+  /* 이미 반이 있는 경우 안내 */
+  .already-row{display:flex;align-items:center;gap:10px;padding:11px 0;border-bottom:1px solid var(--gray-100)}
+  .already-row:last-child{border-bottom:none}
+  .already-ico{width:32px;height:32px;border-radius:8px;background:var(--gray-100);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .already-ico .ms{font-size:17px;color:var(--gray-500)}
+  .already-label{font-size:13px;font-weight:600;color:var(--gray-700);flex:1}
+  .already-sub{font-size:11px;color:var(--gray-500);margin-top:2px}
+
+  /* 인기 게시글 */
+  .hot-post{padding:10px 0;border-bottom:1px solid var(--gray-100);cursor:pointer}
+  .hot-post:last-child{border-bottom:none}
+  .hot-post-title{font-size:13px;font-weight:600;color:var(--navy);line-height:1.4;margin-bottom:4px}
+  .hot-post-meta{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--gray-500)}
+  .hot-post-meta .ms{font-size:13px}
+
+  /* === 드로어 === */
+  .drw-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300}
+  .drw-ov.on{display:block}
+  .drw{position:fixed;top:0;right:-290px;width:280px;height:100dvh;background:var(--navy);z-index:301;display:flex;flex-direction:column;transition:right .25s ease;box-shadow:-4px 0 20px rgba(0,0,0,.25)}
+  .drw.on{right:0}
+  .drw-hd{display:flex;align-items:center;justify-content:space-between;padding:0 18px;height:64px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.1)}
+  .drw-logo{font-weight:800;font-size:18px;letter-spacing:-.03em}
+  .drw-logo .We{color:#fff}.drw-logo .Sw{color:#00A8B5}
+  .drw-x{width:32px;height:32px;border-radius:7px;border:none;background:rgba(255,255,255,.1);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .drw-x .ms{font-size:18px}
+  .drw-bd{flex:1;overflow-y:auto;padding:10px}
+  .drw-sec{font-size:10px;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.12em;text-transform:uppercase;padding:12px 12px 4px}
+  .drw-it{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;font-size:15px;font-weight:700;color:rgba(255,255,255,.6);border:none;background:transparent;width:100%;font-family:inherit;text-align:left;cursor:pointer;transition:background .15s,color .15s}
+  .drw-it:hover,.drw-it.on{background:rgba(255,255,255,.1);color:#fff}
+  .drw-it .ms{font-size:20px}
+  .drw-hr{height:1px;background:rgba(255,255,255,.08);margin:6px 0}
+
+  /* === 반응형 === */
+  @media(max-width:1180px){
+    .page{grid-template-columns:1fr}
+    .sidebar{display:none}
+  }
+  @media(max-width:880px){
+    .gnb-nav{display:none}
+    .gnb-hamburger{display:inline-flex}
+    .page{padding:28px 16px 60px}
+    .empty-card{padding:40px 24px}
+    .empty-title{font-size:20px}
+    .steps{grid-template-columns:1fr}
+    .waiting-box{flex-direction:column;gap:12px}
+  }
+  @media(max-width:600px){
+    .empty-illust{width:96px;height:96px}
+    .empty-illust .ms{font-size:44px}
+    .cta-btn{width:100%;justify-content:center}
+    .sub-btn{width:100%;justify-content:center;margin-left:0;margin-top:10px}
+  }
+</style>
+</head>
+<body>
+
+<!-- GNB -->
+<header class="gnb">
+  <div class="gnb-inner">
+    <a href="home.html" class="gnb-logo"><span class="We">We</span><span class="Swim">Swim</span></a>
+    <nav class="gnb-nav">
+      <a href="home.html" >홈</a>
+      <a href="group.html" class="on">우리반</a>
+      <a href="record.html" >기록</a>
+      <a href="my.html" >마이</a>
+    </nav>
+    <div class="gnb-right">
+      <button class="icon-btn" aria-label="검색" onclick="location.href='search.html'">
+        <span class="ms" aria-hidden="true">search</span>
+      </button>
+      <button class="icon-btn" aria-label="알림" onclick="location.href='notifications.html'">
+        <span class="ms" aria-hidden="true">notifications</span>
+        <span class="badge">3</span>
+      </button>
+      <div class="gnb-avatar" title="이레인" onclick="location.href='my.html'">이</div>
+      <button class="gnb-hamburger" id="drwBtn" aria-label="메뉴"><span class="ms">menu</span></button>
+    </a>
+  </div>
+</header>
+
+<!-- 드로어 -->
+<div class="drw-ov" id="drwOv"></div>
+<aside class="drw" id="drwPanel">
+  <div class="drw-hd">
+    <div class="drw-logo"><span class="We">We</span><span class="Sw">Swim</span></div>
+    <button class="drw-x" id="drwClose"><span class="ms">close</span></button>
+  </div>
+    <div class="drw-bd">
+    <div class="drw-sec">메뉴</div>
+    <button class="drw-it" onclick="location.href='home.html'"><span class="ms">home</span>홈</button>
+    <button class="drw-it on" onclick="location.href='group.html'"><span class="ms">groups</span>우리반</button>
+    <button class="drw-it" onclick="location.href='record.html'"><span class="ms">pool</span>기록</button>
+    <button class="drw-it" onclick="location.href='my.html'"><span class="ms">account_circle</span>마이</button>
+    <div class="drw-hr"></div>
+    <div class="drw-sec">기타</div>
+    <button class="drw-it" onclick="location.href='notifications.html'"><span class="ms">notifications</span>알림</button>
+    <button class="drw-it" onclick="location.href='my-settings.html'"><span class="ms">settings</span>설정</button>
+  </div>
+</aside>
+
+<!-- 본문 -->
+<div class="page">
+
+  <!-- 좌측 메인 -->
+  <div>
+    <div class="empty-card">
+
+      <!-- 일러스트 -->
+      <div class="empty-illust">
+        <span class="ms">pool</span>
+      </div>
+
+      <!-- 안내 문구 -->
+      <div class="empty-title">아직 소속 반이 없어요</div>
+      <div class="empty-desc">
+        WeSwim은 <b>강습반 소통방(레인방)</b>을 중심으로 운영돼요.<br>
+        반을 찾아 입장하면 같은 반 수영 친구들과<br>
+        기록을 공유하고 함께 성장할 수 있어요!
+      </div>
+
+      <!-- CTA -->
+      <div>
+        <a href="group-find.html" class="cta-btn">
+          <span class="ms">search</span> 반 찾기
+        </a>
+        <a href="home.html" class="sub-btn">
+          <span class="ms">home</span> 홈 둘러보기
+        </a>
+      </div>
+
+      <!-- 오리발 대기방 안내 -->
+      <div class="waiting-box">
+        <div class="waiting-ico"><span class="ms">front_hand</span></div>
+        <div>
+          <div class="waiting-title">우리 수영장 반이 없나요? — 오리발 대기방</div>
+          <div class="waiting-desc">
+            아직 반이 개설되지 않은 수영장도 괜찮아요.<br>
+            반 찾기에서 조건을 선택하면 <b>오리발 대기방</b>이 만들어지고,<br>
+            같은 조건의 멤버가 2명 이상 모이면 자동으로 활성화됩니다!
+          </div>
+        </div>
+      </div>
+
+      <!-- 이용 단계 -->
+      <div class="steps" style="margin-top:32px">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div class="step-label">반 찾기</div>
+          <div class="step-sub">지역 · 수영장 · 시간대 · 레인등급 선택</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div class="step-label">레인방 입장</div>
+          <div class="step-sub">같은 반 멤버와 소통방 자동 개설</div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div class="step-label">기록 공유</div>
+          <div class="step-sub">수영 기록을 레인방에 자동 공유</div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- 우측 사이드바 -->
+  <div class="sidebar">
+
+    <!-- 이미 반 코드가 있다면 -->
+    <div class="sidebar-widget">
+      <div class="widget-title"><span class="ms">link</span> 반 코드로 입장</div>
+      <div style="font-size:13px;color:var(--gray-500);line-height:1.6;margin-bottom:14px">
+        같은 반 친구에게 초대 코드를 받았다면 바로 입장할 수 있어요.
+      </div>
+      <div style="display:flex;gap:8px">
+        <input
+          type="text"
+          placeholder="반 코드 입력"
+          style="flex:1;height:40px;border:1.5px solid var(--gray-200);border-radius:8px;padding:0 12px;font-size:13px;color:var(--text-main);font-family:inherit;outline:none;transition:border-color .15s"
+          onfocus="this.style.borderColor='var(--aqua)'"
+          onblur="this.style.borderColor='var(--gray-200)'"
+        />
+        <button style="padding:0 14px;height:40px;background:var(--aqua);color:#fff;border:none;border-radius:8px;font-size:13px;font-weight:700;cursor:pointer;white-space:nowrap;transition:background .15s" onmouseover="this.style.background='var(--aqua-hover)'" onmouseout="this.style.background='var(--aqua)'">
+          입장
+        </button>
+      </div>
+    </div>
+
+    <!-- 커뮤니티 인기 게시글 -->
+    <div class="sidebar-widget">
+      <div class="widget-title"><span class="ms">local_fire_department</span> 지금 뜨는 글</div>
+      <div class="hot-post">
+        <div class="hot-post-title">자유형 호흡 때 물 마시는 분들 — 이거 해보세요</div>
+        <div class="hot-post-meta"><span class="ms">favorite</span>47 <span class="ms">mode_comment</span>23</div>
+      </div>
+      <div class="hot-post">
+        <div class="hot-post-title">마스터즈 대회 첫 출전 무엇을 준비해야 할까요?</div>
+        <div class="hot-post-meta"><span class="ms">favorite</span>22 <span class="ms">mode_comment</span>14</div>
+      </div>
+      <div class="hot-post">
+        <div class="hot-post-title">잠실 새벽 6~8시 성인 개인레슨 모집 (초급~중급)</div>
+        <div class="hot-post-meta"><span class="ms">favorite</span>18 <span class="ms">mode_comment</span>7</div>
+      </div>
+    </div>
+
+    <!-- 반 찾기 바로가기 -->
+    <a href="group-find.html" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;background:var(--aqua);color:#fff;border-radius:12px;font-size:14px;font-weight:700;text-decoration:none;transition:background .15s" onmouseover="this.style.background='var(--aqua-hover)'" onmouseout="this.style.background='var(--aqua)'">
+      <span class="ms">search</span> 반 찾기 시작하기
+    </a>
+
+  </div>
+</div>
+
+<script>
+  /* 드로어 */
+  (function(){
+    var btn = document.getElementById('drwBtn');
+    var drw = document.getElementById('drwPanel');
+    var ov  = document.getElementById('drwOv');
+    var cls = document.getElementById('drwClose');
+    if(!btn||!drw||!ov) return;
+    function open(){ drw.classList.add('on'); ov.classList.add('on'); document.body.style.overflow='hidden'; }
+    function close(){ drw.classList.remove('on'); ov.classList.remove('on'); document.body.style.overflow=''; }
+    btn.addEventListener('click', open);
+    ov.addEventListener('click', close);
+    if(cls) cls.addEventListener('click', close);
+    drw.querySelectorAll('.drw-it').forEach(function(el){ el.addEventListener('click', close); });
+  })();
+</script>
+</body>
+</html>

@@ -1,0 +1,963 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>WeSwim — 마이페이지 (나의 레인)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0,0&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --navy:#1B3A5C;--navy-dark:#142D47;--navy-light:#E8EEF4;
+    --aqua:#0096A0;--aqua-hover:#00A8B5;--aqua-dark:#006970;
+    --aqua-light:#E6F6F7;--aqua-whisper:#F2FBFC;
+    --coral:#E8734A;--coral-dark:#C45A33;--coral-light:#FDF0EB;
+    --mint:#7DD3C8;--mint-light:#E8F7F4;
+    --sun:#F4B740;--sun-light:#FCF1D8;
+    --bg:#F5F7FA;--white:#FFFFFF;
+    --gray-100:#ECEFF4;--gray-200:#D0D7E2;--gray-300:#B4BECD;
+    --gray-500:#6B7A99;--gray-700:#3D4A66;--text-main:#1A1A2E;
+    --font-sans:'Pretendard Variable','Pretendard','Helvetica Neue','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-display:'Helvetica Neue','Pretendard Variable','Pretendard',sans-serif;
+  }
+  html,body{height:100%}
+  body{font-family:var(--font-sans);color:var(--text-main);background:var(--bg);-webkit-font-smoothing:antialiased;font-feature-settings:"ss06","ss03"}
+  .ms{font-family:'Material Symbols Rounded';font-weight:500;font-style:normal;display:inline-flex;align-items:center;justify-content:center;line-height:1;text-transform:none;letter-spacing:normal;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;font-feature-settings:'liga';vertical-align:middle;font-size:20px;font-variation-settings:'opsz' 24,'wght' 500,'FILL' 0,'GRAD' 0}
+  button{font-family:inherit;cursor:pointer}
+  a{color:inherit;text-decoration:none}
+
+  /* === GNB === */
+  .gnb{height:64px;background:var(--navy);color:#fff;position:sticky;top:0;z-index:50;border-bottom:1px solid rgba(255,255,255,.05)}
+  .gnb-inner{max-width:1320px;margin:0 auto;height:100%;padding:0 32px;display:flex;align-items:center;gap:32px}
+  .gnb-logo{font-family:var(--font-display);font-size:22px;font-weight:800;letter-spacing:-.04em}
+  .gnb-logo .We{color:#fff}.gnb-logo .Swim{color:var(--aqua-hover)}
+  .gnb-nav{display:flex;gap:2px}
+  .gnb-nav a{padding:8px 14px;font-size:14px;font-weight:600;color:rgba(255,255,255,.5);border-radius:8px;transition:all .15s}
+  .gnb-nav a:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.06)}
+  .gnb-nav a.on{color:#fff;background:rgba(255,255,255,.1)}
+  .gnb-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+  .icon-btn{width:38px;height:38px;border-radius:99px;border:none;background:transparent;color:rgba(255,255,255,.7);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:all .15s}
+  .icon-btn:hover{background:rgba(255,255,255,.08);color:#fff}
+  .icon-btn .ms{font-size:22px}
+  .gnb-avatar{width:36px;height:36px;border-radius:50%;background:var(--aqua);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;cursor:pointer;border:2px solid rgba(255,255,255,.15)}
+
+  /* === 페이지 레이아웃 === */
+  .page{max-width:1320px;margin:0 auto;padding:0 32px 80px;display:grid;grid-template-columns:1fr 300px;gap:28px;align-items:start}
+
+  /* === 프로필 히어로 === */
+  .profile-hero{background:linear-gradient(135deg,var(--navy) 0%,#0E2540 100%);position:relative;overflow:hidden;margin-bottom:0}
+  .profile-hero::before{content:"";position:absolute;left:-100px;bottom:-120px;width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,var(--aqua) 0%,transparent 70%);opacity:.2;filter:blur(8px)}
+  .profile-hero::after{content:"";position:absolute;right:80px;top:-60px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,var(--coral) 0%,transparent 70%);opacity:.15;filter:blur(4px)}
+  .hero-inner{max-width:1320px;margin:0 auto;padding:32px 32px 28px;display:flex;align-items:flex-end;gap:24px;position:relative;z-index:1}
+  .hero-av{width:80px;height:80px;border-radius:50%;background:var(--aqua);border:3px solid rgba(255,255,255,.25);display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:800;color:#fff;flex-shrink:0;cursor:pointer;position:relative;transition:border-color .15s}
+  .hero-av:hover{border-color:var(--aqua-hover)}
+  .hero-av .av-edit{position:absolute;bottom:0;right:0;width:22px;height:22px;border-radius:50%;background:var(--white);display:flex;align-items:center;justify-content:center}
+  .hero-av .av-edit .ms{font-size:12px;color:var(--navy)}
+  .hero-info{flex:1}
+  .hero-name{font-size:26px;font-weight:800;color:#fff;letter-spacing:-.02em;margin-bottom:8px}
+  .hero-meta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .lane-pill{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:99px;font-size:11px;font-weight:700}
+  .lane-pill.lv3{background:rgba(0,150,160,.3);color:#7DD3C8}
+  .lane-pill.lv3 span{width:6px;height:6px;border-radius:50%;background:var(--aqua);display:inline-block}
+  .instructor-pill{background:rgba(232,115,74,.25);color:#F4A07A;display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border-radius:99px;font-size:11px;font-weight:700}
+  .instructor-pill .ms{font-size:12px}
+  .hero-join{font-size:12px;color:rgba(255,255,255,.5)}
+  .hero-settings{margin-left:auto;padding-bottom:4px}
+  .settings-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:8px;border:1.5px solid rgba(255,255,255,.2);background:rgba(255,255,255,.06);color:rgba(255,255,255,.75);font-size:13px;font-weight:600;cursor:pointer;transition:all .15s}
+  .settings-btn:hover{background:rgba(255,255,255,.12);color:#fff}
+  .settings-btn .ms{font-size:16px}
+
+  /* === 성장 대시보드 === */
+  .dash-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:20px 0}
+  .dash-card{background:var(--white);border:1px solid var(--gray-200);border-radius:12px;padding:16px 18px}
+  .dash-label{font-size:11px;font-weight:700;color:var(--gray-500);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .dash-label .ms{font-size:14px}
+  .dash-val{font-family:var(--font-display);font-size:28px;font-weight:800;color:var(--navy);letter-spacing:-.02em}
+  .dash-val span{font-size:13px;color:var(--gray-500);font-weight:500;margin-left:2px}
+  .dash-sub{font-size:11px;color:var(--gray-500);margin-top:4px}
+  .dash-sub.up{color:var(--success)}
+  .dash-sub.streak{color:var(--coral);font-weight:700;display:flex;align-items:center;gap:3px}
+  .dash-sub.streak .ms{font-size:13px}
+
+  /* === 레인 로그 (달력) === */
+  .section-card{background:var(--white);border:1px solid var(--gray-200);border-radius:16px;padding:22px 24px;margin-bottom:16px}
+  .section-head{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+  .section-title{font-size:16px;font-weight:800;color:var(--navy);flex:1}
+  .section-sub{font-size:12px;color:var(--gray-500)}
+  .section-more{font-size:13px;font-weight:700;color:var(--aqua);border:none;background:none;cursor:pointer;display:flex;align-items:center;gap:4px}
+  .section-more .ms{font-size:15px}
+
+  /* 달력 월 네비 */
+  .cal-nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+  .cal-month{font-size:15px;font-weight:700;color:var(--navy)}
+  .cal-arrow{width:30px;height:30px;border-radius:8px;border:1px solid var(--gray-200);background:var(--white);display:flex;align-items:center;justify-content:center;cursor:pointer;color:var(--gray-500);transition:all .12s}
+  .cal-arrow:hover{background:var(--aqua-light);border-color:var(--aqua);color:var(--aqua-dark)}
+  .cal-arrow .ms{font-size:16px}
+
+  /* 달력 그리드 */
+  .cal-dow{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:4px}
+  .cal-dow span{text-align:center;font-size:11px;font-weight:700;color:var(--gray-500);padding:4px 0}
+  .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+  .cal-day{aspect-ratio:1;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:600;color:var(--gray-500);cursor:pointer;transition:all .12s;position:relative}
+  .cal-day:hover{background:var(--aqua-light);color:var(--aqua-dark)}
+  .cal-day.swim{background:var(--aqua-light);color:var(--aqua-dark);font-weight:700}
+  .cal-day.swim.long{background:var(--aqua);color:#fff}
+  .cal-day.today{outline:2px solid var(--aqua);outline-offset:1px}
+  .cal-day.empty{cursor:default}
+  .cal-day.empty:hover{background:none}
+  .cal-day.selected{background:var(--navy);color:#fff}
+
+  /* 선택 날짜 기록 카드 */
+  .day-record{background:var(--aqua-whisper);border:1px solid var(--aqua-light);border-radius:10px;padding:14px 16px;margin-top:14px;display:flex;align-items:center;gap:14px}
+  .day-rec-dist{font-family:var(--font-display);font-size:24px;font-weight:800;color:var(--navy)}
+  .day-rec-dist span{font-size:13px;color:var(--gray-500);font-weight:500;margin-left:2px}
+  .day-rec-info{flex:1}
+  .day-rec-date{font-size:12px;color:var(--gray-500);margin-bottom:3px}
+  .day-rec-stroke{font-size:13px;font-weight:700;color:var(--aqua-dark)}
+  .day-rec-memo{font-size:12px;color:var(--gray-500);margin-top:3px}
+  .day-rec-link{font-size:12px;font-weight:700;color:var(--aqua);display:flex;align-items:center;gap:3px;white-space:nowrap}
+  .day-rec-link .ms{font-size:14px}
+
+  /* === 기록 리스트 === */
+  .rec-list{display:flex;flex-direction:column;gap:8px}
+  .rec-row{display:flex;align-items:center;gap:16px;padding:12px 14px;background:var(--bg);border-radius:10px;cursor:pointer;transition:all .12s;border:1px solid transparent}
+  .rec-row:hover{background:var(--aqua-light);border-color:var(--aqua-light)}
+  .rec-row-dist{font-family:var(--font-display);font-size:20px;font-weight:800;color:var(--navy);min-width:80px}
+  .rec-row-dist span{font-size:12px;color:var(--gray-500);font-weight:500;margin-left:2px}
+  .rec-row-info{flex:1}
+  .rec-row-date{font-size:12px;color:var(--gray-500);margin-bottom:2px}
+  .rec-row-stroke{font-size:13px;font-weight:600;color:var(--text-main)}
+  .rec-row-memo{font-size:12px;color:var(--gray-500);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:240px}
+  .rec-row-badge{display:flex;align-items:center;gap:6px}
+  .vis-pill{display:inline-flex;align-items:center;gap:3px;padding:3px 8px;border-radius:99px;font-size:10px;font-weight:700}
+  .vis-pill.group{background:var(--aqua-light);color:var(--aqua-dark)}
+  .vis-pill.private{background:var(--gray-100);color:var(--gray-500)}
+  .vis-pill.pub{background:var(--mint-light);color:#0A8F7C}
+  .vis-pill .ms{font-size:11px}
+
+  /* === 소속 이력 === */
+  .history-list{display:flex;flex-direction:column;gap:8px}
+  .history-item{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;background:var(--bg);border:1px solid var(--gray-100)}
+  .history-item.current{background:var(--aqua-whisper);border-color:var(--aqua-light)}
+  .h-icon{width:36px;height:36px;border-radius:10px;background:var(--aqua-light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .h-icon .ms{font-size:18px;color:var(--aqua-dark)}
+  .history-item.current .h-icon{background:var(--aqua);}.history-item.current .h-icon .ms{color:#fff}
+  .h-info{flex:1}
+  .h-name{font-size:14px;font-weight:700;color:var(--navy)}
+  .h-sub{font-size:12px;color:var(--gray-500);margin-top:2px}
+  .h-badge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;border-radius:99px;font-size:10px;font-weight:700;background:var(--aqua);color:#fff}
+
+  /* === 우측 사이드바 === */
+  .sidebar{display:flex;flex-direction:column;gap:16px;position:sticky;top:88px}
+  .widget{background:var(--white);border:1px solid var(--gray-200);border-radius:12px;padding:16px}
+  .widget-title{font-size:12px;font-weight:700;color:var(--gray-500);letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px;display:flex;align-items:center;gap:6px}
+  .widget-title .ms{font-size:15px;color:var(--aqua)}
+
+  /* 뱃지 위젯 */
+  .badge-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .badge-item{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 6px;border-radius:10px;background:var(--bg);position:relative}
+  .badge-item.earned{background:var(--aqua-light)}
+  .badge-ico{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;background:var(--gray-200)}
+  .badge-item.earned .badge-ico{background:linear-gradient(135deg,var(--aqua),var(--navy))}
+  .badge-ico .ms{font-size:18px;color:var(--gray-500)}
+  .badge-item.earned .badge-ico .ms{color:#fff}
+  .badge-lbl{font-size:10px;font-weight:700;color:var(--gray-500);text-align:center;line-height:1.3}
+  .badge-item.earned .badge-lbl{color:var(--aqua-dark)}
+  .badge-count{position:absolute;top:5px;right:5px;background:var(--aqua);color:#fff;font-size:9px;font-weight:800;padding:1px 4px;border-radius:99px;font-family:var(--font-display)}
+  .badge-new{position:absolute;top:5px;right:5px;width:7px;height:7px;border-radius:50%;background:var(--coral)}
+
+  /* 스트릭 위젯 */
+  .streak-row{display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--gray-100)}
+  .streak-row:last-child{border-bottom:none}
+  .streak-fire{font-size:22px}
+  .streak-info{flex:1}
+  .streak-label{font-size:13px;font-weight:700;color:var(--navy)}
+  .streak-sub{font-size:11px;color:var(--gray-500);margin-top:2px}
+  .streak-count{font-family:var(--font-display);font-size:20px;font-weight:800;color:var(--coral)}
+  .streak-count span{font-size:11px;color:var(--gray-500);font-weight:500}
+
+  /* ===== 반응형 공통 ===== */
+  .gnb{position:sticky;top:0;z-index:100}
+  .gnb-hamburger{display:none;width:38px;height:38px;border:none;border-radius:8px;background:transparent;color:rgba(255,255,255,.85);cursor:pointer;flex-shrink:0;align-items:center;justify-content:center}
+  .gnb-hamburger .ms{font-size:24px;line-height:1}
+  .drw-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300}
+  .drw-ov.on{display:block}
+  .drw{position:fixed;top:0;right:-290px;width:280px;height:100dvh;background:#1B3A5C;z-index:301;display:flex;flex-direction:column;transition:right .25s ease;box-shadow:-4px 0 20px rgba(0,0,0,.25)}
+  .drw.on{right:0}
+  .drw-hd{display:flex;align-items:center;justify-content:space-between;padding:0 18px;height:64px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.1)}
+  .drw-logo{font-weight:800;font-size:18px;letter-spacing:-.03em;line-height:1}
+  .drw-logo .We{color:#fff}.drw-logo .Sw{color:#00A8B5}
+  .drw-x{width:32px;height:32px;border-radius:7px;border:none;background:rgba(255,255,255,.1);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .drw-x .ms{font-size:18px}
+  .drw-bd{flex:1;overflow-y:auto;padding:10px}
+  .drw-sec{font-size:10px;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.12em;text-transform:uppercase;padding:12px 12px 4px}
+  .drw-it{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;font-size:15px;font-weight:700;color:rgba(255,255,255,.6);border:none;background:transparent;width:100%;font-family:inherit;text-align:left;cursor:pointer;transition:background .15s,color .15s}
+  .drw-it:hover,.drw-it.on{background:rgba(255,255,255,.1);color:#fff}
+  .drw-it .ms{font-size:20px}
+  .drw-hr{height:1px;background:rgba(255,255,255,.08);margin:6px 0}
+  .mob-tabs{display:none;background:#fff;border-bottom:1px solid #D0D7E2;overflow-x:auto;white-space:nowrap;-webkit-overflow-scrolling:touch;scrollbar-width:none;position:sticky;top:64px;z-index:90;padding:0 8px}
+  .mob-tabs::-webkit-scrollbar{display:none}
+  .mob-tab{display:inline-flex;align-items:center;gap:5px;padding:11px 12px;font-size:13px;font-weight:700;color:#6B7A99;border:none;background:transparent;border-bottom:2.5px solid transparent;margin-bottom:-1px;cursor:pointer;font-family:inherit;white-space:nowrap;transition:all .15s}
+  .mob-tab.on{color:#0096A0;border-bottom-color:#0096A0}
+  .mob-tab .ms{font-size:15px}
+
+  /* === 뱃지 그리드 === */
+  .bdg-category{margin-bottom:14px}
+  .bdg-cat-label{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--gray-700);letter-spacing:.04em;margin-bottom:7px}
+  .bdg-cat-tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;margin-left:2px}
+  .bdg-row{display:flex;flex-wrap:wrap;gap:5px;align-items:flex-end}
+  .bdg-item{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;width:52px;cursor:pointer}
+  .bdg-item:not(.earned){opacity:.32;filter:grayscale(1);cursor:default;pointer-events:none}
+  .bdg-ico{width:42px;height:42px;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;position:relative;transition:transform .15s,box-shadow .15s}
+  .bdg-ico .ms{font-size:17px;color:#fff}
+  .bdg-lv{font-size:6px;font-weight:700;color:rgba(255,255,255,.88);line-height:1;white-space:nowrap}
+  .bdg-ico-locked{background:var(--gray-100) !important}
+  .bdg-ico-locked .ms{color:var(--gray-300)}
+  .bdg-ico-locked .bdg-lv{color:var(--gray-300)}
+  .bdg-pip{position:absolute;top:-5px;right:-5px;min-width:16px;height:16px;border-radius:99px;background:var(--navy);color:#fff;font-size:8px;font-weight:800;display:flex;align-items:center;justify-content:center;padding:0 3px;border:1.5px solid var(--white);font-family:var(--font-display);line-height:1}
+  .bdg-pip-new{position:absolute;top:-3px;right:-3px;width:7px;height:7px;border-radius:50%;background:var(--coral);border:1.5px solid var(--white)}
+  .bdg-streak{position:absolute;bottom:-5px;right:-5px;font-size:8px;font-weight:700;background:#FEF0EB;color:#C85A30;border-radius:99px;padding:1px 4px;border:1.5px solid var(--white);line-height:1.4}
+  .bdg-name{font-size:9px;font-weight:600;color:var(--gray-700);text-align:center;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:52px;line-height:1.2}
+  .bdg-item:not(.earned) .bdg-name{color:var(--gray-300)}
+  .bdg-tooltip{display:none;position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);background:var(--navy);color:#fff;font-size:11px;font-weight:500;line-height:1.5;padding:6px 10px;border-radius:8px;white-space:nowrap;z-index:50;pointer-events:none;text-align:center}
+  .bdg-tooltip::after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:5px solid transparent;border-top-color:var(--navy)}
+  .tip-new{display:inline-block;background:var(--aqua);color:#fff;font-size:9px;font-weight:700;padding:1px 5px;border-radius:99px;margin-left:3px;vertical-align:middle}
+  .bdg-item:hover .bdg-tooltip{display:block}
+  .bdg-item.earned:hover .bdg-ico{transform:translateY(-2px);box-shadow:0 4px 10px rgba(0,0,0,.14)}
+  .bdg-item.active .bdg-ico{transform:translateY(-2px);outline:2px solid var(--aqua);outline-offset:2px}
+  /* 뱃지 인라인 디테일 — bdg-category 안, bdg-row 바로 다음 */
+  .bdg-inline-detail{display:none;width:200px;flex-shrink:0;background:var(--aqua-whisper);border:1px solid var(--aqua-light);border-radius:8px;padding:7px 10px;flex-direction:row;align-items:center;gap:9px;box-sizing:border-box;align-self:flex-start}
+  .bdg-inline-detail.open{display:flex}
+  .bdg-di-desc{font-size:11px;color:var(--gray-500);margin-top:2px;line-height:1.4;word-break:keep-all;white-space:normal}
+  .bdg-row-wrap{display:block;width:100%}
+  .bdg-di-ico{width:28px;height:28px;border-radius:7px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;flex-shrink:0}
+  .bdg-di-ico .ms{font-size:13px;color:#fff}
+  .bdg-di-ico .dlv{font-size:6px;font-weight:700;color:rgba(255,255,255,.85);line-height:1;white-space:nowrap}
+  .bdg-di-body{flex:1;min-width:0}
+  .bdg-di-cat{font-size:10px;color:var(--gray-500);line-height:1.2}
+  .bdg-di-name{font-size:12px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:5px;flex-wrap:wrap}
+  .bdg-di-new{display:inline-block;background:var(--aqua);color:#fff;font-size:9px;font-weight:700;padding:1px 6px;border-radius:99px}
+  .bdg-di-pip{display:inline-flex;align-items:center;justify-content:center;min-width:17px;height:17px;border-radius:99px;background:var(--navy);color:#fff;font-size:8px;font-weight:800;padding:0 4px;font-family:var(--font-display)}
+  .bdg-di-close{flex-shrink:0;background:none;border:none;cursor:pointer;color:var(--gray-300);display:flex;align-items:center;padding:2px}
+  @media(max-width:1180px){.page{grid-template-columns:1fr}.sidebar{display:none}}
+  @media(max-width:880px){
+    .gnb-nav{display:none}
+    .gnb-hamburger{display:inline-flex}
+    .page{padding:16px 16px 60px}
+    .hero-inner{padding:24px 16px 20px;flex-wrap:wrap;gap:16px}
+    .hero-av{width:60px;height:60px;font-size:22px}
+    .hero-name{font-size:20px}.hero-settings{margin-left:0}
+    .dash-grid{grid-template-columns:1fr 1fr}
+  }
+  @media(max-width:600px){.dash-val{font-size:20px}}
+
+  /* === 달력 날짜 선택 기록 패널 === */
+  .cal-record-panel{background:var(--aqua-whisper);border:1px solid var(--aqua-light);border-radius:10px;padding:14px 16px;margin-top:12px;display:none;animation:fadeIn .2s ease}
+  .cal-record-panel.show{display:block}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}
+  .crp-date{font-size:11px;font-weight:700;color:var(--aqua-dark);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .crp-date .ms{font-size:14px}
+  .crp-empty{font-size:13px;color:var(--gray-500);text-align:center;padding:8px 0}
+  .crp-rec{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--aqua-light)}
+  .crp-rec:last-child{border-bottom:none}
+  .crp-ico{width:32px;height:32px;border-radius:8px;background:var(--aqua-light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .crp-ico .ms{font-size:16px;color:var(--aqua)}
+  .crp-dist{font-family:var(--font-display);font-size:15px;font-weight:800;color:var(--navy)}
+  .crp-dist span{font-size:11px;font-weight:500;color:var(--gray-500);margin-left:2px}
+  .crp-detail{font-size:11px;color:var(--gray-500);margin-top:1px}
+  .crp-link{display:flex;align-items:center;justify-content:flex-end;margin-top:8px}
+  .crp-link a{font-size:12px;font-weight:700;color:var(--aqua-dark);display:inline-flex;align-items:center;gap:3px}
+  .crp-link a .ms{font-size:14px}
+
+</style>
+</head>
+<body>
+
+<!-- === GNB === -->
+<header class="gnb">
+  <div class="gnb-inner">
+    <a href="home.html" class="gnb-logo"><span class="We">We</span><span class="Swim">Swim</span></a>
+    <nav class="gnb-nav">
+      <a href="home.html" >홈</a>
+      <a href="group.html" >우리반</a>
+      <a href="record.html" >기록</a>
+      <a href="my.html" class="on">마이</a>
+    </nav>
+    <div class="gnb-right">
+      <button class="icon-btn" aria-label="검색" onclick="location.href='search.html'">
+        <span class="ms" aria-hidden="true">search</span>
+      </button>
+      <button class="icon-btn" aria-label="알림" onclick="location.href='notifications.html'">
+        <span class="ms" aria-hidden="true">notifications</span>
+        <span class="badge">3</span>
+      </button>
+      <div class="gnb-avatar" title="이레인" onclick="location.href='my.html'">이</div>
+      <button class="gnb-hamburger" id="drwBtn" aria-label="메뉴"><span class="ms">menu</span></button>
+    </a>
+  </div>
+</header>
+<div class="drw-ov" id="drwOv"></div>
+<aside class="drw" id="drwPanel">
+  <div class="drw-hd">
+    <div class="drw-logo"><span class="We">We</span><span class="Sw">Swim</span></div>
+    <button class="drw-x" id="drwClose"><span class="ms">close</span></button>
+  </div>
+    <div class="drw-bd">
+    <div class="drw-sec">메뉴</div>
+    <button class="drw-it" onclick="location.href='home.html'"><span class="ms">home</span>홈</button>
+    <button class="drw-it" onclick="location.href='group.html'"><span class="ms">groups</span>우리반</button>
+    <button class="drw-it" onclick="location.href='record.html'"><span class="ms">pool</span>기록</button>
+    <button class="drw-it on" onclick="location.href='my.html'"><span class="ms">account_circle</span>마이</button>
+    <div class="drw-hr"></div>
+    <div class="drw-sec">기타</div>
+    <button class="drw-it" onclick="location.href='notifications.html'"><span class="ms">notifications</span>알림</button>
+    <button class="drw-it" onclick="location.href='my-settings.html'"><span class="ms">settings</span>설정</button>
+  </div>
+</aside>
+
+
+<!-- === 프로필 히어로 === -->
+<div class="profile-hero">
+  <div class="hero-inner">
+    <div class="hero-av">
+      이
+      <div class="av-edit"><span class="ms">photo_camera</span></div>
+    </div>
+    <div class="hero-info">
+      <div class="hero-name">이레인</div>
+      <div class="hero-meta">
+        <span class="lane-pill lv3"><span></span> 중급</span>
+        <span class="hero-join">2025년 11월 가입</span>
+      </div>
+    </div>
+    <div class="hero-settings">
+      <button class="settings-btn"><span class="ms">settings</span> 설정</button>
+    </div>
+  </div>
+</div>
+
+<!-- === 본문 === -->
+<div class="page" style="padding-top:24px">
+
+  <!-- 좌측 메인 -->
+  <div>
+
+    <!-- 성장 대시보드 -->
+    <div class="dash-grid">
+      <div class="dash-card">
+        <div class="dash-label"><span class="ms">straighten</span> 이달 누적</div>
+        <div class="dash-val">18,500<span>m</span></div>
+        <div class="dash-sub up">▲ 목표의 74%</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-label"><span class="ms">emoji_events</span> 개인 최고</div>
+        <div class="dash-val">3,000<span>m</span></div>
+        <div class="dash-sub">5월 14일 기록</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-label"><span class="ms">calendar_month</span> 총 운동일</div>
+        <div class="dash-val">87<span>일</span></div>
+        <div class="dash-sub">이달 14일</div>
+      </div>
+      <div class="dash-card">
+        <div class="dash-label"><span class="ms">local_fire_department</span> 연속 운동</div>
+        <div class="dash-val">14<span>일</span></div>
+        <div class="dash-sub streak"><span class="ms">local_fire_department</span> 🔥 불타는 중!</div>
+      </div>
+    </div>
+
+    <!-- 레인 로그 (달력) + 영법별 통계 -->
+    <div class="section-card">
+      <div class="section-head">
+        <span class="ms" style="color:var(--aqua);font-size:18px">calendar_month</span>
+        <div class="section-title">레인 로그</div>
+        <span class="section-sub">운동한 날을 기록으로 채워요</span>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start">
+
+        <!-- 왼쪽: 달력 -->
+        <div>
+          <div class="cal-nav">
+            <button class="cal-arrow"><span class="ms">chevron_left</span></button>
+            <div class="cal-month">2026년 5월</div>
+            <button class="cal-arrow"><span class="ms">chevron_right</span></button>
+          </div>
+          <div class="cal-dow">
+            <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+          </div>
+          <div class="cal-grid" id="calGrid"></div>
+      <div class="cal-record-panel" id="calRecordPanel"></div>
+        </div>
+
+        <!-- 오른쪽: 영법별 통계 -->
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:6px">
+            <span class="ms" style="font-size:16px;color:var(--aqua)">pool</span>
+            이달 영법별 통계
+          </div>
+          <div style="display:flex;flex-direction:column;gap:8px">
+
+            <div class="rec-row" style="cursor:default">
+              <div style="width:36px;height:36px;border-radius:10px;background:var(--aqua-light);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <span class="ms" style="font-size:18px;color:var(--aqua-dark)">pool</span>
+              </div>
+              <div class="rec-row-info">
+                <div class="rec-row-date">자유형</div>
+                <div class="rec-row-stroke">9,200m · 7회</div>
+              </div>
+              <div style="text-align:right;flex-shrink:0">
+                <div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--navy);line-height:1">50<span style="font-size:11px;color:var(--gray-500);font-weight:500;margin-left:2px">%</span></div>
+                <div style="margin-top:5px;height:4px;width:72px;background:var(--gray-200);border-radius:2px;overflow:hidden">
+                  <div style="height:4px;width:50%;background:var(--aqua);border-radius:2px"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="rec-row" style="cursor:default">
+              <div style="width:36px;height:36px;border-radius:10px;background:#E8F7F4;display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <span class="ms" style="font-size:18px;color:#0A8F7C">pool</span>
+              </div>
+              <div class="rec-row-info">
+                <div class="rec-row-date">배영</div>
+                <div class="rec-row-stroke">5,000m · 4회</div>
+              </div>
+              <div style="text-align:right;flex-shrink:0">
+                <div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--navy);line-height:1">27<span style="font-size:11px;color:var(--gray-500);font-weight:500;margin-left:2px">%</span></div>
+                <div style="margin-top:5px;height:4px;width:72px;background:var(--gray-200);border-radius:2px;overflow:hidden">
+                  <div style="height:4px;width:27%;background:var(--mint);border-radius:2px"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="rec-row" style="cursor:default">
+              <div style="width:36px;height:36px;border-radius:10px;background:var(--sun-light);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <span class="ms" style="font-size:18px;color:#9B6D0A">pool</span>
+              </div>
+              <div class="rec-row-info">
+                <div class="rec-row-date">평영</div>
+                <div class="rec-row-stroke">2,800m · 3회</div>
+              </div>
+              <div style="text-align:right;flex-shrink:0">
+                <div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--navy);line-height:1">15<span style="font-size:11px;color:var(--gray-500);font-weight:500;margin-left:2px">%</span></div>
+                <div style="margin-top:5px;height:4px;width:72px;background:var(--gray-200);border-radius:2px;overflow:hidden">
+                  <div style="height:4px;width:15%;background:var(--sun);border-radius:2px"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="rec-row" style="cursor:default">
+              <div style="width:36px;height:36px;border-radius:10px;background:var(--coral-light);display:flex;align-items:center;justify-content:center;flex-shrink:0">
+                <span class="ms" style="font-size:18px;color:var(--coral-dark)">pool</span>
+              </div>
+              <div class="rec-row-info">
+                <div class="rec-row-date">접영</div>
+                <div class="rec-row-stroke">1,500m · 2회</div>
+              </div>
+              <div style="text-align:right;flex-shrink:0">
+                <div style="font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--navy);line-height:1">8<span style="font-size:11px;color:var(--gray-500);font-weight:500;margin-left:2px">%</span></div>
+                <div style="margin-top:5px;height:4px;width:72px;background:var(--gray-200);border-radius:2px;overflow:hidden">
+                  <div style="height:4px;width:8%;background:var(--coral);border-radius:2px"></div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div style="margin-top:14px;padding:10px 14px;background:var(--bg);border-radius:10px;display:flex;justify-content:space-between;align-items:center">
+            <span style="font-size:12px;color:var(--gray-500)">이달 총 거리</span>
+            <span style="font-family:var(--font-display);font-size:16px;font-weight:800;color:var(--navy)">18,500<span style="font-size:12px;color:var(--gray-500);font-weight:500;margin-left:2px">m</span></span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- 전체 너비: 보유 뱃지 그리드 -->
+      <div style="border-top:1px solid var(--gray-100);margin-top:20px;padding-top:20px">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+          <div style="font-size:13px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:6px">
+            <span class="ms" style="font-size:16px;color:var(--aqua)">military_tech</span>
+            뱃지 컬렉션
+          </div>
+          <div style="font-size:12px;color:var(--gray-500)">획득 <b style="color:var(--navy)">6</b> / 전체 25</div>
+        </div>
+
+        <!-- 행 1: 총 누적 거리 -->
+        <div class="bdg-category">
+          <div class="bdg-cat-label">
+            <span class="ms" style="font-size:14px;color:var(--aqua)">route</span>
+            총 누적 거리
+            <span class="bdg-cat-tag" style="background:var(--aqua-light);color:var(--aqua-dark)">무한 성장</span>
+          </div>
+          <div class="bdg-row" id="bdgRow0">
+            <div class="bdg-item earned" data-cat="총 누적 거리" data-name="1km" data-desc="첫 수영 완주" data-bg="linear-gradient(135deg,#00A8B5,#006970)" data-icon="route" data-lv="1km">
+              <div class="bdg-ico" style="background:linear-gradient(135deg,#00A8B5,#006970)"><span class="ms">route</span><span class="bdg-lv">1km</span></div>
+              <div class="bdg-name">1km</div>
+              <div class="bdg-tooltip">첫 수영 완주</div>
+            </div>
+            <div class="bdg-item earned" data-cat="총 누적 거리" data-name="5km" data-desc="한강 한 번 건넌 거리" data-bg="linear-gradient(135deg,#00A8B5,#006970)" data-icon="route" data-lv="5km">
+              <div class="bdg-ico" style="background:linear-gradient(135deg,#00A8B5,#006970)"><span class="ms">route</span><span class="bdg-lv">5km</span></div>
+              <div class="bdg-name">5km</div>
+              <div class="bdg-tooltip">한강 한 번 건넌 거리</div>
+            </div>
+            <div class="bdg-item earned" data-cat="총 누적 거리" data-name="10km" data-desc="제주 바다 횡단" data-bg="linear-gradient(135deg,#00A8B5,#006970)" data-icon="route" data-lv="10km" data-extra="new">
+              <div class="bdg-ico" style="background:linear-gradient(135deg,#00A8B5,#006970)"><span class="ms">route</span><span class="bdg-lv">10km</span><span class="bdg-pip-new"></span></div>
+              <div class="bdg-name">10km</div>
+              <div class="bdg-tooltip">제주 바다 횡단 <span class="tip-new">NEW</span></div>
+            </div>
+            <div class="bdg-item" data-cat="총 누적 거리" data-name="30km" data-desc="부산~여수 직선 거리" data-bg="linear-gradient(135deg,#00A8B5,#006970)" data-icon="route" data-lv="30km">
+              <div class="bdg-ico bdg-ico-locked"><span class="ms">route</span><span class="bdg-lv">30km</span></div>
+              <div class="bdg-name">30km</div>
+              <div class="bdg-tooltip">부산~여수 직선 거리</div>
+            </div>
+            <div class="bdg-item" data-cat="총 누적 거리" data-name="50km" data-desc="독도까지 절반" data-bg="linear-gradient(135deg,#00A8B5,#006970)" data-icon="route" data-lv="50km">
+              <div class="bdg-ico bdg-ico-locked"><span class="ms">route</span><span class="bdg-lv">50km</span></div>
+              <div class="bdg-name">50km</div>
+              <div class="bdg-tooltip">독도까지 절반</div>
+            </div>
+            <div class="bdg-item" data-cat="총 누적 거리" data-name="100km" data-desc="서울~부산 직선" data-bg="linear-gradient(135deg,#EF9F27,#BA7517)" data-icon="route" data-lv="100km">
+              <div class="bdg-ico bdg-ico-locked"><span class="ms">route</span><span class="bdg-lv">100km</span></div>
+              <div class="bdg-name">100km</div>
+              <div class="bdg-tooltip">서울~부산 직선</div>
+            </div>
+            <div class="bdg-item" data-cat="총 누적 거리" data-name="300km" data-desc="제주 해안선 한 바퀴" data-bg="linear-gradient(135deg,#EF9F27,#BA7517)" data-icon="route" data-lv="300km">
+              <div class="bdg-ico bdg-ico-locked"><span class="ms">route</span><span class="bdg-lv">300km</span></div>
+              <div class="bdg-name">300km</div>
+              <div class="bdg-tooltip">제주 해안선 한 바퀴</div>
+            </div>
+            <div class="bdg-item" data-cat="총 누적 거리" data-name="500km" data-desc="한반도 세로 횡단" data-bg="linear-gradient(135deg,#D85A30,#993C1D)" data-icon="route" data-lv="500km">
+              <div class="bdg-ico bdg-ico-locked"><span class="ms">route</span><span class="bdg-lv">500km</span></div>
+              <div class="bdg-name">500km</div>
+              <div class="bdg-tooltip">한반도 세로 횡단</div>
+            </div>
+            <div class="bdg-item" data-cat="총 누적 거리" data-name="1,000km+" data-desc="영해 수호대" data-bg="linear-gradient(135deg,#534AB7,#3C3489)" data-icon="route" data-lv="1000+">
+              <div class="bdg-ico bdg-ico-locked"><span class="ms">route</span><span class="bdg-lv">1000+</span></div>
+              <div class="bdg-name">1,000km+</div>
+              <div class="bdg-tooltip">영해 수호대</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 행 2: 하루 수영 거리 -->
+        <div class="bdg-category">
+          <div class="bdg-cat-label">
+            <span class="ms" style="font-size:14px;color:#EF9F27">emoji_events</span>
+            하루 수영 거리
+            <span class="bdg-cat-tag" style="background:#FAEEDA;color:#633806">월 레벨업</span>
+          </div>
+          <div class="bdg-row" id="bdgRow1">
+            <div class="bdg-item earned" data-cat="하루 수영 거리" data-name="Bronze" data-desc="400m · 단거리 입문 (올림픽 최단)" data-bg="linear-gradient(135deg,#5DC8D0,#0096A0)" data-icon="emoji_events" data-lv="Bronze">
+              <div class="bdg-ico" style="background:linear-gradient(135deg,#5DC8D0,#0096A0)"><span class="ms">emoji_events</span><span class="bdg-lv">Bronze</span></div>
+              <div class="bdg-name">Bronze</div>
+              <div class="bdg-tooltip">400m · 단거리 입문</div>
+            </div>
+            <div class="bdg-item earned" data-cat="하루 수영 거리" data-name="Silver" data-desc="800m · 중거리 도전" data-bg="linear-gradient(135deg,#85B7EB,#378ADD)" data-icon="emoji_events" data-lv="Silver">
+              <div class="bdg-ico" style="background:linear-gradient(135deg,#85B7EB,#378ADD)"><span class="ms">emoji_events</span><span class="bdg-lv">Silver</span></div>
+              <div class="bdg-name">Silver</div>
+              <div class="bdg-tooltip">800m · 중거리 도전</div>
+            </div>
+            <div class="bdg-item earned" data-cat="하루 수영 거리" data-name="Gold" data-desc="1,500m · 올림픽 장거리 · 2회 달성 중" data-bg="linear-gradient(135deg,#EF9F27,#BA7517)" data-icon="emoji_events" data-lv="Gold" data-extra="×2">
+              <div class="bdg-ico" style="background:linear-gradient(135deg,#EF9F27,#BA7517)"><span class="ms">emoji_events</span><span class="bdg-lv">Gold</span><span class="bdg-pip">×2</span></div>
+              <div class="bdg-name">Gold ×2</div>
+              <div class="bdg-tooltip">1,500m · 올림픽 장거리</div>
+            </div>
+            <div class="bdg-item" data-cat="하루 수영 거리" data-name="Platinum" data-desc="3,000m · 오픈워터 입문" data-bg="linear-gradient(135deg,#EF9F27,#BA7517)" data-icon="emoji_events" data-lv="Plat">
+              <div class="bdg-ico bdg-ico-locked"><span class="ms">emoji_events</span><span class="bdg-lv">Plat</span></div>
+              <div class="bdg-name">Platinum</div>
+              <div class="bdg-tooltip">3,000m · 오픈워터 입문</div>
+            </div>
+            <div class="bdg-item" data-cat="하루 수영 거리" data-name="Diamond" data-desc="5,000m · 오픈워터 경기" data-bg="linear-gradient(135deg,#D85A30,#993C1D)" data-icon="emoji_events" data-lv="Diamond">
+              <div class="bdg-ico bdg-ico-locked"><span class="ms">emoji_events</span><span class="bdg-lv">Diamond</span></div>
+              <div class="bdg-name">Diamond</div>
+              <div class="bdg-tooltip">5,000m · 오픈워터 경기</div>
+            </div>
+            <div class="bdg-item" data-cat="하루 수영 거리" data-name="Legend" data-desc="10,000m · 철인3종 수영" data-bg="linear-gradient(135deg,#534AB7,#3C3489)" data-icon="emoji_events" data-lv="Legend">
+              <div class="bdg-ico bdg-ico-locked"><span class="ms">emoji_events</span><span class="bdg-lv">Legend</span></div>
+              <div class="bdg-name">Legend</div>
+              <div class="bdg-tooltip">10,000m · 철인3종 수영</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 행 3: 출석 -->
+        <div class="bdg-category">
+          <div class="bdg-cat-label">
+            <span class="ms" style="font-size:14px;color:#3B6D11">calendar_month</span>
+            출석
+            <span class="bdg-cat-tag" style="background:#EAF3DE;color:#3B6D11">월 레벨업</span>
+          </div>
+          <div class="bdg-row" id="bdgRow2">
+            <div class="bdg-item earned" data-cat="출석" data-name="주 2회" data-desc="한 달 8회 이상 · 꾸준히 시작" data-bg="linear-gradient(135deg,#7DB84A,#3B6D11)" data-icon="calendar_month" data-lv="주2회">
+              <div class="bdg-ico" style="background:linear-gradient(135deg,#7DB84A,#3B6D11)"><span class="ms">calendar_month</span><span class="bdg-lv">주2회</span></div>
+              <div class="bdg-name">주 2회</div>
+              <div class="bdg-tooltip">한 달 8회 이상</div>
+            </div>
+            <div class="bdg-item earned" data-cat="출석" data-name="주 3회" data-desc="한 달 12회 이상 · 수영 생활화" data-bg="linear-gradient(135deg,#639922,#3B6D11)" data-icon="calendar_month" data-lv="주3회">
+              <div class="bdg-ico" style="background:linear-gradient(135deg,#639922,#3B6D11)"><span class="ms">calendar_month</span><span class="bdg-lv">주3회</span></div>
+              <div class="bdg-name">주 3회</div>
+              <div class="bdg-tooltip">한 달 12회 이상</div>
+            </div>
+            <div class="bdg-item earned" data-cat="출석" data-name="주 4회" data-desc="한 달 16회 이상 · 진심 수영러" data-bg="linear-gradient(135deg,#639922,#27500A)" data-icon="calendar_month" data-lv="주4회">
+              <div class="bdg-ico" style="background:linear-gradient(135deg,#639922,#27500A)"><span class="ms">calendar_month</span><span class="bdg-lv">주4회</span></div>
+              <div class="bdg-name">주 4회</div>
+              <div class="bdg-tooltip">한 달 16회 이상</div>
+            </div>
+            <div class="bdg-item earned" data-cat="출석" data-name="주 5회" data-desc="한 달 20회 이상 · 평일 개근왕" data-bg="linear-gradient(135deg,#3B6D11,#173404)" data-icon="calendar_month" data-lv="주5회">
+              <div class="bdg-ico" style="background:linear-gradient(135deg,#3B6D11,#173404)"><span class="ms">calendar_month</span><span class="bdg-lv">주5회</span></div>
+              <div class="bdg-name">주 5회</div>
+              <div class="bdg-tooltip">한 달 20회 이상</div>
+            </div>
+            <div class="bdg-item earned" data-cat="출석" data-name="주 6회" data-desc="한 달 24회 이상 · 레인의 지박령 · 🔥 4연속 달성 중" data-bg="linear-gradient(135deg,#27500A,#173404)" data-icon="calendar_month" data-lv="주6회" data-extra="×4">
+              <div class="bdg-ico" style="background:linear-gradient(135deg,#27500A,#173404)"><span class="ms">calendar_month</span><span class="bdg-lv">주6회</span><span class="bdg-pip">×4</span><span class="bdg-streak">🔥4</span></div>
+              <div class="bdg-name">주 6회 ×4</div>
+              <div class="bdg-tooltip">한 달 24회 이상</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 행 4: 스페셜 -->
+        <div class="bdg-category" style="margin-bottom:0">
+          <div class="bdg-cat-label">
+            <span class="ms" style="font-size:14px;color:#534AB7">auto_awesome</span>
+            스페셜
+            <span class="bdg-cat-tag" style="background:#EEEDFE;color:#3C3489">조건부 달성</span>
+          </div>
+          <div class="bdg-row" id="bdgRow3">
+            <div class="bdg-item earned" data-cat="스페셜" data-name="첫 글 작성" data-desc="첫 글 작성 달성 · 레인방 소통 시작!" data-bg="linear-gradient(135deg,#534AB7,#3C3489)" data-icon="chat_bubble" data-lv="소통">
+              <div class="bdg-ico" style="background:linear-gradient(135deg,#534AB7,#3C3489)"><span class="ms">chat_bubble</span><span class="bdg-lv">소통</span></div>
+              <div class="bdg-name">첫 글 작성</div>
+              <div class="bdg-tooltip">레인방 소통 시작!</div>
+            </div>
+            <div class="bdg-item" data-cat="스페셜" data-name="목표 달성" data-desc="이달 거리 목표 달성" data-bg="linear-gradient(135deg,#534AB7,#3C3489)" data-icon="star" data-lv="목표">
+              <div class="bdg-ico bdg-ico-locked"><span class="ms">star</span><span class="bdg-lv">목표</span></div>
+              <div class="bdg-name">목표 달성</div>
+              <div class="bdg-tooltip">이달 거리 목표 달성</div>
+            </div>
+            <div class="bdg-item" data-cat="스페셜" data-name="퍼펙트 먼스" data-desc="3가지 목표 동시 달성" data-bg="linear-gradient(135deg,#534AB7,#3C3489)" data-icon="workspace_premium" data-lv="퍼펙트">
+              <div class="bdg-ico bdg-ico-locked"><span class="ms">workspace_premium</span><span class="bdg-lv">퍼펙트</span></div>
+              <div class="bdg-name">퍼펙트 먼스</div>
+              <div class="bdg-tooltip">3가지 목표 동시 달성</div>
+            </div>
+            <div class="bdg-item" data-cat="스페셜" data-name="첫 대회" data-desc="첫 수영 대회 등록" data-bg="linear-gradient(135deg,#D85A30,#993C1D)" data-icon="emoji_events" data-lv="대회">
+              <div class="bdg-ico bdg-ico-locked"><span class="ms">emoji_events</span><span class="bdg-lv">대회</span></div>
+              <div class="bdg-name">첫 대회</div>
+              <div class="bdg-tooltip">첫 수영 대회 등록</div>
+            </div>
+            <div class="bdg-item" data-cat="스페셜" data-name="완주 인증" data-desc="대회 완주 인증" data-bg="linear-gradient(135deg,#D85A30,#993C1D)" data-icon="military_tech" data-lv="완주">
+              <div class="bdg-ico bdg-ico-locked"><span class="ms">military_tech</span><span class="bdg-lv">완주</span></div>
+              <div class="bdg-name">완주 인증</div>
+              <div class="bdg-tooltip">대회 완주 인증</div>
+            </div>
+            <div class="bdg-item" data-cat="스페셜" data-name="기록 갱신" data-desc="개인 최고 거리 경신" data-bg="linear-gradient(135deg,#EF9F27,#BA7517)" data-icon="bolt" data-lv="갱신">
+              <div class="bdg-ico bdg-ico-locked"><span class="ms">bolt</span><span class="bdg-lv">갱신</span></div>
+              <div class="bdg-name">기록 갱신</div>
+              <div class="bdg-tooltip">개인 최고 거리 경신</div>
+            </div>
+            <div class="bdg-item" data-cat="스페셜" data-name="친구 초대" data-desc="친구 초대 성공 · 함께 수영해요!" data-bg="linear-gradient(135deg,#00A8B5,#006970)" data-icon="groups" data-lv="레인방">
+              <div class="bdg-ico bdg-ico-locked"><span class="ms">groups</span><span class="bdg-lv">레인방</span></div>
+              <div class="bdg-name">친구 초대</div>
+              <div class="bdg-tooltip">친구 초대 성공</div>
+            </div>
+            <div class="bdg-item" data-cat="스페셜" data-name="시즌 한정" data-desc="시즌 이벤트 뱃지 · 추후 추가 예정" data-bg="linear-gradient(135deg,#888780,#5F5E5A)" data-icon="event" data-lv="시즌">
+              <div class="bdg-ico bdg-ico-locked"><span class="ms">event</span><span class="bdg-lv">시즌</span></div>
+              <div class="bdg-name">시즌 한정</div>
+              <div class="bdg-tooltip">시즌 이벤트 뱃지</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- 기록 리스트 -->
+    <div class="section-card">
+      <div class="section-head">
+        <span class="ms" style="color:var(--aqua);font-size:18px">pool</span>
+        <div class="section-title">최근 기록</div>
+        <button class="section-more" onclick="location.href='my-badges.html'">전체보기 <span class="ms">arrow_forward</span></button>
+      </div>
+      <div class="rec-list">
+        <div class="rec-row">
+          <div class="rec-row-dist">1,500<span>m</span></div>
+          <div class="rec-row-info">
+            <div class="rec-row-date">2026.05.22 목</div>
+            <div class="rec-row-stroke">자유형 · 배영</div>
+            <div class="rec-row-memo">오늘 턴 동작이 나아진 것 같다</div>
+          </div>
+          <div class="rec-row-badge">
+            <span class="vis-pill group"><span class="ms">group</span> 우리반</span>
+          </div>
+        </div>
+        <div class="rec-row">
+          <div class="rec-row-dist">2,000<span>m</span></div>
+          <div class="rec-row-info">
+            <div class="rec-row-date">2026.05.20 화</div>
+            <div class="rec-row-stroke">자유형</div>
+            <div class="rec-row-memo">오늘은 지치지 않고 완주했다</div>
+          </div>
+          <div class="rec-row-badge">
+            <span class="vis-pill group"><span class="ms">group</span> 우리반</span>
+          </div>
+        </div>
+        <div class="rec-row">
+          <div class="rec-row-dist">1,200<span>m</span></div>
+          <div class="rec-row-info">
+            <div class="rec-row-date">2026.05.18 일</div>
+            <div class="rec-row-stroke">혼합</div>
+            <div class="rec-row-memo">—</div>
+          </div>
+          <div class="rec-row-badge">
+            <span class="vis-pill private"><span class="ms">lock</span> 나만보기</span>
+          </div>
+        </div>
+        <div class="rec-row">
+          <div class="rec-row-dist">3,000<span>m</span></div>
+          <div class="rec-row-info">
+            <div class="rec-row-date">2026.05.14 수</div>
+            <div class="rec-row-stroke">자유형 · 평영</div>
+            <div class="rec-row-memo">개인 최고 기록 경신! 🎉</div>
+          </div>
+          <div class="rec-row-badge">
+            <span class="vis-pill pub"><span class="ms">public</span> 전체공개</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 소속 이력 -->
+    <div class="section-card">
+      <div class="section-head">
+        <span class="ms" style="color:var(--aqua);font-size:18px">groups</span>
+        <div class="section-title">소속 이력</div>
+      </div>
+      <div class="history-list">
+        <div class="history-item current">
+          <div class="h-icon"><span class="ms">pool</span></div>
+          <div class="h-info">
+            <div class="h-name">잠실 실내수영장 · 중급반</div>
+            <div class="h-sub">월·수·금 07:00 · 2025.11 ~ 현재</div>
+          </div>
+          <span class="h-badge">현재</span>
+        </div>
+        <div class="history-item">
+          <div class="h-icon"><span class="ms">pool</span></div>
+          <div class="h-info">
+            <div class="h-name">강남 수영장 · 초급반</div>
+            <div class="h-sub">화·목 19:00 · 2025.03 ~ 2025.10</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- 우측 사이드바 -->
+  <aside class="sidebar">
+
+    <!-- 뱃지 현황 -->
+    <div class="widget">
+      <div class="widget-title"><span class="ms">military_tech</span> 나의 뱃지</div>
+      <div class="badge-grid">
+        <div class="badge-item earned">
+          <div class="badge-ico"><span class="ms">local_fire_department</span></div>
+          <div class="badge-lbl">주 6회</div>
+          <div class="badge-count">×4</div>
+        </div>
+        <div class="badge-item earned">
+          <div class="badge-ico"><span class="ms">pool</span></div>
+          <div class="badge-lbl">누적 10km</div>
+          <div class="badge-new"></div>
+        </div>
+        <div class="badge-item earned">
+          <div class="badge-ico"><span class="ms">emoji_events</span></div>
+          <div class="badge-lbl">Gold</div>
+          <div class="badge-count">×2</div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-ico"><span class="ms">water_drop</span></div>
+          <div class="badge-lbl">누적 30km</div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-ico"><span class="ms">star</span></div>
+          <div class="badge-lbl">퍼펙트<br/>먼스</div>
+        </div>
+        <div class="badge-item">
+          <div class="badge-ico"><span class="ms">share</span></div>
+          <div class="badge-lbl">기록 첫<br/>공유</div>
+        </div>
+      </div>
+      <button style="width:100%;margin-top:12px;padding:9px;border:1.5px solid var(--gray-200);border-radius:8px;background:none;font-size:13px;font-weight:700;color:var(--gray-700);cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px">
+        <span class="ms" style="font-size:15px">grid_view</span> 전체 뱃지 보기
+      </button>
+    </div>
+
+    <!-- 스트릭 -->
+    <div class="widget">
+      <div class="widget-title"><span class="ms">local_fire_department</span> 연속 달성</div>
+      <div class="streak-row">
+        <div class="streak-fire">🔥</div>
+        <div class="streak-info">
+          <div class="streak-label">주 6회 출석</div>
+          <div class="streak-sub">이번 달까지 연속</div>
+        </div>
+        <div class="streak-count">4<span>연속</span></div>
+      </div>
+      <div class="streak-row">
+        <div class="streak-fire">🔥</div>
+        <div class="streak-info">
+          <div class="streak-label">Gold 하루 거리</div>
+          <div class="streak-sub">3연속 달성 중</div>
+        </div>
+        <div class="streak-count">3<span>연속</span></div>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<script>
+  /* === 레인 로그 달력 렌더링 === */
+  const swimDays = [1,3,5,6,8,10,12,13,15,17,18,20,22];
+  const longDays = [3,10,17];
+  const calGrid = document.getElementById('calGrid');
+  const startDow = 5; /* 2026년 5월 1일 = 금요일 */
+  const totalDays = 31;
+
+  for(let i = 0; i < startDow; i++){
+    const d = document.createElement('div');
+    d.className = 'cal-day empty';
+    calGrid.appendChild(d);
+  }
+  for(let day = 1; day <= totalDays; day++){
+    const d = document.createElement('div');
+    let cls = 'cal-day';
+    if(swimDays.includes(day)) cls += longDays.includes(day) ? ' swim long' : ' swim';
+    if(day === 22) cls += ' selected';
+    d.className = cls;
+    d.textContent = day;
+    d.addEventListener('click', () => {
+      document.querySelectorAll('.cal-day').forEach(x => x.classList.remove('selected'));
+      d.classList.add('selected');
+      showCalRecord(day, swimDays.includes(day));
+    });
+    calGrid.appendChild(d);
+  }
+
+  
+  /* === 달력 날짜 클릭 → 기록 조회 === */
+  const recordData = {
+    1:  {dist:2000, stroke:'자유형', time:'55분', memo:'새해 첫 수영! 기분 좋다'},
+    3:  {dist:3000, stroke:'자유형+배영', time:'80분', memo:'장거리 도전 성공 🏊'},
+    5:  {dist:1500, stroke:'자유형', time:'45분', memo:''},
+    6:  {dist:500,  stroke:'자유형', time:'20분', memo:'짧게 몸 풀기'},
+    8:  {dist:2000, stroke:'혼합', time:'60분', memo:'접영 연습 위주'},
+    10: {dist:2500, stroke:'자유형', time:'70분', memo:'목표 초과 달성!'},
+    12: {dist:1000, stroke:'배영', time:'35분', memo:'배영 교정 수업'},
+    13: {dist:1500, stroke:'자유형', time:'44분', memo:''},
+    15: {dist:2000, stroke:'자유형', time:'55분', memo:'턴 동작 개선 중'},
+    17: {dist:2000, stroke:'혼합', time:'58분', memo:'평영 다리가 어색함'},
+    18: {dist:1500, stroke:'자유형', time:'42분', memo:''},
+    20: {dist:1000, stroke:'자유형', time:'30분', memo:'짧게'},
+    22: {dist:1500, stroke:'자유형', time:'44분', memo:'오늘 기록 ✨'},
+  };
+  function showCalRecord(day, hasRecord){
+    const panel = document.getElementById('calRecordPanel');
+    const months = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+    const dateStr = '2026년 5월 ' + day + '일';
+    if(!hasRecord){
+      panel.innerHTML = '<div class="crp-date"><span class="ms">calendar_today</span>' + dateStr + '</div><div class="crp-empty">이 날은 수영 기록이 없어요 🌊</div>';
+      panel.classList.add('show');
+      return;
+    }
+    const r = recordData[day];
+    if(!r){ panel.classList.remove('show'); return; }
+    panel.innerHTML = '<div class="crp-date"><span class="ms">calendar_today</span>' + dateStr + '</div>' +
+      '<div class="crp-rec">' +
+        '<div class="crp-ico"><span class="ms">pool</span></div>' +
+        '<div><div class="crp-dist">' + r.dist.toLocaleString() + '<span>m · ' + r.stroke + '</span></div>' +
+        '<div class="crp-detail">' + r.time + (r.memo ? ' · ' + r.memo : '') + '</div></div>' +
+      '</div>' +
+      '<div class="crp-link"><a href="record-detail.html">상세 보기 <span class="ms">arrow_forward</span></a></div>';
+    panel.classList.add('show');
+  }
+
+  /* === 뱃지 클릭 → 클릭 아이템 바로 뒤에 패널 인라인 삽입 === */
+  (function(){
+    function closeRow(row){
+      row.querySelectorAll('.bdg-item.active').forEach(function(el){ el.classList.remove('active'); });
+      var p = row.querySelector('.bdg-inline-detail');
+      if(p) p.remove();
+    }
+
+    document.querySelectorAll('.bdg-row').forEach(function(row){
+      row.querySelectorAll('.bdg-item.earned').forEach(function(item){
+        item.addEventListener('click', function(){
+          var isActive = item.classList.contains('active');
+          closeRow(row);
+          if(isActive) return;
+
+          item.classList.add('active');
+
+          var bg       = item.dataset.bg   || 'var(--gray-200)';
+          var icon     = item.dataset.icon || 'military_tech';
+          var lv       = item.dataset.lv   || '';
+          var catLabel = item.dataset.cat  || '';
+          var name     = item.dataset.name || '';
+          var desc     = item.dataset.desc || '';
+          var extra    = item.dataset.extra || '';
+
+          var extraHtml = '';
+          if(extra === 'new'){
+            extraHtml = '<span class="bdg-di-new">NEW</span>';
+          } else if(extra && extra.charAt(0) === '×'){
+            extraHtml = '<span class="bdg-di-pip">'+extra+'</span>';
+          }
+
+          // 패널 생성
+          var panel = document.createElement('div');
+          panel.className = 'bdg-inline-detail open';
+          panel.innerHTML =
+            '<div class="bdg-di-ico" style="background:'+bg+'">'
+            +  '<span class="ms">'+icon+'</span>'
+            +  '<span class="dlv">'+lv+'</span>'
+            +'</div>'
+            +'<div class="bdg-di-body">'
+            +  '<div class="bdg-di-cat">'+catLabel+'</div>'
+            +  '<div class="bdg-di-name">'+name+extraHtml+'</div>'
+            +  '<div class="bdg-di-desc">'+desc.replace(' · ','<br>')+'</div>'
+            +'</div>'
+            +'<button class="bdg-di-close"><span class="ms" style="font-size:17px">close</span></button>';
+
+          panel.querySelector('.bdg-di-close').addEventListener('click', function(e){
+            e.stopPropagation();
+            closeRow(row);
+          });
+
+          // 클릭 아이템 바로 뒤에 패널 삽입 — 뒤 뱃지들은 자연스럽게 wrap
+          item.insertAdjacentElement('afterend', panel);
+        });
+      });
+    });
+  })();
+
+  (function(){
+    var btn=document.getElementById('drwBtn');
+    var drw=document.getElementById('drwPanel');
+    var ov=document.getElementById('drwOv');
+    var cls=document.getElementById('drwClose');
+    if(!btn||!drw||!ov) return;
+    function open(){drw.classList.add('on');ov.classList.add('on');document.body.style.overflow='hidden'}
+    function close(){drw.classList.remove('on');ov.classList.remove('on');document.body.style.overflow=''}
+    btn.addEventListener('click',open);
+    ov.addEventListener('click',close);
+    if(cls) cls.addEventListener('click',close);
+    drw.querySelectorAll('.drw-it').forEach(function(el){el.addEventListener('click',close)});
+  })();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>WeSwim — Design System v1.1</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0,0" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  :root{
+    /* === Brand Core === */
+    --navy:          #1B3A5C;   /* Deep Navy — GNB, 헤더, 로고 We */
+    --navy-dark:     #142D47;   /* Navy Dark — hover/active */
+    --navy-light:    #E8EEF4;   /* Navy 8% tint */
+
+    --aqua:          #0096A0;   /* Pool Aqua — primary action */
+    --aqua-hover:    #00A8B5;   /* Aqua Hover — 한 단계 밝게 */
+    --aqua-dark:     #006970;   /* Aqua Dark — text on light bg */
+    --aqua-light:    #E6F6F7;   /* Aqua Light — selected, soft fills */
+    --aqua-whisper:  #F2FBFC;   /* Aqua Whisper — page tints */
+
+    --coral:         #E8734A;   /* Coral — share / 강사 badge / accent CTA */
+    --coral-dark:    #C45A33;
+    --coral-light:   #FDF0EB;
+
+    /* === Supporting === */
+    --mint:          #7DD3C8;   /* Lane Mint — 레인 로그 자유수영, 완주 */
+    --mint-light:    #E8F7F4;
+    --sun:           #F4B740;   /* Streak / 뱃지 */
+    --sun-light:     #FCF1D8;
+    --sand:          #FAF5EE;   /* 따뜻 보조 배경 */
+
+    /* === Neutral === */
+    --bg:            #F5F7FA;   /* Page bg */
+    --white:         #FFFFFF;
+    --gray-50:       #F5F7FA;
+    --gray-100:      #ECEFF4;
+    --gray-200:      #D0D7E2;   /* Border */
+    --gray-300:      #B4BECD;
+    --gray-500:      #6B7A99;   /* Text Sub */
+    --gray-700:      #3D4A66;
+    --text-main:     #1A1A2E;   /* Text Main */
+
+    /* === Semantic === */
+    --success:       #00A37A;
+    --warning:       #F4B740;
+    --error:         #E54B4B;
+    --info:          var(--aqua);
+
+    /* === Radius & Shadow === */
+    --r-sm:6px; --r-md:8px; --r-lg:10px; --r-xl:12px; --r-2xl:16px; --r-full:999px;
+    --shadow-1: 0 1px 2px rgba(20,45,71,.04);
+    --shadow-2: 0 4px 16px rgba(20,45,71,.06);
+
+    /* === Typography === */
+    --font-sans: 'Pretendard Variable','Pretendard','Helvetica Neue','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-display: 'Helvetica Neue','Pretendard Variable','Pretendard',sans-serif;
+  }
+
+  .ms{font-family:'Material Symbols Rounded';font-weight:500;font-style:normal;display:inline-flex;align-items:center;justify-content:center;line-height:1;text-transform:none;letter-spacing:normal;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale;font-feature-settings:'liga';vertical-align:middle;font-size:18px;font-variation-settings:'opsz' 24,'wght' 500,'FILL' 0,'GRAD' 0}
+  .ic .ms{font-size:14px}
+
+  html,body{background:var(--bg);color:var(--text-main);font-family:var(--font-sans);font-feature-settings:"ss06","ss03";-webkit-font-smoothing:antialiased}
+  body{padding:64px 32px 120px}
+  .shell{max-width:1240px;margin:0 auto}
+
+  /* === Cover === */
+  .cover{background:linear-gradient(135deg,var(--navy) 0%,#0E2540 100%);color:#fff;border-radius:24px;padding:48px 48px 56px;margin-bottom:32px;position:relative;overflow:hidden}
+  .cover::before{content:"";position:absolute;right:-80px;bottom:-120px;width:380px;height:380px;border-radius:50%;background:radial-gradient(circle at 30% 30%,var(--aqua) 0%,transparent 70%);opacity:.45;filter:blur(8px)}
+  .cover::after{content:"";position:absolute;right:120px;top:-100px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,var(--coral) 0%,transparent 70%);opacity:.25;filter:blur(4px)}
+  .cover .eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;opacity:.6;font-weight:600;margin-bottom:16px}
+  .cover h1{font-family:var(--font-display);font-size:64px;font-weight:800;letter-spacing:-.03em;line-height:1;margin-bottom:8px}
+  .cover h1 .swim{color:var(--aqua-hover)}
+  .cover .slogan{font-size:18px;opacity:.75;margin-bottom:28px;font-weight:500}
+  .cover-meta{display:flex;gap:32px;font-size:13px;opacity:.8;position:relative;z-index:2;flex-wrap:nowrap;overflow:hidden}
+  .cover-meta b{display:block;font-size:11px;letter-spacing:.12em;text-transform:uppercase;opacity:.55;margin-bottom:4px;font-weight:600}
+  .cover-meta > div{min-width:0;white-space:nowrap}
+
+  /* === Section Header === */
+  .sec{margin-top:56px;margin-bottom:20px;display:flex;align-items:baseline;gap:16px;border-bottom:1px solid var(--gray-200);padding-bottom:14px}
+  .sec-num{font-family:var(--font-display);font-size:14px;font-weight:700;color:var(--aqua);letter-spacing:.08em}
+  .sec h2{font-size:24px;font-weight:800;color:var(--navy);letter-spacing:-.02em}
+  .sec .desc{margin-left:auto;font-size:13px;color:var(--gray-500);max-width:480px;text-align:right}
+
+  /* === Grid / Cards === */
+  .grid{display:grid;gap:16px}
+  .g-2{grid-template-columns:repeat(2,1fr)}
+  .g-3{grid-template-columns:repeat(3,1fr)}
+  .g-4{grid-template-columns:repeat(4,1fr)}
+  .g-6{grid-template-columns:repeat(6,1fr)}
+  .card{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--r-xl);padding:20px}
+  .card.flush{padding:0;overflow:hidden}
+  .card-title{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:4px}
+  .card-sub{font-size:12px;color:var(--gray-500)}
+
+  /* === Color Swatches === */
+  .swatch{border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--gray-200);background:var(--white)}
+  .swatch .chip{height:120px;display:flex;flex-direction:column;justify-content:flex-end;padding:14px 16px;color:#fff;position:relative}
+  .swatch .chip.dark-text{color:var(--text-main)}
+  .swatch .chip .role{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;opacity:.7;margin-bottom:4px}
+  .swatch .chip .name{font-size:18px;font-weight:800;letter-spacing:-.02em}
+  .swatch .meta{padding:12px 16px;border-top:1px solid var(--gray-200);display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--gray-500)}
+  .swatch .meta b{font-family:var(--font-display);font-weight:600;color:var(--text-main);letter-spacing:.02em}
+
+  .scale-row{display:flex;align-items:center;gap:0;border-radius:var(--r-xl);overflow:hidden;border:1px solid var(--gray-200);height:64px}
+  .scale-row .step{flex:1;display:flex;align-items:flex-end;padding:8px 10px;font-size:11px;font-weight:600;color:rgba(255,255,255,.85)}
+  .scale-row .step.lt{color:var(--gray-500)}
+
+  /* === Typography === */
+  .type-row{display:grid;grid-template-columns:120px 1fr 200px;gap:24px;padding:18px 0;border-bottom:1px dashed var(--gray-200);align-items:baseline}
+  .type-row:last-child{border-bottom:none}
+  .type-tag{font-size:11px;font-weight:700;color:var(--gray-500);letter-spacing:.08em;text-transform:uppercase}
+  .type-spec{font-family:var(--font-display);font-size:11px;color:var(--gray-500);text-align:right}
+  .t-display{font-family:var(--font-display);font-size:56px;font-weight:800;letter-spacing:-.03em;line-height:1.05;color:var(--navy)}
+  .t-h1{font-size:32px;font-weight:800;letter-spacing:-.025em;color:var(--navy)}
+  .t-h2{font-size:24px;font-weight:700;letter-spacing:-.02em;color:var(--navy)}
+  .t-h3{font-size:18px;font-weight:700;color:var(--navy)}
+  .t-body{font-size:14px;font-weight:400;line-height:1.6;color:var(--text-main)}
+  .t-cap{font-size:12px;color:var(--gray-500)}
+  .t-btn{font-size:14px;font-weight:700;color:var(--aqua)}
+  .t-num{font-family:var(--font-display);font-size:40px;font-weight:800;color:var(--navy);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+
+  /* === Buttons === */
+  .btn{display:inline-flex;align-items:center;gap:8px;border:none;border-radius:var(--r-lg);padding:11px 18px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;line-height:1;transition:all .15s ease;white-space:nowrap}
+  .btn-aqua{background:var(--aqua);color:#fff}
+  .btn-aqua:hover{background:var(--aqua-hover)}
+  .btn-coral{background:var(--coral);color:#fff}
+  .btn-navy{background:var(--navy);color:#fff}
+  .btn-ghost{background:transparent;color:var(--aqua);border:1.5px solid var(--gray-200)}
+  .btn-ghost:hover{border-color:var(--aqua);background:var(--aqua-whisper)}
+  .btn-secondary{background:var(--gray-100);color:var(--gray-700)}
+  .btn-disabled{background:var(--aqua);color:#fff;opacity:.4;cursor:not-allowed}
+  .btn-sm{padding:7px 12px;font-size:12px;border-radius:var(--r-md)}
+  .btn-lg{padding:14px 22px;font-size:15px;border-radius:var(--r-lg);width:100%;justify-content:center}
+
+  /* === Inputs === */
+  .input{display:flex;align-items:center;gap:8px;width:100%;background:var(--white);border:1.5px solid var(--gray-200);border-radius:var(--r-md);padding:0 14px;height:44px;font-size:13px;color:var(--text-main);font-family:inherit;transition:border-color .15s ease}
+  .input:focus,.input.focus{outline:none;border-color:var(--aqua);box-shadow:0 0 0 3px var(--aqua-light)}
+  .input.err{border-color:var(--error);box-shadow:0 0 0 3px #FBE2E2}
+  .input input{flex:1;border:none;outline:none;background:transparent;font-size:13px;color:var(--text-main);font-family:inherit;height:100%}
+  .input i,.input .ms{color:var(--gray-500);font-size:17px}
+  .label{display:block;font-size:12px;font-weight:700;color:var(--gray-500);margin-bottom:6px}
+  .help{font-size:11px;margin-top:6px}
+  .help.ok{color:var(--aqua-dark)}
+  .help.err{color:var(--error)}
+
+  /* === Pills / Badges === */
+  .pill{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:700;padding:4px 10px;border-radius:var(--r-full);background:var(--aqua-light);color:var(--aqua-dark)}
+  .pill-coral{background:var(--coral-light);color:var(--coral-dark)}
+  .pill-navy{background:var(--navy-light);color:var(--navy)}
+  .pill-mint{background:var(--mint-light);color:#0A8F7C}
+  .pill-sun{background:var(--sun-light);color:#9B6D0A}
+  .pill-line{background:transparent;color:var(--gray-500);border:1px solid var(--gray-200)}
+
+  .chip-sel{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border-radius:var(--r-full);font-size:13px;font-weight:600;border:1.5px solid var(--gray-200);color:var(--gray-500);background:#fff;cursor:pointer}
+  .chip-sel.on{border-color:var(--aqua);background:var(--aqua-light);color:var(--aqua-dark)}
+
+  /* === Lane Badge === */
+  .lane{display:inline-flex;align-items:center;gap:6px;padding:5px 11px 5px 7px;border-radius:var(--r-full);font-size:11px;font-weight:700;background:var(--aqua-light);color:var(--aqua-dark)}
+  .lane .dot{width:8px;height:8px;border-radius:50%;background:var(--aqua);box-shadow:0 0 0 2px #fff,0 0 0 3px var(--aqua)}
+  .lane.l1{background:#F0F4F9;color:var(--gray-700)} .lane.l1 .dot{background:var(--gray-500);box-shadow:0 0 0 2px #fff,0 0 0 3px var(--gray-500)}
+  .lane.l2{background:var(--mint-light);color:#0A8F7C} .lane.l2 .dot{background:var(--mint);box-shadow:0 0 0 2px #fff,0 0 0 3px var(--mint)}
+  .lane.l3{background:var(--aqua-light);color:var(--aqua-dark)} .lane.l3 .dot{background:var(--aqua);box-shadow:0 0 0 2px #fff,0 0 0 3px var(--aqua)}
+  .lane.l4{background:var(--coral-light);color:var(--coral-dark)} .lane.l4 .dot{background:var(--coral);box-shadow:0 0 0 2px #fff,0 0 0 3px var(--coral)}
+
+  /* === Avatar === */
+  .av{width:36px;height:36px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;flex-shrink:0;background:var(--aqua-light);color:var(--aqua-dark)}
+  .av-navy{background:var(--navy);color:#fff;border:2px solid var(--aqua)}
+  .av-coral{background:var(--coral-light);color:var(--coral-dark)}
+  .av-mint{background:var(--mint-light);color:#0A8F7C}
+  .av-sm{width:24px;height:24px;font-size:11px}
+  .av-lg{width:56px;height:56px;font-size:20px}
+
+  /* === Post Card === */
+  .post-mini{background:#fff;border:1px solid var(--gray-200);border-radius:var(--r-xl);padding:16px;display:flex;flex-direction:column;gap:10px}
+  .post-mini .row{display:flex;align-items:center;gap:10px}
+  .post-mini .row > div{min-width:0;flex:1}
+  .post-mini .row .av{flex:0 0 auto}
+  .post-mini .name{font-size:13px;font-weight:700;color:var(--text-main)}
+  .post-mini .meta{font-size:11px;color:var(--gray-500)}
+  .post-mini .body{font-size:13px;line-height:1.55;color:var(--text-main)}
+  .post-mini .acts{display:flex;gap:14px;font-size:12px;color:var(--gray-500)}
+  .post-mini .acts .ms{font-size:14px;margin-right:3px;vertical-align:-2px}
+
+  /* === Bot Record Card === */
+  .rec-bot{background:var(--aqua-light);border-left:3px solid var(--aqua);border-radius:var(--r-lg);padding:12px 14px}
+  .rec-bot .lbl{font-size:11px;font-weight:700;color:var(--aqua-dark);margin-bottom:4px;display:flex;align-items:center;gap:5px}
+  .rec-bot .body{font-size:13px;color:var(--navy);line-height:1.5}
+  .rec-bot .link{font-size:12px;color:var(--aqua);font-weight:700;margin-top:6px}
+
+  /* === Scale Grid === */
+  .scale-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:12px}
+  .scale-grid .cell{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .scale-grid .box{background:var(--aqua-light);border:1px solid var(--aqua)}
+  .scale-grid .lbl{font-family:var(--font-display);font-size:11px;color:var(--gray-500);font-weight:600}
+
+  .radius-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:12px}
+  .radius-grid .cell{display:flex;flex-direction:column;align-items:center;gap:8px}
+  .radius-grid .box{width:72px;height:72px;background:linear-gradient(135deg,var(--aqua),var(--navy))}
+
+  /* === Icon Grid === */
+  .icon-grid{display:grid;grid-template-columns:repeat(8,1fr);gap:12px}
+  .icon-cell{display:flex;flex-direction:column;align-items:center;gap:8px;padding:16px 8px;border:1px solid var(--gray-200);border-radius:var(--r-md);background:#fff}
+  .icon-cell .ms{font-size:22px;color:var(--navy)}
+  .icon-cell .nm{font-size:11px;color:var(--gray-500);text-align:center}
+
+  /* === UX Vocabulary === */
+  .vocab{background:var(--white);border:1px solid var(--gray-200);border-radius:var(--r-xl);overflow:hidden}
+  .vocab-row{display:grid;grid-template-columns:1fr 1.2fr 2fr;gap:0;padding:14px 20px;border-bottom:1px solid var(--gray-200);font-size:13px;align-items:center}
+  .vocab-row:last-child{border-bottom:none}
+  .vocab-row .gen{color:var(--gray-500);text-decoration:line-through;text-decoration-color:var(--gray-300)}
+  .vocab-row .lane-term{font-weight:800;color:var(--aqua-dark)}
+  .vocab-row .where{font-size:12px;color:var(--gray-500)}
+  .vocab-row.head{background:var(--bg);font-size:11px;font-weight:700;color:var(--gray-500);letter-spacing:.06em;text-transform:uppercase}
+  .vocab-row.head .gen,.vocab-row.head .lane-term,.vocab-row.head .where{color:var(--gray-500);text-decoration:none;font-weight:700}
+
+  /* === Tone === */
+  .tone-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .tone-card{padding:18px;border-radius:var(--r-xl);border:1px solid var(--gray-200);background:#fff}
+  .tone-card.do{border-left:3px solid var(--aqua)}
+  .tone-card.dont{border-left:3px solid var(--error);background:#FCF5F5}
+  .tone-card .h{font-size:12px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;margin-bottom:10px}
+  .tone-card.do .h{color:var(--aqua-dark)}
+  .tone-card.dont .h{color:var(--error)}
+  .tone-card .q{font-size:14px;color:var(--text-main);line-height:1.55}
+  .tone-card .q + .q{margin-top:10px;padding-top:10px;border-top:1px dashed var(--gray-200)}
+
+  /* === Logo Grid === */
+  .logo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .logo-tile{padding:32px;border-radius:var(--r-xl);border:1px solid var(--gray-200);display:flex;align-items:center;justify-content:center;background:#fff;min-height:140px}
+  .logo-tile.dark{background:var(--navy);border-color:var(--navy)}
+  .logo-tile.aqua{background:var(--aqua);border-color:var(--aqua)}
+  .logo{font-family:var(--font-display);font-size:36px;font-weight:800;letter-spacing:-.04em;line-height:1}
+  .logo .We{color:var(--navy)}
+  .logo .Swim{color:var(--aqua)}
+  .logo.inv .We{color:#fff} .logo.inv .Swim{color:var(--aqua-hover)}
+  .logo.mono .We,.logo.mono .Swim{color:#fff}
+
+  /* === Preview === */
+  .preview{background:#fff;border:1px solid var(--gray-200);border-radius:var(--r-xl);overflow:hidden}
+  .pv-gnb{background:var(--navy);height:48px;display:flex;align-items:center;padding:0 20px;gap:24px;color:#fff}
+  .pv-gnb .logo{font-size:18px}
+  .pv-nav{display:flex;gap:4px;flex:1;margin-left:8px}
+  .pv-nav span{font-size:12px;font-weight:600;color:rgba(255,255,255,.55);padding:6px 12px;border-radius:6px}
+  .pv-nav span.on{color:#fff;background:rgba(255,255,255,.12)}
+  .pv-body{padding:24px;display:grid;grid-template-columns:1fr 1fr;gap:16px;background:var(--bg)}
+
+  /* === Helpers === */
+  .row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+  .stack{display:flex;flex-direction:column;gap:12px}
+  .muted{color:var(--gray-500)}
+  .mono{font-family:var(--font-display);letter-spacing:.02em}
+  .footnote{font-size:12px;color:var(--gray-500);margin-top:12px;font-style:italic}
+  .btn{white-space:nowrap}
+</style>
+</head>
+<body>
+<div class="shell">
+
+  <section class="cover">
+    <div class="eyebrow">WeSwim Design System · v1.1 — 변수 통일판</div>
+    <h1>We<span class="swim">Swim</span></h1>
+    <div class="slogan">나만의 레인, 우리들의 수영장 — Clean Aquatic</div>
+    <div class="cover-meta">
+      <div><b>Aesthetic</b>Clean Aquatic · 차분한 활기</div>
+      <div><b>Platform</b>PC Web 우선 → 반응형 → 앱 래핑</div>
+      <div><b>Variables</b>식별형 (--navy, --aqua, --coral)</div>
+      <div><b>Updated</b>2026.05</div>
+    </div>
+  </section>
+
+  <div class="sec"><span class="sec-num">01</span><h2>Brand &amp; Voice</h2>
+    <div class="desc">스포티하되 차갑지 않은 친근함.</div></div>
+
+  <div class="logo-grid" style="margin-bottom:24px">
+    <div class="logo-tile"><div class="logo"><span class="We">We</span><span class="Swim">Swim</span></div></div>
+    <div class="logo-tile dark"><div class="logo inv"><span class="We">We</span><span class="Swim">Swim</span></div></div>
+    <div class="logo-tile aqua"><div class="logo mono"><span class="We">We</span><span class="Swim">Swim</span></div></div>
+  </div>
+
+  <div class="tone-row">
+    <div class="tone-card do">
+      <div class="h">✓ Do — 친근하고 담백하게</div>
+      <div class="q">"오늘도 한 레인 채웠어요 🏊"</div>
+      <div class="q">"아직 이 시간대 반이 없어요. 오리발 대기방을 만들어드릴게요!"</div>
+      <div class="q">"레인방에 입장했어요!"</div>
+    </div>
+    <div class="tone-card dont">
+      <div class="h">✗ Don't — 과장·구호·기능언어</div>
+      <div class="q">"지금 바로 가입하고 무료 혜택을 받아가세요!!"</div>
+      <div class="q">"매칭 그룹 생성 완료. 그룹 ID: 2034"</div>
+      <div class="q">"운동 의지를 불태우세요 🔥💪"</div>
+    </div>
+  </div>
+
+  <div class="sec"><span class="sec-num">02</span><h2>Color</h2>
+    <div class="desc">Navy의 깊이 · Aqua의 활기 · Coral의 따뜻함.</div></div>
+
+  <div class="grid g-4" style="margin-bottom:20px">
+    <div class="swatch">
+      <div class="chip" style="background:var(--navy)"><div class="role">Primary · Brand</div><div class="name">Deep Navy</div></div>
+      <div class="meta"><span>GNB · 로고 We</span><b>#1B3A5C</b></div>
+    </div>
+    <div class="swatch">
+      <div class="chip" style="background:var(--aqua)"><div class="role">Secondary · Action</div><div class="name">Pool Aqua</div></div>
+      <div class="meta"><span>버튼 · 링크 · 강조</span><b>#0096A0</b></div>
+    </div>
+    <div class="swatch">
+      <div class="chip" style="background:var(--coral)"><div class="role">Accent · Share</div><div class="name">Coral</div></div>
+      <div class="meta"><span>공유 · 강사 뱃지</span><b>#E8734A</b></div>
+    </div>
+    <div class="swatch">
+      <div class="chip dark-text" style="background:var(--aqua-light)"><div class="role">Soft · Selected</div><div class="name" style="color:var(--aqua-dark)">Aqua Light</div></div>
+      <div class="meta"><span>선택 상태 · 알림 배경</span><b>#E6F6F7</b></div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-bottom:16px">
+    <div class="card-title">Aqua Scale</div>
+    <div class="card-sub" style="margin-bottom:14px">활성 / hover / 진한 텍스트까지 한 줄로.</div>
+    <div class="scale-row">
+      <div class="step lt" style="background:var(--aqua-whisper)">50 · F2FBFC</div>
+      <div class="step lt" style="background:var(--aqua-light)">100 · E6F6F7</div>
+      <div class="step" style="background:#8FD8DC;color:var(--navy)">300 · 8FD8DC</div>
+      <div class="step" style="background:var(--aqua-hover)">500 · 00A8B5</div>
+      <div class="step" style="background:var(--aqua)">600 · 0096A0</div>
+      <div class="step" style="background:var(--aqua-dark)">800 · 006970</div>
+      <div class="step" style="background:#003B40">900 · 003B40</div>
+    </div>
+  </div>
+
+  <div class="grid g-2">
+    <div class="card">
+      <div class="card-title">Neutral Scale</div>
+      <div class="card-sub" style="margin-bottom:14px">텍스트, 보더, 배경.</div>
+      <div class="scale-row">
+        <div class="step lt" style="background:#fff;border-right:1px solid var(--gray-200)">0 · FFFFFF</div>
+        <div class="step lt" style="background:var(--bg)">50 · F5F7FA</div>
+        <div class="step lt" style="background:var(--gray-100)">100 · ECEFF4</div>
+        <div class="step lt" style="background:var(--gray-200)">200 · D0D7E2</div>
+        <div class="step" style="background:var(--gray-500)">500 · 6B7A99</div>
+        <div class="step" style="background:var(--gray-700)">700 · 3D4A66</div>
+        <div class="step" style="background:var(--text-main)">900 · 1A1A2E</div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Semantic</div>
+      <div class="card-sub" style="margin-bottom:14px">상태 메시지 전용.</div>
+      <div class="row">
+        <span class="pill" style="background:#E0F5EE;color:#007A57">✓ 성공 · #00A37A</span>
+        <span class="pill pill-sun">! 주의 · #F4B740</span>
+        <span class="pill" style="background:#FBE2E2;color:#A33333">✕ 오류 · #E54B4B</span>
+        <span class="pill">i 안내 · #0096A0</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec"><span class="sec-num">03</span><h2>Typography</h2>
+    <div class="desc">Pretendard Variable (한글 본문) + Helvetica Neue (영문 디스플레이/숫자).</div></div>
+
+  <div class="card">
+    <div class="type-row"><div class="type-tag">Display</div><div class="t-display">나만의 레인.</div><div class="type-spec">Helvetica · 56 / 800</div></div>
+    <div class="type-row"><div class="type-tag">H1 · 페이지</div><div class="t-h1">오늘의 레인 기록</div><div class="type-spec">Pretendard · 32 / 800</div></div>
+    <div class="type-row"><div class="type-tag">H2 · 섹션</div><div class="t-h2">이번 달 거리 추이</div><div class="type-spec">Pretendard · 24 / 700</div></div>
+    <div class="type-row"><div class="type-tag">H3 · 카드</div><div class="t-h3">잠실 중급반 · 월수금 07:00</div><div class="type-spec">Pretendard · 18 / 700</div></div>
+    <div class="type-row"><div class="type-tag">Body</div><div class="t-body">25m 구간마다 날숨을 완전히 내뱉으면 다음 흡기가 훨씬 편해요.</div><div class="type-spec">Pretendard · 14 / 400 · 1.6</div></div>
+    <div class="type-row"><div class="type-tag">Caption</div><div class="t-cap">정보방 · 23분 전 · 이레인</div><div class="type-spec">Pretendard · 12 / 400</div></div>
+    <div class="type-row"><div class="type-tag">Button</div><div class="t-btn">레인에 기록 저장</div><div class="type-spec">Pretendard · 14 / 700</div></div>
+    <div class="type-row"><div class="type-tag">Numeric</div><div class="t-num">1,500<span style="font-size:18px;color:var(--gray-500);margin-left:4px">m</span></div><div class="type-spec">Helvetica · 40 / 800</div></div>
+  </div>
+
+  <div class="sec"><span class="sec-num">04</span><h2>Spacing &amp; Radius</h2></div>
+  <div class="grid g-2">
+    <div class="card">
+      <div class="card-title">Spacing Scale</div>
+      <div class="card-sub" style="margin-bottom:18px">4px base</div>
+      <div class="scale-grid">
+        <div class="cell"><div class="box" style="width:4px;height:32px"></div><div class="lbl">4</div></div>
+        <div class="cell"><div class="box" style="width:8px;height:32px"></div><div class="lbl">8</div></div>
+        <div class="cell"><div class="box" style="width:12px;height:32px"></div><div class="lbl">12</div></div>
+        <div class="cell"><div class="box" style="width:16px;height:32px"></div><div class="lbl">16</div></div>
+        <div class="cell"><div class="box" style="width:24px;height:32px"></div><div class="lbl">24</div></div>
+        <div class="cell"><div class="box" style="width:32px;height:32px"></div><div class="lbl">32</div></div>
+        <div class="cell"><div class="box" style="width:48px;height:32px"></div><div class="lbl">48</div></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Radius Scale</div>
+      <div class="card-sub" style="margin-bottom:18px">플랫 디자인 · 그림자 거의 없음</div>
+      <div class="radius-grid">
+        <div class="cell"><div class="box" style="border-radius:0"></div><div class="lbl">0</div></div>
+        <div class="cell"><div class="box" style="border-radius:6px"></div><div class="lbl">6 · sm</div></div>
+        <div class="cell"><div class="box" style="border-radius:8px"></div><div class="lbl">8 · md</div></div>
+        <div class="cell"><div class="box" style="border-radius:12px"></div><div class="lbl">12 · xl</div></div>
+        <div class="cell"><div class="box" style="border-radius:16px"></div><div class="lbl">16 · 2xl</div></div>
+        <div class="cell"><div class="box" style="border-radius:999px"></div><div class="lbl">full</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec"><span class="sec-num">05</span><h2>Buttons</h2></div>
+  <div class="card">
+    <div class="grid g-2" style="gap:24px">
+      <div class="stack">
+        <div class="card-title">Primary · Aqua</div>
+        <div class="row">
+          <button class="btn btn-aqua">레인에 기록 저장</button>
+          <button class="btn btn-aqua btn-sm">입장</button>
+          <button class="btn btn-disabled">선택 후 활성화</button>
+        </div>
+        <div class="card-title" style="margin-top:8px">Accent · Coral</div>
+        <div class="row">
+          <button class="btn btn-coral"><span class="ms">share</span> 우리반 공유</button>
+          <button class="btn btn-coral btn-sm">대기방 만들기</button>
+        </div>
+        <div class="card-title" style="margin-top:8px">Navy · Strong</div>
+        <div class="row"><button class="btn btn-navy">관리자 액션</button></div>
+      </div>
+      <div class="stack">
+        <div class="card-title">Ghost · Outline</div>
+        <div class="row">
+          <button class="btn btn-ghost">건너뛰기</button>
+          <button class="btn btn-ghost btn-sm"><span class="ms">add</span> 반 추가</button>
+        </div>
+        <div class="card-title" style="margin-top:8px">Secondary · Mute</div>
+        <div class="row">
+          <button class="btn btn-secondary">홈 둘러보기</button>
+          <button class="btn btn-secondary btn-sm">취소</button>
+        </div>
+        <div class="card-title" style="margin-top:8px">Full-width · Form CTA</div>
+        <button class="btn btn-aqua btn-lg">다음 단계로</button>
+        <button class="btn btn-coral btn-lg"><span class="ms">share</span> 우리반 소통방에 공유하기</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec"><span class="sec-num">06</span><h2>Inputs &amp; Forms</h2></div>
+  <div class="grid g-3">
+    <div class="card">
+      <div class="label">닉네임</div>
+      <div class="input"><input placeholder="최대 20자" value="이레인"/></div>
+      <div class="help ok">✓ 사용 가능한 닉네임이에요</div>
+    </div>
+    <div class="card">
+      <div class="label">이메일</div>
+      <div class="input focus"><span class="ms">mail</span><input placeholder="이메일 주소"/></div>
+      <div class="help muted">blur 시 중복 확인 호출</div>
+    </div>
+    <div class="card">
+      <div class="label">비밀번호</div>
+      <div class="input err"><span class="ms">lock</span><input type="password" value="••••"/><span class="ms">visibility</span></div>
+      <div class="help err">✕ 8자 이상, 영문+숫자 포함</div>
+    </div>
+  </div>
+  <div style="height:16px"></div>
+  <div class="card">
+    <div class="card-title" style="margin-bottom:14px">Chip Group · 레벨 · 영법 · 요일</div>
+    <div class="row" style="margin-bottom:14px">
+      <span class="chip-sel">입문</span><span class="chip-sel on">초급</span><span class="chip-sel">중급</span><span class="chip-sel">상급</span>
+    </div>
+    <div class="row" style="margin-bottom:14px">
+      <span class="chip-sel on">자유형</span><span class="chip-sel">배영</span><span class="chip-sel">평영</span><span class="chip-sel">접영</span><span class="chip-sel">혼합</span>
+    </div>
+    <div class="row">
+      <span class="chip-sel on" style="width:44px;justify-content:center;padding:8px 0">월</span>
+      <span class="chip-sel" style="width:44px;justify-content:center;padding:8px 0">화</span>
+      <span class="chip-sel on" style="width:44px;justify-content:center;padding:8px 0">수</span>
+      <span class="chip-sel" style="width:44px;justify-content:center;padding:8px 0">목</span>
+      <span class="chip-sel on" style="width:44px;justify-content:center;padding:8px 0">금</span>
+      <span class="chip-sel" style="width:44px;justify-content:center;padding:8px 0">토</span>
+      <span class="chip-sel" style="width:44px;justify-content:center;padding:8px 0">일</span>
+    </div>
+  </div>
+
+  <div class="sec"><span class="sec-num">07</span><h2>Badges, Avatars &amp; Lane Levels</h2></div>
+  <div class="grid g-2">
+    <div class="card">
+      <div class="card-title" style="margin-bottom:14px">Lane Level Badge — 4단계</div>
+      <div class="row" style="gap:14px">
+        <span class="lane l1"><span class="dot"></span> 입문</span>
+        <span class="lane l2"><span class="dot"></span> 초급</span>
+        <span class="lane l3"><span class="dot"></span> 중급</span>
+        <span class="lane l4"><span class="dot"></span> 상급</span>
+      </div>
+      <div class="card-title" style="margin:24px 0 14px">Pills · 카테고리 · 상태</div>
+      <div class="row">
+        <span class="pill">정보방</span>
+        <span class="pill pill-coral"><span class="ms" style="font-size:11px">workspace_premium</span> 강사</span>
+        <span class="pill pill-navy">우리수영장</span>
+        <span class="pill pill-mint">완주</span>
+        <span class="pill pill-sun"><span class="ms" style="font-size:11px">local_fire_department</span> 14일 연속</span>
+        <span class="pill pill-line">자유게시판</span>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title" style="margin-bottom:14px">Avatar — Mono initial</div>
+      <div class="row" style="gap:18px;align-items:flex-end">
+        <div class="stack" style="align-items:center;gap:6px"><div class="av av-sm">김</div><div class="t-cap">sm 24</div></div>
+        <div class="stack" style="align-items:center;gap:6px"><div class="av">박</div><div class="t-cap">md 36</div></div>
+        <div class="stack" style="align-items:center;gap:6px"><div class="av av-lg av-navy">이</div><div class="t-cap">lg 56 · 본인</div></div>
+        <div class="stack" style="align-items:center;gap:6px"><div class="av av-coral">코</div><div class="t-cap">강사</div></div>
+        <div class="stack" style="align-items:center;gap:6px"><div class="av av-mint">신</div><div class="t-cap">신규</div></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec"><span class="sec-num">08</span><h2>Cards</h2></div>
+  <div class="grid g-2">
+    <div class="post-mini">
+      <div class="row">
+        <div class="av av-coral">박</div>
+        <div>
+          <div class="row" style="gap:6px">
+            <span class="name">박코치</span>
+            <span class="pill pill-coral" style="padding:2px 8px;font-size:10px"><span class="ms" style="font-size:10px">workspace_premium</span> 강사</span>
+          </div>
+          <div class="meta">강사실 · 1시간 전</div>
+        </div>
+      </div>
+      <div class="body">잠실 지역 성인 개인레슨 모집합니다. 초급~중급 대환영. 새벽 6시~8시 가능.</div>
+      <div class="row" style="gap:6px">
+        <span class="pill pill-navy">개인레슨</span>
+        <span class="pill pill-navy">잠실</span>
+      </div>
+      <div class="acts">
+        <span><span class="ms">favorite</span>8</span>
+        <span><span class="ms">forum</span>3</span>
+        <span><span class="ms">share</span> 공유</span>
+      </div>
+    </div>
+    <div class="stack" style="gap:12px">
+      <div class="rec-bot">
+        <div class="lbl"><span class="ms">pool</span> 기록 공유 · 자동 게시</div>
+        <div class="body"><b>이레인</b>님이 오늘 <b>1,500m</b> 수영을 완주했습니다!</div>
+        <div class="link">기록 보기 →</div>
+      </div>
+      <div class="card" style="background:var(--coral-light);border-color:var(--coral);padding:14px 16px">
+        <div style="font-size:11px;font-weight:700;color:var(--coral-dark);margin-bottom:4px">오리발 대기방</div>
+        <div style="font-size:13px;color:var(--navy);line-height:1.5">현재 혼자예요. 친구에게 공유하면 활성화돼요.</div>
+        <button class="btn btn-coral btn-sm" style="margin-top:10px"><span class="ms">share</span> 친구에게 공유</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="sec"><span class="sec-num">09</span><h2>Iconography</h2></div>
+  <div class="icon-grid">
+    <div class="icon-cell"><span class="ms">home</span><div class="nm">홈</div></div>
+    <div class="icon-cell"><span class="ms">groups</span><div class="nm">우리반</div></div>
+    <div class="icon-cell"><span class="ms">pool</span><div class="nm">수영장</div></div>
+    <div class="icon-cell"><span class="ms">pool</span><div class="nm">기록</div></div>
+    <div class="icon-cell"><span class="ms">military_tech</span><div class="nm">뱃지</div></div>
+    <div class="icon-cell"><span class="ms">chat_bubble</span><div class="nm">소통방</div></div>
+    <div class="icon-cell"><span class="ms">notifications</span><div class="nm">알림</div></div>
+    <div class="icon-cell"><span class="ms">account_circle</span><div class="nm">마이</div></div>
+    <div class="icon-cell"><span class="ms">workspace_premium</span><div class="nm">강사</div></div>
+    <div class="icon-cell"><span class="ms">local_fire_department</span><div class="nm">스트릭</div></div>
+    <div class="icon-cell"><span class="ms">calendar_month</span><div class="nm">레인로그</div></div>
+    <div class="icon-cell"><span class="ms">share</span><div class="nm">공유</div></div>
+    <div class="icon-cell"><span class="ms">favorite</span><div class="nm">좋아요</div></div>
+    <div class="icon-cell"><span class="ms">search</span><div class="nm">검색</div></div>
+    <div class="icon-cell"><span class="ms">settings</span><div class="nm">설정</div></div>
+    <div class="icon-cell"><span class="ms">campaign</span><div class="nm">공지/벙개</div></div>
+  </div>
+
+  <div class="sec"><span class="sec-num">10</span><h2>UX Vocabulary — 레인 감성</h2></div>
+  <div class="vocab">
+    <div class="vocab-row head"><span>일반 표현</span><span>WeSwim 표현</span><span>적용 위치</span></div>
+    <div class="vocab-row"><span class="gen">강습반 채팅방</span><span class="lane-term">레인방</span><span class="where">② 우리반 탭 / 진입 카드 / 알림</span></div>
+    <div class="vocab-row"><span class="gen">마이페이지</span><span class="lane-term">나의 레인</span><span class="where">④ 마이 탭 헤더 / 프로필 히어로</span></div>
+    <div class="vocab-row"><span class="gen">기록 달력 · 잔디</span><span class="lane-term">레인 로그</span><span class="where">마이페이지 달력 위젯 / 기록 사이드바</span></div>
+    <div class="vocab-row"><span class="gen">레벨 / 티어</span><span class="lane-term">레인 등급</span><span class="where">뱃지 컴포넌트 · 입문/초급/중급/상급</span></div>
+    <div class="vocab-row"><span class="gen">대기 중인 그룹</span><span class="lane-term">오리발 대기방</span><span class="where">반 찾기 결과 · 활성화 전 상태</span></div>
+    <div class="vocab-row"><span class="gen">저장 / 등록</span><span class="lane-term">레인에 기록 저장</span><span class="where">기록 입력폼 Primary 버튼</span></div>
+    <div class="vocab-row"><span class="gen">그룹 입장</span><span class="lane-term">레인방 입장하기</span><span class="where">반 찾기 결과 카드 / 가입 완료</span></div>
+  </div>
+
+  <div style="margin-top:64px;padding-top:24px;border-top:1px solid var(--gray-200);display:flex;justify-content:space-between;color:var(--gray-500);font-size:12px">
+    <div>WeSwim Design System · v1.1 — 변수 통일판 (식별형)</div>
+    <div class="mono">2026.05 · --navy / --aqua / --coral 체계</div>
+  </div>
+
+</div>
+</body>
+</html>

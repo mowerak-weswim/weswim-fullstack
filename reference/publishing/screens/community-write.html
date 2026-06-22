@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>WeSwim — 게시글 작성</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0,0&display=swap" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  :root{
+    --navy:#1B3A5C;--navy-dark:#142D47;--navy-light:#E8EEF4;
+    --aqua:#0096A0;--aqua-hover:#00A8B5;--aqua-dark:#006970;
+    --aqua-light:#E6F6F7;--aqua-whisper:#F2FBFC;
+    --coral:#E8734A;--coral-light:#FDF0EB;
+    --bg:#F5F7FA;--white:#FFFFFF;
+    --gray-100:#ECEFF4;--gray-200:#D0D7E2;--gray-300:#B4BECD;
+    --gray-500:#6B7A99;--gray-700:#3D4A66;--text-main:#1A1A2E;
+    --error:#E54B4B;
+    --font-sans:'Pretendard Variable','Pretendard','Helvetica Neue','Apple SD Gothic Neo','Malgun Gothic',sans-serif;
+    --font-display:'Helvetica Neue','Pretendard Variable','Pretendard',sans-serif;
+  }
+  html,body{height:100%}
+  body{font-family:var(--font-sans);color:var(--text-main);background:var(--bg);-webkit-font-smoothing:antialiased}
+  .ms{font-family:'Material Symbols Rounded';font-weight:500;font-style:normal;display:inline-flex;align-items:center;justify-content:center;line-height:1;text-transform:none;letter-spacing:normal;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;font-feature-settings:'liga';vertical-align:middle;font-size:20px;font-variation-settings:'opsz' 24,'wght' 500,'FILL' 0,'GRAD' 0}
+  button{font-family:inherit;cursor:pointer}
+  input,select,textarea{font-family:inherit}
+
+  /* === GNB === */
+  .gnb{height:64px;background:var(--navy);color:#fff;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.05)}
+  .gnb-inner{max-width:1320px;margin:0 auto;height:100%;padding:0 32px;display:flex;align-items:center;gap:32px}
+  .gnb-logo{font-family:var(--font-display);font-size:22px;font-weight:800;letter-spacing:-.04em}
+  .gnb-logo .We{color:#fff}.gnb-logo .Swim{color:var(--aqua-hover)}
+  .gnb-nav{display:flex;gap:2px}
+  .gnb-nav a{padding:8px 14px;font-size:14px;font-weight:600;color:rgba(255,255,255,.5);border-radius:8px;transition:all .15s}
+  .gnb-nav a.on{color:#fff;background:rgba(255,255,255,.1)}
+  .gnb-right{display:flex;align-items:center;gap:12px;margin-left:auto}
+  .icon-btn{width:38px;height:38px;border-radius:99px;border:none;background:transparent;color:rgba(255,255,255,.7);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all .15s}
+  .icon-btn:hover{background:rgba(255,255,255,.08);color:#fff}
+  .icon-btn .ms{font-size:22px}
+  .gnb-avatar{width:36px;height:36px;border-radius:50%;background:var(--aqua);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;border:2px solid rgba(255,255,255,.15)}
+  .gnb-hamburger{display:none;width:38px;height:38px;border-radius:8px;border:none;background:transparent;color:rgba(255,255,255,.85);align-items:center;justify-content:center;cursor:pointer;flex-shrink:0}
+  .gnb-hamburger .ms{font-size:24px}
+
+  /* === 페이지 레이아웃 === */
+  .page{max-width:800px;margin:0 auto;padding:28px 32px 80px}
+
+  /* 페이지 헤더 */
+  .page-header{display:flex;align-items:center;gap:12px;margin-bottom:24px}
+  .back-btn{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--gray-500);background:none;border:none;padding:0;transition:color .15s}
+  .back-btn:hover{color:var(--navy)}
+  .back-btn .ms{font-size:18px}
+  .page-title{font-size:22px;font-weight:800;color:var(--navy);letter-spacing:-.02em}
+
+  /* === 작성 폼 카드 === */
+  .write-card{background:var(--white);border:1px solid var(--gray-200);border-radius:16px;padding:28px}
+
+  /* 폼 요소 */
+  .form-row{margin-bottom:20px}
+  .form-label{display:flex;align-items:center;justify-content:space-between;font-size:12px;font-weight:700;color:var(--gray-500);margin-bottom:7px}
+  .form-label .required{color:var(--coral)}
+  .form-label .char-count{font-weight:500;font-size:11px;color:var(--gray-300)}
+  .form-label .char-count.near{color:var(--coral)}
+
+  .form-select{width:100%;height:44px;border:1.5px solid var(--gray-200);border-radius:8px;padding:0 12px;font-size:14px;color:var(--text-main);background:var(--white);appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='%236B7A99'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 12px center;cursor:pointer;transition:border-color .15s}
+  .form-select:focus{outline:none;border-color:var(--aqua);box-shadow:0 0 0 3px var(--aqua-light)}
+
+  .form-input{width:100%;height:44px;border:1.5px solid var(--gray-200);border-radius:8px;padding:0 14px;font-size:14px;color:var(--text-main);background:var(--white);transition:border-color .15s}
+  .form-input:focus{outline:none;border-color:var(--aqua);box-shadow:0 0 0 3px var(--aqua-light)}
+
+  .form-textarea{width:100%;border:1.5px solid var(--gray-200);border-radius:8px;padding:12px 14px;font-size:14px;color:var(--text-main);background:var(--white);resize:none;line-height:1.6;transition:border-color .15s;min-height:240px}
+  .form-textarea:focus{outline:none;border-color:var(--aqua);box-shadow:0 0 0 3px var(--aqua-light)}
+
+  /* 이미지 첨부 */
+  .img-upload-area{border:2px dashed var(--gray-200);border-radius:10px;padding:24px;text-align:center;cursor:pointer;transition:all .15s;background:var(--bg)}
+  .img-upload-area:hover{border-color:var(--aqua);background:var(--aqua-whisper)}
+  .img-upload-icon{font-size:32px;color:var(--gray-300);margin-bottom:8px;display:block}
+  .img-upload-label{font-size:14px;font-weight:600;color:var(--gray-500);margin-bottom:4px}
+  .img-upload-sub{font-size:12px;color:var(--gray-300)}
+  .img-previews{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+  .img-preview{width:80px;height:80px;border-radius:8px;background:var(--gray-100);border:1px solid var(--gray-200);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;flex-shrink:0}
+  .img-preview .ms{font-size:28px;color:var(--gray-300)}
+  .img-preview .remove-img{position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,.5);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:11px;border:none;line-height:1}
+
+  /* 강사실 안내 */
+  .coach-notice{background:var(--coral-light);border:1px solid rgba(232,115,74,.2);border-radius:8px;padding:12px 14px;font-size:13px;color:var(--coral-dark);display:none;align-items:flex-start;gap:8px;line-height:1.5;margin-bottom:20px}
+  .coach-notice.show{display:flex}
+  .coach-notice .ms{font-size:16px;flex-shrink:0;margin-top:1px}
+
+  /* 폼 액션 */
+  .form-divider{height:1px;background:var(--gray-100);margin:24px 0}
+  .form-actions{display:flex;gap:10px;justify-content:flex-end}
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:none;border-radius:10px;padding:12px 20px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:all .15s;white-space:nowrap}
+  .btn-aqua{background:var(--aqua);color:#fff}
+  .btn-aqua:hover{background:var(--aqua-hover)}
+  .btn-aqua:disabled{opacity:.4;cursor:not-allowed}
+  .btn-ghost{background:transparent;color:var(--gray-700);border:1.5px solid var(--gray-200)}
+  .btn-ghost:hover{border-color:var(--gray-300);background:var(--bg)}
+  .btn-secondary{background:var(--gray-100);color:var(--gray-700)}
+  .btn-secondary:hover{background:var(--gray-200)}
+
+  /* 작성 가이드 */
+  .write-guide{background:var(--aqua-whisper);border-radius:10px;padding:14px 16px;margin-bottom:20px}
+  .guide-title{font-size:12px;font-weight:700;color:var(--aqua-dark);margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .guide-title .ms{font-size:15px}
+  .guide-list{list-style:none;display:flex;flex-direction:column;gap:4px}
+  .guide-list li{font-size:12px;color:var(--gray-700);line-height:1.6;padding-left:12px;position:relative}
+  .guide-list li::before{content:"·";position:absolute;left:0;color:var(--aqua)}
+
+  /* === 드로어 === */
+  .drw-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300}
+  .drw-ov.on{display:block}
+  .drw{position:fixed;top:0;right:-290px;width:280px;height:100dvh;background:var(--navy);z-index:301;display:flex;flex-direction:column;transition:right .25s ease;box-shadow:-4px 0 20px rgba(0,0,0,.25)}
+  .drw.on{right:0}
+  .drw-hd{display:flex;align-items:center;justify-content:space-between;padding:0 18px;height:64px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.1)}
+  .drw-logo{font-weight:800;font-size:18px;letter-spacing:-.03em}
+  .drw-logo .We{color:#fff}.drw-logo .Sw{color:#00A8B5}
+  .drw-x{width:32px;height:32px;border-radius:7px;border:none;background:rgba(255,255,255,.1);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}
+  .drw-x .ms{font-size:18px}
+  .drw-bd{flex:1;overflow-y:auto;padding:10px}
+  .drw-sec{font-size:10px;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.12em;text-transform:uppercase;padding:12px 12px 4px}
+  .drw-it{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;font-size:15px;font-weight:700;color:rgba(255,255,255,.6);border:none;background:transparent;width:100%;font-family:inherit;text-align:left;cursor:pointer;transition:background .15s,color .15s}
+  .drw-it:hover,.drw-it.on{background:rgba(255,255,255,.1);color:#fff}
+  .drw-it .ms{font-size:20px}
+  .drw-hr{height:1px;background:rgba(255,255,255,.08);margin:6px 0}
+
+  /* === 반응형 === */
+  @media(max-width:880px){
+    .gnb-nav{display:none}
+    .gnb-hamburger{display:inline-flex}
+    .page{padding:20px 16px 60px}
+    .write-card{padding:20px 16px}
+  }
+</style>
+</head>
+<body>
+
+<!-- GNB -->
+<header class="gnb">
+  <div class="gnb-inner">
+    <a href="home.html" class="gnb-logo"><span class="We">We</span><span class="Swim">Swim</span></a>
+    <nav class="gnb-nav">
+      <a href="home.html" class="on">홈</a>
+      <a href="group.html" >우리반</a>
+      <a href="record.html" >기록</a>
+      <a href="my.html" >마이</a>
+    </nav>
+    <div class="gnb-right">
+      <button class="icon-btn" aria-label="검색" onclick="location.href='search.html'">
+        <span class="ms" aria-hidden="true">search</span>
+      </button>
+      <button class="icon-btn" aria-label="알림" onclick="location.href='notifications.html'">
+        <span class="ms" aria-hidden="true">notifications</span>
+        <span class="badge">3</span>
+      </button>
+      <div class="gnb-avatar" title="이레인" onclick="location.href='my.html'">이</div>
+      <button class="gnb-hamburger" id="drwBtn" aria-label="메뉴"><span class="ms">menu</span></button>
+    </a>
+  </div>
+</header>
+
+<!-- 드로어 -->
+<div class="drw-ov" id="drwOv"></div>
+<aside class="drw" id="drwPanel">
+  <div class="drw-hd">
+    <div class="drw-logo"><span class="We">We</span><span class="Sw">Swim</span></div>
+    <button class="drw-x" id="drwClose"><span class="ms">close</span></button>
+  </div>
+    <div class="drw-bd">
+    <div class="drw-sec">메뉴</div>
+    <button class="drw-it" onclick="location.href='home.html'"><span class="ms">home</span>홈</button>
+    <button class="drw-it" onclick="location.href='group.html'"><span class="ms">groups</span>우리반</button>
+    <button class="drw-it" onclick="location.href='record.html'"><span class="ms">pool</span>기록</button>
+    <button class="drw-it" onclick="location.href='my.html'"><span class="ms">account_circle</span>마이</button>
+    <div class="drw-hr"></div>
+    <div class="drw-sec">기타</div>
+    <button class="drw-it" onclick="location.href='notifications.html'"><span class="ms">notifications</span>알림</button>
+    <button class="drw-it" onclick="location.href='my-settings.html'"><span class="ms">settings</span>설정</button>
+  </div>
+</aside>
+
+<!-- 본문 -->
+<div class="page">
+
+  <!-- 페이지 헤더 -->
+  <div class="page-header">
+    <button class="back-btn" onclick="history.back()">
+      <span class="ms">arrow_back</span> 커뮤니티
+    </button>
+    <div class="page-title">게시글 작성</div>
+  </div>
+
+  <!-- 작성 폼 -->
+  <div class="write-card">
+
+    <!-- 작성 가이드 -->
+    <div class="write-guide">
+      <div class="guide-title"><span class="ms">tips_and_updates</span> 좋은 게시글이 되려면</div>
+      <ul class="guide-list">
+        <li>제목에 핵심 내용을 담아주세요</li>
+        <li>경험을 구체적으로 적으면 도움이 돼요</li>
+        <li>이미지는 이해를 돕는 데 효과적이에요 (최대 5장)</li>
+        <li>해시태그로 검색이 쉬워집니다</li>
+      </ul>
+    </div>
+
+    <!-- 게시판 선택 -->
+    <div class="form-row">
+      <div class="form-label">게시판 선택 <span class="required">*</span></div>
+      <select class="form-select" id="catSelect">
+        <option value="">게시판을 선택하세요</option>
+        <option value="info">정보방</option>
+        <option value="tip">초보 팁</option>
+        <option value="pool">우리 수영장</option>
+        <option value="free">자유게시판</option>
+        <option value="coach">강사실 (강사 회원 전용)</option>
+      </select>
+    </div>
+
+    <!-- 강사실 선택 시 안내 -->
+    <div class="coach-notice" id="coachNotice">
+      <span class="ms">workspace_premium</span>
+      강사실은 강사 뱃지 보유 회원만 작성할 수 있습니다. 강사 회원 전환은 설정 → 회원 유형에서 신청하세요.
+    </div>
+
+    <!-- 제목 -->
+    <div class="form-row">
+      <div class="form-label">
+        제목 <span class="required">*</span>
+        <span class="char-count"><span id="titleCount">0</span>/100</span>
+      </div>
+      <input class="form-input" type="text" id="titleInput" placeholder="제목을 입력하세요" maxlength="100" />
+    </div>
+
+    <!-- 내용 -->
+    <div class="form-row">
+      <div class="form-label">
+        내용 <span class="required">*</span>
+        <span class="char-count" id="contentCountWrap"><span id="contentCount">0</span>/5,000</span>
+      </div>
+      <textarea class="form-textarea" id="contentInput" placeholder="내용을 자유롭게 작성해보세요.&#10;&#10;수영 팁, 정보, 경험담 등 뭐든 좋아요!" maxlength="5000"></textarea>
+    </div>
+
+    <!-- 이미지 첨부 -->
+    <div class="form-row">
+      <div class="form-label">이미지 첨부 <span style="font-weight:400;color:var(--gray-300)">(최대 5장 · 장당 5MB · JPG/PNG/WEBP)</span></div>
+      <div class="img-upload-area" id="uploadArea">
+        <span class="ms img-upload-icon">add_photo_alternate</span>
+        <div class="img-upload-label">클릭하거나 이미지를 드래그해서 업로드</div>
+        <div class="img-upload-sub">JPG, PNG, WEBP · 장당 최대 5MB</div>
+      </div>
+      <div class="img-previews" id="imgPreviews">
+        <!-- 미리보기 예시 -->
+        <div class="img-preview">
+          <span class="ms">image</span>
+          <button class="remove-img">✕</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-divider"></div>
+
+    <!-- 액션 버튼 -->
+    <div class="form-actions">
+      <button class="btn btn-secondary" id="draftBtn"><span class="ms">save</span> 임시저장</button>
+      <button class="btn btn-ghost" onclick="history.back()">취소</button>
+      <button class="btn btn-aqua" id="submitBtn" disabled><span class="ms">send</span> 등록하기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  /* 카테고리 선택 */
+  var catSelect   = document.getElementById('catSelect');
+  var coachNotice = document.getElementById('coachNotice');
+  if(catSelect){
+    catSelect.addEventListener('change', function(){
+      if(coachNotice) coachNotice.classList.toggle('show', this.value === 'coach');
+      checkSubmit();
+    });
+  }
+
+  /* 글자수 카운트 + 등록버튼 활성 */
+  var titleInput    = document.getElementById('titleInput');
+  var contentInput  = document.getElementById('contentInput');
+  var titleCount    = document.getElementById('titleCount');
+  var contentCount  = document.getElementById('contentCount');
+  var submitBtn     = document.getElementById('submitBtn');
+
+  function checkSubmit(){
+    var cat  = catSelect ? catSelect.value : '';
+    var titl = titleInput ? titleInput.value.trim() : '';
+    var cont = contentInput ? contentInput.value.trim() : '';
+    if(submitBtn) submitBtn.disabled = !(cat && titl && cont);
+  }
+
+  if(titleInput){
+    titleInput.addEventListener('input', function(){
+      if(titleCount) titleCount.textContent = this.value.length;
+      checkSubmit();
+    });
+  }
+  if(contentInput){
+    contentInput.addEventListener('input', function(){
+      if(contentCount) contentCount.textContent = this.value.length;
+      /* 4500자 이상이면 글자수 붉게 */
+      var wrap = document.getElementById('contentCountWrap');
+      if(wrap) wrap.classList.toggle('near', this.value.length >= 4500);
+      checkSubmit();
+    });
+  }
+
+  /* 이미지 제거 버튼 */
+  document.querySelectorAll('.remove-img').forEach(function(btn){
+    btn.addEventListener('click', function(e){
+      e.stopPropagation();
+      btn.closest('.img-preview').remove();
+    });
+  });
+
+  /* 임시저장 토스트 */
+  if(document.getElementById('draftBtn')){
+    document.getElementById('draftBtn').addEventListener('click', function(){
+      alert('임시저장됐어요!');
+    });
+  }
+
+  /* 드로어 */
+  (function(){
+    var btn = document.getElementById('drwBtn');
+    var drw = document.getElementById('drwPanel');
+    var ov  = document.getElementById('drwOv');
+    var cls = document.getElementById('drwClose');
+    if(!btn||!drw||!ov) return;
+    function open(){ drw.classList.add('on'); ov.classList.add('on'); document.body.style.overflow='hidden'; }
+    function close(){ drw.classList.remove('on'); ov.classList.remove('on'); document.body.style.overflow=''; }
+    btn.addEventListener('click', open);
+    ov.addEventListener('click', close);
+    if(cls) cls.addEventListener('click', close);
+    drw.querySelectorAll('.drw-it').forEach(function(el){ el.addEventListener('click', close); });
+  })();
+</script>
+</body>
+</html>

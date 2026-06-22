@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/><title>WeSwim — 뱃지 컬렉션</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0,0&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1B3A5C;--aqua:#0096A0;--aqua-hover:#00A8B5;--aqua-dark:#006970;--aqua-light:#E6F6F7;--aqua-whisper:#F2FBFC;--coral:#E8734A;--coral-light:#FDF0EB;--coral-dark:#C45A33;--mint:#7DD3C8;--mint-light:#E8F7F4;--sun:#F4B740;--sun-light:#FCF1D8;--bg:#F5F7FA;--white:#fff;--gray-100:#ECEFF4;--gray-200:#D0D7E2;--gray-300:#B4BECD;--gray-500:#6B7A99;--gray-700:#3D4A66;--text-main:#1A1A2E;--font-sans:'Pretendard Variable','Pretendard','Helvetica Neue',sans-serif;--font-display:'Helvetica Neue','Pretendard Variable',sans-serif;}
+html,body{height:100%}
+body{font-family:var(--font-sans);color:var(--text-main);background:var(--bg);-webkit-font-smoothing:antialiased}
+.ms{font-family:'Material Symbols Rounded';font-weight:500;font-style:normal;display:inline-flex;align-items:center;justify-content:center;line-height:1;text-transform:none;white-space:nowrap;direction:ltr;font-feature-settings:'liga';vertical-align:middle;font-size:20px;font-variation-settings:'opsz' 24,'wght' 500,'FILL' 0,'GRAD' 0}
+button,a{font-family:inherit;text-decoration:none;color:inherit}
+.gnb{height:64px;background:var(--navy);color:#fff;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.05)}
+.gnb-inner{max-width:1320px;margin:0 auto;height:100%;padding:0 32px;display:flex;align-items:center;gap:28px}
+.gnb-logo{font-family:var(--font-display);font-size:22px;font-weight:800;letter-spacing:-.04em;line-height:1;text-decoration:none}
+.gnb-logo .We{color:#fff}.gnb-logo .Swim{color:var(--aqua-hover)}
+.gnb-nav{display:flex;gap:2px}
+.gnb-nav a{padding:8px 14px;font-size:14px;font-weight:600;color:rgba(255,255,255,.5);border-radius:8px;transition:all .15s;text-decoration:none}
+.gnb-nav a:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.06)}
+.gnb-nav a.on{color:#fff;background:rgba(255,255,255,.1)}
+.gnb-right{display:flex;align-items:center;gap:6px;margin-left:auto}
+.icon-btn{width:38px;height:38px;border-radius:99px;border:none;background:transparent;color:rgba(255,255,255,.7);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:all .15s}
+.icon-btn:hover{background:rgba(255,255,255,.08);color:#fff}.icon-btn .ms{font-size:22px}
+.icon-btn .badge{position:absolute;top:5px;right:5px;background:var(--coral);color:#fff;font-size:9px;font-weight:800;min-width:14px;height:14px;padding:0 3px;border-radius:99px;display:flex;align-items:center;justify-content:center;border:2px solid var(--navy)}
+.gnb-avatar{width:36px;height:36px;border-radius:50%;background:var(--aqua);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;cursor:pointer;border:2px solid rgba(255,255,255,.15);flex-shrink:0}
+.gnb-hamburger{display:none;width:38px;height:38px;border-radius:8px;border:none;background:transparent;color:rgba(255,255,255,.85);cursor:pointer;flex-shrink:0;align-items:center;justify-content:center}
+.gnb-hamburger .ms{font-size:24px}
+.drw-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300}.drw-ov.on{display:block}
+.drw{position:fixed;top:0;right:-290px;width:280px;height:100dvh;background:var(--navy);z-index:301;display:flex;flex-direction:column;transition:right .25s ease;box-shadow:-4px 0 20px rgba(0,0,0,.25)}.drw.on{right:0}
+.drw-hd{display:flex;align-items:center;justify-content:space-between;padding:0 18px;height:64px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.1)}
+.drw-logo{font-weight:800;font-size:18px;letter-spacing:-.03em}.drw-logo .We{color:#fff}.drw-logo .Sw{color:#00A8B5}
+.drw-x{width:32px;height:32px;border-radius:7px;border:none;background:rgba(255,255,255,.1);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}.drw-x .ms{font-size:18px}
+.drw-bd{flex:1;overflow-y:auto;padding:10px}
+.drw-sec{font-size:10px;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.12em;text-transform:uppercase;padding:12px 12px 4px}
+.drw-it{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;font-size:15px;font-weight:700;color:rgba(255,255,255,.6);border:none;background:transparent;width:100%;font-family:inherit;text-align:left;cursor:pointer;transition:background .15s,color .15s}.drw-it:hover,.drw-it.on{background:rgba(255,255,255,.1);color:#fff}.drw-it .ms{font-size:20px}
+.drw-hr{height:1px;background:rgba(255,255,255,.08);margin:6px 0}
+
+.back-wrap{max-width:900px;margin:0 auto;padding:20px 32px 0}
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--gray-500);background:none;border:none;padding:0;cursor:pointer;transition:color .15s}
+.back-btn:hover{color:var(--navy)}.back-btn .ms{font-size:18px}
+.page{max-width:900px;margin:0 auto;padding:16px 32px 80px}
+
+/* 헤더 */
+.badge-header{background:linear-gradient(135deg,#0E2540 0%,var(--navy) 60%,#1F4870 100%);color:#fff;border-radius:16px;padding:24px 28px;margin-bottom:24px;position:relative;overflow:hidden}
+.badge-header::before{content:"";position:absolute;right:-60px;bottom:-80px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(0,168,181,.35) 0%,transparent 65%)}
+.badge-header>*{position:relative;z-index:2}
+.bh-eyebrow{font-size:11px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:rgba(255,255,255,.55);margin-bottom:8px}
+.bh-title{font-size:22px;font-weight:800;margin-bottom:6px}
+.bh-summary{display:flex;gap:20px;margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.1)}
+.bh-stat b{display:block;font-family:var(--font-display);font-size:18px;font-weight:800}
+.bh-stat span{font-size:11px;color:rgba(255,255,255,.55);margin-top:1px;display:block}
+
+/* 필터 탭 */
+.filter-tabs{display:flex;gap:6px;padding:6px;background:#fff;border:1px solid var(--gray-200);border-radius:12px;margin-bottom:20px;overflow-x:auto}
+.filter-tabs::-webkit-scrollbar{display:none}
+.ft{padding:8px 14px;border-radius:8px;font-size:13px;font-weight:600;color:var(--gray-500);border:none;background:transparent;cursor:pointer;white-space:nowrap;transition:all .12s}
+.ft:hover{background:var(--bg);color:var(--navy)}
+.ft.on{background:var(--navy);color:#fff}
+
+/* 뱃지 섹션 */
+.badge-section{margin-bottom:28px}
+.bs-title{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:6px}
+.bs-title .ms{font-size:18px;color:var(--aqua)}
+.bs-sub{font-size:11px;font-weight:600;color:var(--gray-500);margin-left:auto}
+.badge-list{display:flex;flex-direction:column;gap:10px}
+.badge-item{display:flex;align-items:center;gap:14px;background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:14px 16px;transition:all .15s;cursor:pointer}
+.badge-item:hover{border-color:var(--aqua);box-shadow:0 2px 8px rgba(0,150,160,.08)}
+.badge-item.locked{opacity:.55}
+.badge-item.locked:hover{border-color:var(--gray-200);box-shadow:none}
+.bi-icon{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0;position:relative;border:2px solid var(--aqua)}
+.badge-item.locked .bi-icon{border-color:var(--gray-200)}
+.bi-count{position:absolute;top:-2px;right:-2px;background:var(--coral);color:#fff;font-size:9px;font-weight:800;padding:1px 4px;border-radius:99px;border:2px solid #fff;line-height:1.4}
+.bi-info{flex:1;min-width:0}
+.bi-name{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:3px}
+.badge-item.locked .bi-name{color:var(--gray-500)}
+.bi-desc{font-size:12px;color:var(--gray-500);line-height:1.45;margin-bottom:6px}
+.bi-progress-wrap{display:flex;align-items:center;gap:8px}
+.bi-bar{flex:1;height:5px;background:var(--gray-100);border-radius:99px;overflow:hidden}
+.bi-fill{height:100%;background:linear-gradient(90deg,var(--aqua) 0%,var(--mint) 100%);border-radius:99px;transition:width .4s}
+.bi-pct{font-size:11px;font-weight:700;color:var(--aqua-dark);min-width:30px;text-align:right}
+.badge-item.locked .bi-fill{background:var(--gray-200)}
+.badge-item.locked .bi-pct{color:var(--gray-300)}
+.bi-streak{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;color:var(--coral);background:var(--coral-light);padding:2px 7px;border-radius:99px}
+.bi-streak .ms{font-size:12px}
+.bi-master{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;color:var(--sun);background:var(--sun-light);padding:2px 7px;border-radius:99px}
+.bi-status{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;color:var(--aqua-dark);background:var(--aqua-light);padding:3px 8px;border-radius:99px;margin-left:auto;flex-shrink:0}
+.bi-status .ms{font-size:13px}
+.bi-status.locked-badge{background:var(--gray-100);color:var(--gray-500)}
+
+@media(max-width:880px){.gnb-nav{display:none}.gnb-hamburger{display:inline-flex}.page,.back-wrap{padding-left:16px;padding-right:16px}}
+</style>
+</head>
+<body>
+<header class="gnb">
+  <div class="gnb-inner">
+    <a href="home.html" class="gnb-logo"><span class="We">We</span><span class="Swim">Swim</span></a>
+    <nav class="gnb-nav">
+      <a href="home.html">홈</a><a href="group.html">우리반</a><a href="record.html">기록</a><a href="my.html" class="on">마이</a>
+    </nav>
+    <div class="gnb-right">
+      <button class="icon-btn" onclick="location.href='search.html'"><span class="ms" aria-hidden="true">search</span></button>
+      <button class="icon-btn" onclick="location.href='notifications.html'"><span class="ms" aria-hidden="true">notifications</span><span class="badge">3</span></button>
+      <div class="gnb-avatar" onclick="location.href='my.html'">이</div>
+      <button class="gnb-hamburger" id="drwBtn" aria-label="메뉴"><span class="ms">menu</span></button>
+    </div>
+  </div>
+</header>
+<div class="drw-ov" id="drwOv"></div>
+<aside class="drw" id="drwPanel">
+  <div class="drw-hd"><div class="drw-logo"><span class="We">We</span><span class="Sw">Swim</span></div><button class="drw-x" id="drwClose"><span class="ms">close</span></button></div>
+  <div class="drw-bd">
+    <div class="drw-sec">메뉴</div>
+    <button class="drw-it" onclick="location.href='home.html'"><span class="ms">home</span>홈</button>
+    <button class="drw-it" onclick="location.href='group.html'"><span class="ms">groups</span>우리반</button>
+    <button class="drw-it" onclick="location.href='record.html'"><span class="ms">pool</span>기록</button>
+    <button class="drw-it on" onclick="location.href='my.html'"><span class="ms">account_circle</span>마이</button>
+    <div class="drw-hr"></div>
+    <div class="drw-sec">기타</div>
+    <button class="drw-it" onclick="location.href='notifications.html'"><span class="ms">notifications</span>알림</button>
+    <button class="drw-it" onclick="location.href='my-settings.html'"><span class="ms">settings</span>설정</button>
+  </div>
+</aside>
+
+<div class="back-wrap"><button class="back-btn" onclick="location.href='my.html'"><span class="ms" aria-hidden="true">arrow_back</span>나의 레인</button></div>
+
+<div class="page">
+  <!-- 헤더 -->
+  <div class="badge-header">
+    <div class="bh-eyebrow">나의 레인 · 뱃지 컬렉션</div>
+    <div class="bh-title">이레인님의 뱃지 🏅</div>
+    <div class="bh-summary">
+      <div class="bh-stat"><b>12</b><span>획득 뱃지</span></div>
+      <div class="bh-stat"><b>13</b><span>미획득</span></div>
+      <div class="bh-stat"><b>48%</b><span>달성률</span></div>
+    </div>
+  </div>
+
+  <!-- 필터 -->
+  <div class="filter-tabs" id="filterTabs">
+    <button class="ft on" data-cat="all">전체</button>
+    <button class="ft" data-cat="distance">누적 거리</button>
+    <button class="ft" data-cat="daily">하루 거리</button>
+    <button class="ft" data-cat="attend">출석</button>
+    <button class="ft" data-cat="special">스페셜</button>
+  </div>
+
+  <!-- 누적 거리 뱃지 -->
+  <div class="badge-section" data-cat="distance">
+    <div class="bs-title"><span class="ms" aria-hidden="true">straighten</span>누적 거리<span class="bs-sub">9개</span></div>
+    <div class="badge-list">
+      <div class="badge-item" data-cat="distance">
+        <div class="bi-icon" style="background:var(--aqua-light)">🏊<span class="bi-count">✓</span></div>
+        <div class="bi-info">
+          <div class="bi-name">첫 수영 완주</div>
+          <div class="bi-desc">누적 1km 달성 — 한강을 두 번 건넌 거리예요</div>
+        </div>
+        <div class="bi-status"><span class="ms" aria-hidden="true">check_circle</span>달성</div>
+      </div>
+      <div class="badge-item" data-cat="distance">
+        <div class="bi-icon" style="background:var(--mint-light)">🌊<span class="bi-count">✓</span></div>
+        <div class="bi-info">
+          <div class="bi-name">한강 한 번 건넌 거리</div>
+          <div class="bi-desc">누적 5km 달성</div>
+        </div>
+        <div class="bi-status"><span class="ms" aria-hidden="true">check_circle</span>달성</div>
+      </div>
+      <div class="badge-item" data-cat="distance">
+        <div class="bi-icon" style="background:var(--aqua-light)">🏝️</div>
+        <div class="bi-info">
+          <div class="bi-name">제주 바다 횡단</div>
+          <div class="bi-desc">누적 10km 달성</div>
+          <div class="bi-progress-wrap">
+            <div class="bi-bar"><div class="bi-fill" style="width:84%"></div></div>
+            <span class="bi-pct">8.4km</span>
+          </div>
+        </div>
+        <div class="bi-status"><span class="ms" aria-hidden="true">schedule</span>진행중</div>
+      </div>
+      <div class="badge-item locked" data-cat="distance">
+        <div class="bi-icon" style="background:var(--gray-100)">🗺️</div>
+        <div class="bi-info">
+          <div class="bi-name">부산~여수 직선 거리</div>
+          <div class="bi-desc">누적 30km 달성</div>
+          <div class="bi-progress-wrap">
+            <div class="bi-bar"><div class="bi-fill" style="width:28%"></div></div>
+            <span class="bi-pct">8.4km</span>
+          </div>
+        </div>
+        <div class="bi-status locked-badge"><span class="ms" aria-hidden="true">lock</span>잠금</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 하루 거리 뱃지 -->
+  <div class="badge-section" data-cat="daily">
+    <div class="bs-title"><span class="ms" aria-hidden="true">speed</span>하루 수영 거리<span class="bs-sub">6개</span></div>
+    <div class="badge-list">
+      <div class="badge-item" data-cat="daily">
+        <div class="bi-icon" style="background:#F5EEF0">🥉<span class="bi-count">×6</span></div>
+        <div class="bi-info">
+          <div class="bi-name">Bronze · 400m</div>
+          <div class="bi-desc">하루 400m 달성 · 올림픽 최단거리</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+            <div class="bi-streak"><span class="ms" aria-hidden="true">local_fire_department</span>3연속</div>
+          </div>
+        </div>
+        <div class="bi-status"><span class="ms" aria-hidden="true">check_circle</span>×6</div>
+      </div>
+      <div class="badge-item" data-cat="daily">
+        <div class="bi-icon" style="background:#F5F0E0">🥈<span class="bi-count">×3</span></div>
+        <div class="bi-info">
+          <div class="bi-name">Silver · 800m</div>
+          <div class="bi-desc">하루 800m 달성 · 중거리 도전</div>
+          <div class="bi-progress-wrap">
+            <div class="bi-bar"><div class="bi-fill" style="width:75%"></div></div>
+            <span class="bi-pct">×3/4</span>
+          </div>
+        </div>
+        <div class="bi-status"><span class="ms" aria-hidden="true">schedule</span>진행중</div>
+      </div>
+      <div class="badge-item" data-cat="daily">
+        <div class="bi-icon" style="background:var(--sun-light)">🥇</div>
+        <div class="bi-info">
+          <div class="bi-name">Gold · 1,500m</div>
+          <div class="bi-desc">하루 1,500m 달성 · 올림픽 장거리</div>
+          <div class="bi-progress-wrap">
+            <div class="bi-bar"><div class="bi-fill" style="width:0%"></div></div>
+            <span class="bi-pct" style="color:var(--gray-300)">0회</span>
+          </div>
+        </div>
+        <div class="bi-status locked-badge"><span class="ms" aria-hidden="true">lock</span>잠금</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 출석 뱃지 -->
+  <div class="badge-section" data-cat="attend">
+    <div class="bs-title"><span class="ms" aria-hidden="true">calendar_month</span>출석<span class="bs-sub">5개</span></div>
+    <div class="badge-list">
+      <div class="badge-item" data-cat="attend">
+        <div class="bi-icon" style="background:var(--mint-light)">📅<span class="bi-count">×8</span></div>
+        <div class="bi-info">
+          <div class="bi-name">주 2회 · 꾸준히 시작</div>
+          <div class="bi-desc">한 달 8회 이상 출석</div>
+          <div style="display:flex;align-items:center;gap:8px;margin-top:4px">
+            <div class="bi-streak"><span class="ms" aria-hidden="true">local_fire_department</span>6연속</div>
+            <div class="bi-master">⭐ Master 향해가는 중</div>
+          </div>
+        </div>
+        <div class="bi-status"><span class="ms" aria-hidden="true">check_circle</span>×8</div>
+      </div>
+      <div class="badge-item" data-cat="attend">
+        <div class="bi-icon" style="background:var(--aqua-light)">📆<span class="bi-count">×4</span></div>
+        <div class="bi-info">
+          <div class="bi-name">주 3회 · 수영 생활화</div>
+          <div class="bi-desc">한 달 12회 이상 출석</div>
+        </div>
+        <div class="bi-status"><span class="ms" aria-hidden="true">check_circle</span>×4</div>
+      </div>
+      <div class="badge-item locked" data-cat="attend">
+        <div class="bi-icon" style="background:var(--gray-100)">📊</div>
+        <div class="bi-info">
+          <div class="bi-name">주 4회 · 진심 수영러</div>
+          <div class="bi-desc">한 달 16회 이상 출석</div>
+          <div class="bi-progress-wrap">
+            <div class="bi-bar"><div class="bi-fill" style="width:42%"></div></div>
+            <span class="bi-pct" style="color:var(--gray-300)">이번달 7회</span>
+          </div>
+        </div>
+        <div class="bi-status locked-badge"><span class="ms" aria-hidden="true">lock</span>잠금</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 스페셜 뱃지 -->
+  <div class="badge-section" data-cat="special">
+    <div class="bs-title"><span class="ms" aria-hidden="true">workspace_premium</span>스페셜<span class="bs-sub">14개+</span></div>
+    <div class="badge-list">
+      <div class="badge-item" data-cat="special">
+        <div class="bi-icon" style="background:var(--coral-light)">✍️</div>
+        <div class="bi-info"><div class="bi-name">첫 글 작성</div><div class="bi-desc">게시글 첫 작성 달성</div></div>
+        <div class="bi-status"><span class="ms" aria-hidden="true">check_circle</span>달성</div>
+      </div>
+      <div class="badge-item" data-cat="special">
+        <div class="bi-icon" style="background:var(--mint-light)">📤</div>
+        <div class="bi-info"><div class="bi-name">기록 첫 공유</div><div class="bi-desc">기록을 소통방에 처음 공유했어요</div></div>
+        <div class="bi-status"><span class="ms" aria-hidden="true">check_circle</span>달성</div>
+      </div>
+      <div class="badge-item locked" data-cat="special">
+        <div class="bi-icon" style="background:var(--gray-100)">🏆</div>
+        <div class="bi-info"><div class="bi-name">첫 대회 등록</div><div class="bi-desc">대회 등록 인증 1회</div></div>
+        <div class="bi-status locked-badge"><span class="ms" aria-hidden="true">lock</span>잠금</div>
+      </div>
+      <div class="badge-item locked" data-cat="special">
+        <div class="bi-icon" style="background:var(--gray-100)">🌅</div>
+        <div class="bi-info">
+          <div class="bi-name">새벽반 10회</div><div class="bi-desc">06:00 이전 기록 10회</div>
+          <div class="bi-progress-wrap">
+            <div class="bi-bar"><div class="bi-fill" style="width:40%"></div></div>
+            <span class="bi-pct" style="color:var(--gray-300)">4/10</span>
+          </div>
+        </div>
+        <div class="bi-status locked-badge"><span class="ms" aria-hidden="true">lock</span>잠금</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// 필터 탭
+document.querySelectorAll('.ft').forEach(tab=>{
+  tab.addEventListener('click', ()=>{
+    document.querySelectorAll('.ft').forEach(t=>t.classList.remove('on'));
+    tab.classList.add('on');
+    const cat = tab.dataset.cat;
+    document.querySelectorAll('.badge-section').forEach(sec=>{
+      sec.style.display = (cat==='all' || sec.dataset.cat===cat) ? '' : 'none';
+    });
+  });
+});
+// 드로어
+(function(){
+  const btn=document.getElementById('drwBtn'),drw=document.getElementById('drwPanel'),ov=document.getElementById('drwOv'),cls=document.getElementById('drwClose');
+  if(!btn||!drw) return;
+  function open(){drw.classList.add('on');ov.classList.add('on');document.body.style.overflow='hidden'}
+  function close(){drw.classList.remove('on');ov.classList.remove('on');document.body.style.overflow=''}
+  btn.addEventListener('click',open); ov.addEventListener('click',close); if(cls) cls.addEventListener('click',close);
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,191 @@
+.group-invite-modal-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 250;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.35);
+}
+
+.group-invite-modal-bg.open {
+  display: flex;
+}
+
+.group-invite-modal {
+  width: 100%;
+  max-width: 420px;
+  background: var(--white, #fff);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 12px 40px rgba(20, 45, 71, 0.18);
+}
+
+.group-invite-modal__title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--navy, #1b3a5c);
+  margin-bottom: 8px;
+}
+
+.group-invite-modal__desc {
+  font-size: 14px;
+  color: var(--gray-500, #6b7a99);
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+
+.group-invite-modal__label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--gray-500, #6b7a99);
+  margin-bottom: 6px;
+}
+
+.group-invite-modal__url {
+  width: 100%;
+  box-sizing: border-box;
+  height: 42px;
+  padding: 0 12px;
+  border: 1.5px solid var(--gray-200, #d0d7e2);
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--navy, #1b3a5c);
+  background: var(--bg, #f5f7fa);
+  margin-bottom: 10px;
+}
+
+.group-invite-modal__url:focus {
+  outline: none;
+  border-color: var(--aqua, #0096a0);
+  box-shadow: 0 0 0 3px var(--aqua-light, #e6f6f7);
+}
+
+.group-invite-modal__feedback {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--aqua-dark, #006970);
+  margin: 0 0 12px;
+  line-height: 1.45;
+}
+
+.group-invite-modal__feedback--warn {
+  color: var(--coral-dark, #c45a33);
+}
+
+.group-invite-modal__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.group-invite-modal__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1.5px solid var(--gray-200, #d0d7e2);
+  background: var(--white, #fff);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy, #1b3a5c);
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+
+.group-invite-modal__btn:hover {
+  border-color: var(--aqua, #0096a0);
+  background: var(--aqua-whisper, #f2fbfc);
+}
+
+.group-invite-modal__btn--primary {
+  border-color: var(--aqua, #0096a0);
+  background: var(--aqua, #0096a0);
+  color: #fff;
+}
+
+.group-invite-modal__btn--primary:hover {
+  background: var(--aqua-hover, #007a82);
+  border-color: var(--aqua-hover, #007a82);
+}
+
+.group-invite-modal__btn .ms {
+  font-size: 18px;
+}
+
+.group-invite-modal__close {
+  display: block;
+  width: 100%;
+  padding: 8px;
+  border: none;
+  background: transparent;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--gray-500, #6b7a99);
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.group-invite-modal__close:hover {
+  color: var(--navy, #1b3a5c);
+}
+
+/* 레인방 입장 확인 */
+.group-join-confirm-modal__loading {
+  font-size: 13px;
+  color: var(--gray-500, #6b7a99);
+  margin-bottom: 14px;
+}
+
+.group-join-confirm-modal__card {
+  background: var(--aqua-whisper, #f2fbfc);
+  border: 1px solid var(--aqua-light, #e6f6f7);
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 14px;
+}
+
+.group-join-confirm-modal__card.waiting {
+  background: var(--coral-light, #fdf0eb);
+  border-color: var(--coral, #e8734a);
+}
+
+.group-join-confirm-modal__card-head {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.group-join-confirm-modal__name {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--navy, #1b3a5c);
+}
+
+.group-join-confirm-modal__meta {
+  font-size: 13px;
+  color: var(--gray-500, #6b7a99);
+  line-height: 1.45;
+  margin-bottom: 6px;
+}
+
+.group-join-confirm-modal__members {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--aqua-dark, #006970);
+  line-height: 1.45;
+}
+
+.group-join-confirm-modal__card.waiting .group-join-confirm-modal__members {
+  color: var(--coral-dark, #c45a33);
+}

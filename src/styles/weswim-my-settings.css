@@ -1,0 +1,928 @@
+.my-settings-screen {
+    --navy: #1b3a5c;
+    --navy-dark: #142d47;
+    --navy-light: #e8eef4;
+    --aqua: #0096a0;
+    --aqua-hover: #00a8b5;
+    --aqua-dark: #006970;
+    --aqua-light: #e6f6f7;
+    --aqua-whisper: #f2fbfc;
+    --coral: #e8734a;
+    --coral-dark: #c45a33;
+    --coral-light: #fdf0eb;
+    --mint: #7dd3c8;
+    --mint-light: #e8f7f4;
+    --sun: #f4b740;
+    --sun-light: #fcf1d8;
+    --bg: #f5f7fa;
+    --white: #ffffff;
+    --gray-100: #eceff4;
+    --gray-200: #d0d7e2;
+    --gray-300: #b4becd;
+    --gray-500: #6b7a99;
+    --gray-700: #3d4a66;
+    --text-main: #1a1a2e;
+    --error: #e54b4b;
+    --success: #00a37a;
+    --font-sans:
+        "Pretendard Variable", "Pretendard", "Helvetica Neue",
+        "Apple SD Gothic Neo", sans-serif;
+    --font-display:
+        "Helvetica Neue", "Pretendard Variable", "Pretendard", sans-serif;
+    font-family: var(--font-sans);
+    color: var(--text-main);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+}
+.my-settings-screen .page {
+    max-width: 960px;
+    display: block;
+}
+
+.my-settings-screen *,
+.my-settings-screen *::before,
+.my-settings-screen *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+.my-settings-screen .ms {
+    font-family: "Material Symbols Rounded";
+    font-weight: 500;
+    font-style: normal;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    white-space: nowrap;
+    direction: ltr;
+    -webkit-font-smoothing: antialiased;
+    font-feature-settings: "liga";
+    vertical-align: middle;
+    font-size: 20px;
+    font-variation-settings:
+        "opsz" 24,
+        "wght" 500,
+        "FILL" 0,
+        "GRAD" 0;
+}
+.my-settings-screen button {
+    font-family: inherit;
+    cursor: pointer;
+}
+.my-settings-screen a {
+    color: inherit;
+    text-decoration: none;
+}
+.my-settings-screen input,
+.my-settings-screen select,
+.my-settings-screen textarea {
+    font-family: inherit;
+}
+.my-settings-screen /* === GNB === */
+  .gnb {
+    height: 64px;
+    background: var(--navy);
+    color: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+.my-settings-screen .gnb-inner {
+    max-width: 1320px;
+    margin: 0 auto;
+    height: 100%;
+    padding: 0 32px;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+.my-settings-screen .gnb-logo {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+}
+.my-settings-screen .gnb-logo .We {
+    color: #fff;
+}
+.my-settings-screen .gnb-logo .Swim {
+    color: var(--aqua-hover);
+}
+.my-settings-screen .gnb-nav {
+    display: flex;
+    gap: 2px;
+}
+.my-settings-screen .gnb-nav a {
+    padding: 8px 14px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.5);
+    border-radius: 8px;
+    transition: all 0.15s;
+}
+.my-settings-screen .gnb-nav a.on {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+}
+.my-settings-screen .gnb-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: auto;
+}
+.my-settings-screen .icon-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 99px;
+    border: none;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.7);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+.my-settings-screen .icon-btn:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: #fff;
+}
+.my-settings-screen .icon-btn .ms {
+    font-size: 22px;
+}
+.my-settings-screen .gnb-avatar {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: var(--aqua);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+}
+.my-settings-screen /* === 레이아웃 === */
+  .page {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 32px 32px 80px;
+}
+.my-settings-screen .page-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 28px;
+}
+.my-settings-screen .back-btn {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--gray-500);
+    background: none;
+    border: none;
+    padding: 8px 0;
+    transition: color 0.15s;
+}
+.my-settings-screen .back-btn:hover {
+    color: var(--navy);
+}
+.my-settings-screen .back-btn .ms {
+    font-size: 18px;
+}
+.my-settings-screen .page-title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--navy);
+    letter-spacing: -0.02em;
+}
+.my-settings-screen /* === 설정 섹션 카드 === */
+  .settings-card {
+    background: var(--white);
+    border: 1px solid var(--gray-200);
+    border-radius: 16px;
+    overflow: hidden;
+    margin-bottom: 16px;
+}
+.my-settings-screen .settings-section-title {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gray-500);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 16px 20px 10px;
+    border-bottom: 1px solid var(--gray-100);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.my-settings-screen .settings-section-title .ms {
+    font-size: 15px;
+    color: var(--aqua);
+}
+.my-settings-screen /* 설정 행 */
+  .settings-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--gray-100);
+    transition: background 0.12s;
+}
+.my-settings-screen .settings-row:last-child {
+    border-bottom: none;
+}
+.my-settings-screen .settings-row:hover {
+    background: var(--bg);
+}
+.my-settings-screen .settings-row.clickable {
+    cursor: pointer;
+}
+.my-settings-screen .row-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    background: var(--aqua-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.my-settings-screen .row-icon .ms {
+    font-size: 18px;
+    color: var(--aqua-dark);
+}
+.my-settings-screen .row-icon.coral {
+    background: var(--coral-light);
+}
+.my-settings-screen .row-icon.coral .ms {
+    color: var(--coral-dark);
+}
+.my-settings-screen .row-icon.gray {
+    background: var(--gray-100);
+}
+.my-settings-screen .row-icon.gray .ms {
+    color: var(--gray-500);
+}
+.my-settings-screen .row-icon.error {
+    background: #fbe2e2;
+}
+.my-settings-screen .row-icon.error .ms {
+    color: var(--error);
+}
+.my-settings-screen .row-info {
+    flex: 1;
+}
+.my-settings-screen .row-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--navy);
+}
+.my-settings-screen .row-sub {
+    font-size: 12px;
+    color: var(--gray-500);
+    margin-top: 2px;
+}
+.my-settings-screen .row-value {
+    font-size: 13px;
+    color: var(--gray-500);
+    font-weight: 500;
+    white-space: nowrap;
+}
+.my-settings-screen .row-arrow {
+    color: var(--gray-300);
+}
+.my-settings-screen .row-arrow .ms {
+    font-size: 18px;
+}
+.my-settings-screen /* 토글 스위치 */
+  .toggle {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    flex-shrink: 0;
+}
+.my-settings-screen .toggle input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+.my-settings-screen .toggle-track {
+    position: absolute;
+    inset: 0;
+    background: var(--gray-200);
+    border-radius: 99px;
+    transition: background 0.2s;
+    cursor: pointer;
+}
+.my-settings-screen .toggle input:checked + .toggle-track {
+    background: var(--aqua);
+}
+.my-settings-screen .toggle-thumb {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fff;
+    transition: transform 0.2s;
+    pointer-events: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+}
+.my-settings-screen .toggle input:checked ~ .toggle-thumb {
+    transform: translateX(20px);
+}
+.my-settings-screen /* 칩 그룹 */
+  .chip-group {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    padding: 0 20px 16px;
+}
+.my-settings-screen .chip {
+    display: inline-flex;
+    align-items: center;
+    padding: 7px 14px;
+    border-radius: 99px;
+    font-size: 13px;
+    font-weight: 600;
+    border: 1.5px solid var(--gray-200);
+    color: var(--gray-500);
+    background: var(--white);
+    cursor: pointer;
+    transition: all 0.12s;
+}
+.my-settings-screen .chip.on {
+    border-color: var(--aqua);
+    background: var(--aqua-light);
+    color: var(--aqua-dark);
+}
+.my-settings-screen /* 소속 카드 */
+  .group-card {
+    margin: 0 20px 16px;
+    background: var(--aqua-whisper);
+    border: 1px solid var(--aqua-light);
+    border-radius: 12px;
+    padding: 14px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.my-settings-screen .group-av {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: var(--aqua);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+.my-settings-screen .group-av .ms {
+    font-size: 20px;
+    color: #fff;
+}
+.my-settings-screen .group-info {
+    flex: 1;
+}
+.my-settings-screen .group-name {
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--navy);
+}
+.my-settings-screen .group-sub {
+    font-size: 12px;
+    color: var(--gray-500);
+    margin-top: 2px;
+}
+.my-settings-screen .leave-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1.5px solid var(--error);
+    background: transparent;
+    color: var(--error);
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.12s;
+}
+.my-settings-screen .leave-btn:hover {
+    background: #fbe2e2;
+}
+.my-settings-screen .leave-btn .ms {
+    font-size: 14px;
+}
+.my-settings-screen .add-group-btn {
+    margin: 0 20px 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 14px;
+    border: 1.5px dashed var(--gray-200);
+    border-radius: 12px;
+    background: none;
+    color: var(--gray-500);
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    width: calc(100% - 40px);
+    transition: all 0.12s;
+}
+.my-settings-screen .add-group-btn:hover {
+    border-color: var(--aqua);
+    color: var(--aqua);
+    background: var(--aqua-whisper);
+}
+.my-settings-screen .add-group-btn .ms {
+    font-size: 18px;
+}
+.my-settings-screen /* 액션 버튼 */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border: none;
+    border-radius: 10px;
+    padding: 11px 18px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+    white-space: nowrap;
+}
+.my-settings-screen .btn-aqua {
+    background: var(--aqua);
+    color: #fff;
+}
+.my-settings-screen .btn-aqua:hover {
+    background: var(--aqua-hover);
+}
+.my-settings-screen /* 위험 영역 */
+  .danger-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--gray-100);
+    cursor: pointer;
+    transition: background 0.12s;
+}
+.my-settings-screen .danger-row:last-child {
+    border-bottom: none;
+}
+.my-settings-screen .danger-row:hover {
+    background: #fff5f5;
+}
+.my-settings-screen .danger-label {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--error);
+}
+.my-settings-screen .danger-sub {
+    font-size: 12px;
+    color: var(--gray-500);
+    margin-top: 2px;
+}
+.my-settings-screen /* 프로필 수정 인라인 폼 */
+  .profile-form {
+    padding: 16px 20px;
+    border-bottom: 1px solid var(--gray-100);
+}
+.my-settings-screen .form-row {
+    margin-bottom: 14px;
+}
+.my-settings-screen .form-label {
+    font-size: 12px;
+    font-weight: 700;
+    color: var(--gray-500);
+    margin-bottom: 6px;
+    display: block;
+}
+.my-settings-screen .form-input {
+    width: 100%;
+    height: 42px;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 0 12px;
+    font-size: 14px;
+    color: var(--text-main);
+    background: var(--white);
+    transition: border-color 0.15s;
+}
+.my-settings-screen .form-input:focus {
+    outline: none;
+    border-color: var(--aqua);
+    box-shadow: 0 0 0 3px var(--aqua-light);
+}
+.my-settings-screen .form-textarea {
+    width: 100%;
+    border: 1.5px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 10px 12px;
+    font-size: 14px;
+    color: var(--text-main);
+    background: var(--white);
+    resize: none;
+    line-height: 1.5;
+    transition: border-color 0.15s;
+}
+.my-settings-screen .form-textarea:focus {
+    outline: none;
+    border-color: var(--aqua);
+    box-shadow: 0 0 0 3px var(--aqua-light);
+}
+.my-settings-screen .form-save {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 4px;
+}
+.my-settings-screen /* 모달 */
+  .modal-bg {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.35);
+    z-index: 200;
+    display: none;
+    align-items: center;
+    justify-content: center;
+}
+.my-settings-screen .modal-bg.open {
+    display: flex;
+}
+.my-settings-screen .modal {
+    background: #fff;
+    border-radius: 16px;
+    padding: 28px;
+    width: 400px;
+}
+.my-settings-screen .modal-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: var(--navy);
+    margin-bottom: 8px;
+}
+.my-settings-screen .modal-desc {
+    font-size: 14px;
+    color: var(--gray-500);
+    line-height: 1.6;
+    margin-bottom: 20px;
+}
+.my-settings-screen .modal-warn {
+    background: #fbe2e2;
+    border-radius: 8px;
+    padding: 12px 14px;
+    font-size: 13px;
+    color: var(--error);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    line-height: 1.5;
+}
+.my-settings-screen .modal-warn .ms {
+    font-size: 16px;
+    flex-shrink: 0;
+    margin-top: 1px;
+}
+.my-settings-screen .modal-btns {
+    display: flex;
+    gap: 8px;
+}
+.my-settings-screen .modal-btns .btn {
+    flex: 1;
+}
+.my-settings-screen .btn-ghost {
+    background: transparent;
+    color: var(--gray-700);
+    border: 1.5px solid var(--gray-200);
+}
+.my-settings-screen .btn-danger {
+    background: var(--error);
+    color: #fff;
+}
+.my-settings-screen .btn-danger:hover {
+    background: #c43333;
+}
+.my-settings-screen /* ===== 반응형 공통 ===== */
+  .gnb {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+.my-settings-screen .gnb-hamburger {
+    display: none;
+    width: 38px;
+    height: 38px;
+    border: none;
+    border-radius: 8px;
+    background: transparent;
+    color: rgba(255, 255, 255, 0.85);
+    cursor: pointer;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+}
+.my-settings-screen .gnb-hamburger .ms {
+    font-size: 24px;
+    line-height: 1;
+}
+.my-settings-screen .drw-ov {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 300;
+}
+.my-settings-screen .drw-ov.on {
+    display: block;
+}
+.my-settings-screen .drw {
+    position: fixed;
+    top: 0;
+    right: -290px;
+    width: 280px;
+    height: 100dvh;
+    background: #1b3a5c;
+    z-index: 301;
+    display: flex;
+    flex-direction: column;
+    transition: right 0.25s ease;
+    box-shadow: -4px 0 20px rgba(0, 0, 0, 0.25);
+}
+.my-settings-screen .drw.on {
+    right: 0;
+}
+.my-settings-screen .drw-hd {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 18px;
+    height: 64px;
+    flex-shrink: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+.my-settings-screen .drw-logo {
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -0.03em;
+    line-height: 1;
+}
+.my-settings-screen .drw-logo .We {
+    color: #fff;
+}
+.my-settings-screen .drw-logo .Sw {
+    color: #00a8b5;
+}
+.my-settings-screen .drw-x {
+    width: 32px;
+    height: 32px;
+    border-radius: 7px;
+    border: none;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.my-settings-screen .drw-x .ms {
+    font-size: 18px;
+}
+.my-settings-screen .drw-bd {
+    flex: 1;
+    overflow-y: auto;
+    padding: 10px;
+}
+.my-settings-screen .drw-sec {
+    font-size: 10px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.35);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 12px 12px 4px;
+}
+.my-settings-screen .drw-it {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 14px;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.6);
+    border: none;
+    background: transparent;
+    width: 100%;
+    font-family: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition:
+        background 0.15s,
+        color 0.15s;
+}
+.my-settings-screen .drw-it:hover,
+.my-settings-screen .drw-it.on {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+.my-settings-screen .drw-it .ms {
+    font-size: 20px;
+}
+.my-settings-screen .drw-hr {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.08);
+    margin: 6px 0;
+}
+.my-settings-screen .mob-tabs {
+    display: none;
+    background: #fff;
+    border-bottom: 1px solid #d0d7e2;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    position: sticky;
+    top: 64px;
+    z-index: 90;
+    padding: 0 8px;
+}
+.my-settings-screen .mob-tabs::-webkit-scrollbar {
+    display: none;
+}
+.my-settings-screen .mob-tab {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 11px 12px;
+    font-size: 13px;
+    font-weight: 700;
+    color: #6b7a99;
+    border: none;
+    background: transparent;
+    border-bottom: 2.5px solid transparent;
+    margin-bottom: -1px;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+    transition: all 0.15s;
+}
+.my-settings-screen .mob-tab.on {
+    color: #0096a0;
+    border-bottom-color: #0096a0;
+}
+.my-settings-screen .mob-tab .ms {
+    font-size: 15px;
+}
+@media (max-width: 880px) {
+    .my-settings-screen .gnb-nav {
+        display: none;
+    }
+    .my-settings-screen .gnb-hamburger {
+        display: inline-flex;
+    }
+    .my-settings-screen .page {
+        max-width: 100%;
+        padding: 20px 16px 60px;
+    }
+}
+@media (max-width: 600px) {
+    .my-settings-screen .settings-row,
+    .my-settings-screen .danger-row {
+        padding: 14px 16px;
+    }
+    .my-settings-screen .settings-section-title {
+        padding: 14px 16px 8px;
+    }
+    .my-settings-screen .profile-form {
+        padding: 14px 16px;
+    }
+}
+.my-settings-screen /* pending 소속 카드 */
+  .group-card.pending {
+    background: var(--sun-light, #fcf1d8);
+    border-color: var(--sun, #f4b740);
+}
+.my-settings-screen .group-card.pending .group-av {
+    background: var(--sun, #f4b740);
+}
+.my-settings-screen .group-card.pending .group-av .ms {
+    color: #fff;
+}
+.my-settings-screen .pending-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 8px;
+    border-radius: 99px;
+    background: var(--sun-light, #fcf1d8);
+    color: var(--sun-dark, #9b6d0a);
+    border: 1px solid var(--sun, #f4b740);
+    margin-left: 6px;
+    vertical-align: middle;
+}
+.my-settings-screen .pending-badge .ms {
+    font-size: 11px;
+    animation: pendingPulse 1.6s ease-in-out infinite;
+}
+@keyframes pendingPulse {
+    0%,
+    100% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.35;
+    }
+}
+.my-settings-screen .group-sub.pending-sub {
+    color: var(--sun-dark, #9b6d0a);
+}
+.my-settings-screen .settings-hint {
+    padding: 0 20px 16px;
+    font-size: 12px;
+    color: var(--gray-500);
+}
+.my-settings-screen .settings-notice {
+    color: var(--aqua-dark);
+    margin-bottom: 12px;
+    padding: 12px;
+    background: var(--aqua-light);
+    border-radius: 8px;
+    font-size: 14px;
+}
+.my-settings-screen form > .form-save {
+    padding: 0 4px 24px;
+}
+.my-settings-screen .avatar-editor-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.my-settings-screen .avatar-trigger {
+    border: none;
+    background: transparent;
+    padding: 0;
+}
+.my-settings-screen .avatar-preview {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--aqua);
+    color: #fff;
+    border: 2px solid var(--aqua-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 800;
+    overflow: visible;
+    flex-shrink: 0;
+    position: relative;
+    transition: border-color 0.15s;
+}
+.my-settings-screen .avatar-trigger:hover .avatar-preview {
+    border-color: var(--aqua-hover);
+}
+.my-settings-screen .avatar-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.my-settings-screen .avatar-preview .av-edit {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--gray-200);
+}
+.my-settings-screen .avatar-preview .av-edit .ms {
+    font-size: 12px;
+    color: var(--navy);
+}
+.my-settings-screen .avatar-remove-btn {
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+}

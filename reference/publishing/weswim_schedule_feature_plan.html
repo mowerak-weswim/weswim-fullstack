@@ -1,0 +1,278 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans)}
+.wrap{padding:20px 0 32px}
+.section{margin-bottom:32px}
+.section-label{font-size:11px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:.08em;text-transform:uppercase;margin-bottom:12px;padding-bottom:8px;border-bottom:0.5px solid var(--color-border-tertiary)}
+.row{display:grid;gap:10px}
+.row-2{grid-template-columns:1fr 1fr}
+.row-3{grid-template-columns:1fr 1fr 1fr}
+.card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 16px}
+.card-accent{border-left:3px solid #0096A0;border-radius:0;padding-left:13px}
+.card-warn{border-left:3px solid #E8734A;border-radius:0;padding-left:13px}
+.card h3{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:6px}
+.card p{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+.badge{display:inline-block;font-size:11px;font-weight:500;padding:2px 8px;border-radius:99px;margin-bottom:8px}
+.badge-teal{background:#E1F5EE;color:#085041}
+.badge-coral{background:#FAECE7;color:#712B13}
+.badge-amber{background:#FAEEDA;color:#633806}
+.badge-blue{background:#E6F1FB;color:#0C447C}
+.badge-purple{background:#EEEDFE;color:#3C3489}
+.chip-row{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--color-text-secondary);background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);padding:3px 9px;border-radius:99px}
+.chip i{font-size:13px}
+.flow{display:flex;align-items:flex-start;gap:0;overflow-x:auto;padding-bottom:4px}
+.flow-step{display:flex;flex-direction:column;align-items:center;min-width:110px}
+.flow-box{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:8px 10px;font-size:12px;color:var(--color-text-primary);text-align:center;width:100px;line-height:1.4}
+.flow-box.highlight{background:#E6F6F7;border-color:#0096A0;color:#006970;font-weight:500}
+.flow-box.warn{background:#FDF0EB;border-color:#E8734A;color:#C45A33}
+.flow-arrow{font-size:16px;color:var(--color-text-tertiary);margin:0 2px;margin-top:20px;flex-shrink:0}
+.spec-table{width:100%;font-size:12px;border-collapse:collapse}
+.spec-table th{font-weight:500;color:var(--color-text-secondary);text-align:left;padding:6px 8px;border-bottom:0.5px solid var(--color-border-tertiary);font-size:11px;text-transform:uppercase;letter-spacing:.06em}
+.spec-table td{padding:8px 8px;border-bottom:0.5px solid var(--color-border-tertiary);color:var(--color-text-primary);vertical-align:top;line-height:1.5}
+.spec-table tr:last-child td{border-bottom:none}
+.spec-table td:first-child{font-weight:500;color:var(--color-text-secondary);white-space:nowrap;padding-right:12px;min-width:80px}
+.notice{background:var(--color-background-info);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 14px;font-size:12px;color:var(--color-text-info);display:flex;gap:8px;align-items:flex-start;margin-top:10px}
+.notice i{font-size:16px;flex-shrink:0;margin-top:1px}
+.mock-card{background:var(--color-background-secondary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);overflow:hidden}
+.mock-header{background:#1B3A5C;padding:10px 14px;display:flex;align-items:center;gap:8px}
+.mock-header span{color:#fff;font-size:13px;font-weight:500}
+.mock-body{padding:12px 14px}
+.mock-title{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.mock-meta{font-size:11px;color:var(--color-text-tertiary);margin-bottom:10px}
+.rsvp-row{display:flex;gap:6px;margin-bottom:8px}
+.rsvp-btn{flex:1;padding:7px 4px;border-radius:var(--border-radius-md);border:0.5px solid var(--color-border-tertiary);background:var(--color-background-primary);font-size:12px;color:var(--color-text-secondary);text-align:center;cursor:pointer}
+.rsvp-btn.on{background:#E6F6F7;border-color:#0096A0;color:#006970;font-weight:500}
+.vote-section{margin-top:10px;border-top:0.5px solid var(--color-border-tertiary);padding-top:10px}
+.vote-title{font-size:11px;font-weight:500;color:var(--color-text-tertiary);margin-bottom:8px;text-transform:uppercase;letter-spacing:.06em}
+.vote-opt{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.vote-bar-wrap{flex:1;background:var(--color-background-secondary);border-radius:99px;height:20px;position:relative;overflow:hidden;border:0.5px solid var(--color-border-tertiary)}
+.vote-bar-fill{height:100%;border-radius:99px;background:#0096A0;opacity:.25}
+.vote-bar-label{position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:11px;color:var(--color-text-primary)}
+.vote-count{font-size:11px;color:var(--color-text-secondary);min-width:24px;text-align:right}
+.vote-check{width:16px;height:16px;border-radius:4px;border:0.5px solid var(--color-border-secondary);background:var(--color-background-primary);flex-shrink:0}
+.vote-check.checked{background:#0096A0;border-color:#0096A0}
+</style>
+
+<div class="wrap">
+
+<div class="section">
+  <div class="section-label">기능 범위 — 일정 타입 2종</div>
+  <div class="row row-2">
+    <div class="card">
+      <span class="badge badge-teal">타입 A</span>
+      <h3>일정 공지 (단순 RSVP)</h3>
+      <p>날짜·시간·장소가 이미 확정된 일정. 강사가 공지하고 멤버는 참석 여부만 응답.</p>
+      <div class="chip-row">
+        <span class="chip"><i class="ti ti-check" aria-hidden="true"></i>날짜 확정</span>
+        <span class="chip"><i class="ti ti-users" aria-hidden="true"></i>참석·미정·불참</span>
+        <span class="chip"><i class="ti ti-bell" aria-hidden="true"></i>D-1 알림</span>
+      </div>
+    </div>
+    <div class="card">
+      <span class="badge badge-amber">타입 B</span>
+      <h3>일정 투표 (날짜/장소 미정)</h3>
+      <p>날짜·장소·메뉴 중 하나 이상이 미정. 멤버가 선호 옵션을 투표하고 작성자가 확정.</p>
+      <div class="chip-row">
+        <span class="chip"><i class="ti ti-chart-bar" aria-hidden="true"></i>옵션 복수 제시</span>
+        <span class="chip"><i class="ti ti-check" aria-hidden="true"></i>중복 선택 가능</span>
+        <span class="chip"><i class="ti ti-lock" aria-hidden="true"></i>작성자 확정 후 종료</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">작성 플로우 — 게시글 작성 시 타입 선택</div>
+  <div class="flow">
+    <div class="flow-step">
+      <div class="flow-box">공지·벙개 탭<br>글쓰기 클릭</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-box">일정 유형 선택<br><span style="font-size:11px;opacity:.7">공지 / 투표</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-box highlight">제목·날짜·장소<br>입력</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-box">투표 옵션 추가<br><span style="font-size:11px;opacity:.7">(타입 B만)</span></div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-box">마감일 설정</div>
+    </div>
+    <div class="flow-arrow">→</div>
+    <div class="flow-step">
+      <div class="flow-box highlight">등록 → 알림 발송</div>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">카드 컴포넌트 명세</div>
+  <div class="row row-2">
+
+    <div>
+      <p style="font-size:12px;color:var(--color-text-tertiary);margin-bottom:8px">타입 A — 일정 공지 카드</p>
+      <div class="mock-card">
+        <div class="mock-header">
+          <i class="ti ti-calendar-event" style="color:rgba(255,255,255,.7);font-size:16px" aria-hidden="true"></i>
+          <span>일정 공지</span>
+          <span style="margin-left:auto;font-size:11px;color:rgba(255,255,255,.5)">D-8</span>
+        </div>
+        <div class="mock-body">
+          <div class="mock-title">5월 정기 회식</div>
+          <div class="mock-meta">5월 30일(금) 19:00 · 잠실 삼겹살집 · 3만원</div>
+          <div class="rsvp-row">
+            <div class="rsvp-btn on">참석 7</div>
+            <div class="rsvp-btn">미정 2</div>
+            <div class="rsvp-btn">불참 1</div>
+          </div>
+          <div style="font-size:11px;color:var(--color-text-tertiary)">응답 마감 5월 28일까지</div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p style="font-size:12px;color:var(--color-text-tertiary);margin-bottom:8px">타입 B — 일정 투표 카드</p>
+      <div class="mock-card">
+        <div class="mock-header" style="background:#E8734A">
+          <i class="ti ti-chart-bar" style="color:rgba(255,255,255,.7);font-size:16px" aria-hidden="true"></i>
+          <span>일정 투표</span>
+          <span style="margin-left:auto;font-size:11px;color:rgba(255,255,255,.7)">진행중 · 4명 참여</span>
+        </div>
+        <div class="mock-body">
+          <div class="mock-title">6월 워크숍 날짜 투표</div>
+          <div class="mock-meta">마감 6월 3일 · 중복선택 가능</div>
+          <div class="vote-section">
+            <div class="vote-title">투표 항목</div>
+            <div class="vote-opt">
+              <div class="vote-check checked"></div>
+              <div class="vote-bar-wrap"><div class="vote-bar-fill" style="width:75%"></div><span class="vote-bar-label">6월 7일(토)</span></div>
+              <span class="vote-count">3명</span>
+            </div>
+            <div class="vote-opt">
+              <div class="vote-check"></div>
+              <div class="vote-bar-wrap"><div class="vote-bar-fill" style="width:50%"></div><span class="vote-bar-label">6월 14일(토)</span></div>
+              <span class="vote-count">2명</span>
+            </div>
+            <div class="vote-opt">
+              <div class="vote-check"></div>
+              <div class="vote-bar-wrap"><div class="vote-bar-fill" style="width:25%"></div><span class="vote-bar-label">6월 21일(토)</span></div>
+              <span class="vote-count">1명</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">필드 명세</div>
+  <div class="row row-2">
+    <div class="card">
+      <span class="badge badge-teal">공통 필드</span>
+      <table class="spec-table">
+        <tr><td>제목</td><td>최대 50자, 필수</td></tr>
+        <tr><td>내용</td><td>상세 설명, 선택, 최대 500자</td></tr>
+        <tr><td>날짜</td><td>날짜 피커, 오늘 이후만 선택 가능</td></tr>
+        <tr><td>장소</td><td>텍스트 입력, 선택</td></tr>
+        <tr><td>비용</td><td>숫자 입력 + "원", 선택</td></tr>
+        <tr><td>응답 마감일</td><td>일정 날짜 이전, 기본 D-2 자동 세팅</td></tr>
+        <tr><td>알림 설정</td><td>등록 즉시 / D-3 / D-1 / 당일 (복수 선택)</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <span class="badge badge-amber">투표 전용 필드</span>
+      <table class="spec-table">
+        <tr><td>투표 항목</td><td>최소 2개, 최대 5개, 텍스트 자유입력</td></tr>
+        <tr><td>중복 선택</td><td>허용 / 단일 선택 토글</td></tr>
+        <tr><td>익명 투표</td><td>결과에 이름 노출 여부 토글</td></tr>
+        <tr><td>확정 권한</td><td>작성자만 "이 항목으로 확정" 가능</td></tr>
+        <tr><td>확정 후</td><td>자동으로 타입 A 공지 카드로 전환, 알림 발송</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">상태 분기 — 투표 → 확정 → 완료</div>
+  <div class="row row-3">
+    <div class="card">
+      <span class="badge badge-amber">상태 1 · 투표중</span>
+      <h3>진행 중</h3>
+      <p>멤버 투표 가능. 실시간 결과 표시. 마감일 이전까지 변경 가능.</p>
+    </div>
+    <div class="card">
+      <span class="badge badge-teal">상태 2 · 확정됨</span>
+      <h3>확정 완료</h3>
+      <p>작성자가 한 항목 확정. 카드가 일정 공지로 전환. 전체 멤버 알림 발송.</p>
+    </div>
+    <div class="card">
+      <span class="badge badge-blue" style="background:#E6F1FB;color:#0C447C">상태 3 · 종료</span>
+      <h3>일정 완료</h3>
+      <p>일정 날짜 경과 후 자동 "완료" 처리. 카드 하단으로 정렬, 흐리게 표시.</p>
+    </div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">알림 트리거</div>
+  <table class="spec-table" style="font-size:12px">
+    <thead><tr><th>이벤트</th><th>발송 대상</th><th>알림 내용</th></tr></thead>
+    <tbody>
+      <tr><td>일정 등록</td><td>전체 멤버</td><td>"[공지] 5월 정기 회식이 등록됐어요 — 참석 여부를 알려주세요"</td></tr>
+      <tr><td>투표 등록</td><td>전체 멤버</td><td>"[투표] 6월 워크숍 날짜를 투표해주세요 (마감 6/3)"</td></tr>
+      <tr><td>마감 임박</td><td>미응답 멤버</td><td>"아직 응답 안 하셨어요! 내일까지예요 — 지금 참석 여부 알려주세요"</td></tr>
+      <tr><td>투표 확정</td><td>전체 멤버</td><td>"[확정] 6월 7일(토)로 워크숍 날짜가 확정됐어요"</td></tr>
+      <tr><td>D-1 리마인더</td><td>참석 멤버</td><td>"내일 5월 정기 회식이에요 — 잠실 삼겹살집 19:00"</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="section">
+  <div class="section-label">group.html 적용 위치</div>
+  <div class="row row-2">
+    <div class="card card-accent">
+      <h3>우측 "다음 일정" 위젯</h3>
+      <p>가장 가까운 일정 1개 프리뷰. 투표 중이면 투표 현황(N명 참여), 확정이면 날짜·장소 표시. "전체 일정 보기 →" 클릭 시 공지·벙개 탭으로 이동.</p>
+    </div>
+    <div class="card card-accent">
+      <h3>공지·벙개 탭 피드</h3>
+      <p>일정 카드가 상단 고정. 투표 카드·공지 카드 인라인 렌더링. 일반 게시글 아래로 정렬. 완료 일정은 "지난 일정" 섹션으로 분리.</p>
+    </div>
+  </div>
+  <div class="notice">
+    <i class="ti ti-info-circle" aria-hidden="true"></i>
+    <span>투표 기능은 공지·벙개 탭에서만 생성 가능. 잡담탭·에티켓탭에서는 일반 게시글 작성만 허용 — 탭 혼선 방지.</span>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-label">신규 생성 필요 화면</div>
+  <div class="row row-3">
+    <div class="card">
+      <span class="badge badge-purple">신규</span>
+      <h3>일정·투표 작성폼</h3>
+      <p>schedule-write.html — 타입 선택 → 공통 필드 → 투표 옵션(타입 B) → 등록</p>
+    </div>
+    <div class="card">
+      <span class="badge badge-purple">신규</span>
+      <h3>일정 상세 화면</h3>
+      <p>schedule-detail.html — 전체 참석 현황, 투표 결과 그래프, 확정 버튼(작성자만), 댓글</p>
+    </div>
+    <div class="card">
+      <span class="badge badge-blue" style="background:#E6F1FB;color:#0C447C">수정</span>
+      <h3>group.html 위젯</h3>
+      <p>"다음 일정" 위젯 상태별 렌더링 + 투표 카드 컴포넌트 추가</p>
+    </div>
+  </div>
+</div>
+
+</div>

@@ -1,0 +1,356 @@
+/* ── 공통 반·대기방 행 ── */
+.gm-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+
+.gm-row--active {
+  background: var(--aqua-whisper, #f2fbfc);
+  border-color: var(--aqua-light, #e6f6f7);
+}
+
+.gm-row--waiting {
+  background: var(--coral-light, #fdf0eb);
+  border-color: var(--coral, #e8734a);
+}
+
+.gm-row--other {
+  background: var(--bg, #f5f7fa);
+  border-color: var(--gray-200, #d0d7e2);
+}
+
+.gm-row__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.gm-row--active .gm-row__icon {
+  background: var(--aqua, #0096a0);
+}
+
+.gm-row--waiting .gm-row__icon {
+  background: var(--coral, #e8734a);
+  margin-right: 4px;
+}
+
+.gm-row--other .gm-row__icon {
+  background: var(--gray-500, #6b7a99);
+}
+
+.gm-row__icon .ms {
+  font-size: 20px;
+  color: #fff;
+}
+
+.gm-row__body {
+  flex: 1;
+  min-width: 0;
+}
+
+.gm-row__title {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--navy, #1b3a5c);
+  line-height: 1.35;
+}
+
+.gm-row__sub {
+  font-size: 12px;
+  color: var(--gray-500, #6b7a99);
+  margin-top: 3px;
+  line-height: 1.45;
+}
+
+.gm-row--waiting .gm-row__sub {
+  color: var(--coral-dark, #c45a33);
+}
+
+.gm-row__badge {
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+.gm-row__leave {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1.5px solid var(--error, #e54b4b);
+  background: transparent;
+  color: var(--error, #e54b4b);
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  flex-shrink: 0;
+  font-family: inherit;
+  transition: background 0.12s ease;
+}
+
+.gm-row__leave:hover {
+  background: #fbe2e2;
+}
+
+.gm-row__leave .ms {
+  font-size: 14px;
+}
+
+/* ── 종류 뱃지 (등록방 / 대기방) ── */
+.group-kind-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 10px;
+  border-radius: 99px;
+  font-size: 10px;
+  font-weight: 800;
+  line-height: 1.4;
+  flex-shrink: 0;
+  background: #fff;
+}
+
+.group-kind-badge.kind-active {
+  color: var(--aqua-dark, #006970);
+  border: 1px solid var(--aqua, #0096a0);
+}
+
+.group-kind-badge.kind-waiting {
+  color: var(--coral-dark, #c45a33);
+  border: 1px solid var(--coral, #e8734a);
+}
+
+.group-kind-badge.kind-inactive,
+.group-kind-badge.kind-other {
+  color: var(--gray-600, #3d4a66);
+  border: 1px solid var(--gray-200, #d0d7e2);
+}
+
+/* ── 설정·마이 > 소속 카드 (공통) ── */
+.my-settings-screen .group-card,
+.my-screen .group-card {
+  background: var(--aqua-whisper, #f2fbfc);
+  border: 1px solid var(--aqua-light, #e6f6f7);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+
+.my-settings-screen .group-card {
+  margin: 0 20px 12px;
+}
+
+.my-screen .history-list .group-card {
+  margin-bottom: 12px;
+}
+
+.my-screen .history-list .group-card:last-child {
+  margin-bottom: 0;
+}
+
+.my-screen .group-card:hover {
+  border-color: var(--aqua, #0096a0);
+}
+
+.my-settings-screen .group-card .group-av,
+.my-screen .group-card .group-av {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: var(--aqua, #0096a0);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.my-settings-screen .group-card .group-av .ms,
+.my-screen .group-card .group-av .ms {
+  font-size: 20px;
+  color: #fff;
+}
+
+.my-settings-screen .group-card .group-info,
+.my-screen .group-card .group-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.my-settings-screen .group-card .group-name,
+.my-screen .group-card .group-name {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--navy, #1b3a5c);
+}
+
+.my-settings-screen .group-card .group-sub,
+.my-screen .group-card .group-sub {
+  font-size: 12px;
+  color: var(--gray-500, #6b7a99);
+  margin-top: 2px;
+  line-height: 1.45;
+}
+
+.my-settings-screen .group-card.waiting,
+.my-screen .group-card.waiting {
+  background: var(--coral-light, #fdf0eb);
+  border-color: var(--coral, #e8734a);
+}
+
+.my-settings-screen .group-card.waiting .group-av,
+.my-screen .group-card.waiting .group-av {
+  background: var(--coral, #e8734a);
+}
+
+.my-settings-screen .group-card.waiting .group-sub,
+.my-screen .group-card.waiting .group-sub {
+  color: var(--coral-dark, #c45a33);
+}
+
+.lane-compact-card .group-kind-badge,
+.my-settings-screen .group-card .group-kind-badge,
+.my-screen .group-card .group-kind-badge {
+  padding: 1px 6px;
+  font-size: 9px;
+  flex-shrink: 0;
+}
+
+.my-screen .group-link-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: var(--gray-300, #b4becd);
+}
+
+.my-screen .group-link-arrow .ms {
+  font-size: 20px;
+}
+
+/* ── 컴팩트 레인방 링크 (홈·우리반 사이드바) ── */
+.home-screen .lane-compact-list,
+.group-screen .lane-compact-list {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 6px;
+}
+
+.home-screen .lane-compact-empty {
+  font-size: 11px;
+  color: var(--gray-500, #6b7a99);
+  padding: 2px 6px 8px;
+  line-height: 1.45;
+}
+
+.lane-compact-card {
+  display: block;
+  padding: 7px 8px;
+  border-radius: 8px;
+  border: 1px solid var(--aqua-light, #e6f6f7);
+  background: var(--aqua-whisper, #f2fbfc);
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+
+.lane-compact-card.waiting {
+  border-color: var(--coral, #e8734a);
+  background: var(--coral-light, #fdf0eb);
+}
+
+.lane-compact-card:hover {
+  border-color: var(--aqua, #0096a0);
+}
+
+.lane-compact-card.waiting:hover {
+  border-color: var(--coral-dark, #c45a33);
+}
+
+.lane-compact-card.on {
+  border-color: var(--aqua, #0096a0);
+  box-shadow: 0 0 0 1px var(--aqua-light, #e6f6f7);
+}
+
+.lane-compact-card.waiting.on {
+  border-color: var(--coral, #e8734a);
+  box-shadow: 0 0 0 1px rgba(232, 115, 74, 0.25);
+}
+
+.lane-compact-card__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.lane-compact-card__title {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--navy, #1b3a5c);
+  line-height: 1.35;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.lane-compact-card__sub {
+  margin-top: 2px;
+  font-size: 10px;
+  line-height: 1.35;
+  color: var(--gray-500, #6b7a99);
+}
+
+.lane-compact-card.waiting .lane-compact-card__sub {
+  color: var(--coral-dark, #c45a33);
+}
+
+.home-screen .sb-block .sb-item {
+  margin-top: 2px;
+}
+
+.group-screen .sb-block .other-classes {
+  margin-top: 4px;
+}
+
+/* ── 마이 > 소속 이력 ── */
+.my-screen .gm-row--history {
+  margin-bottom: 8px;
+}
+
+.my-screen .gm-row--history:hover {
+  border-color: var(--aqua, #0096a0);
+}
+
+.my-screen .gm-row--history.gm-row--active {
+  box-shadow: 0 0 0 1px var(--aqua-light, #e6f6f7);
+}
+
+.group-find-page .current-class-list .lane-compact-card {
+  margin-top: 8px;
+}
+
+.group-find-page .current-class-list .lane-compact-card:last-child {
+  margin-bottom: 0;
+}

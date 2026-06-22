@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/><title>WeSwim — 유저 프로필</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0,0&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--navy:#1B3A5C;--navy-light:#E8EEF4;--aqua:#0096A0;--aqua-hover:#00A8B5;--aqua-dark:#006970;--aqua-light:#E6F6F7;--aqua-whisper:#F2FBFC;--coral:#E8734A;--coral-dark:#C45A33;--coral-light:#FDF0EB;--mint:#7DD3C8;--mint-light:#E8F7F4;--sun-light:#FCF1D8;--bg:#F5F7FA;--white:#fff;--gray-100:#ECEFF4;--gray-200:#D0D7E2;--gray-300:#B4BECD;--gray-500:#6B7A99;--gray-700:#3D4A66;--text-main:#1A1A2E;--font-sans:'Pretendard Variable','Pretendard','Helvetica Neue',sans-serif;--font-display:'Helvetica Neue','Pretendard Variable',sans-serif;}
+html,body{height:100%}
+body{font-family:var(--font-sans);color:var(--text-main);background:var(--bg);-webkit-font-smoothing:antialiased}
+.ms{font-family:'Material Symbols Rounded';font-weight:500;font-style:normal;display:inline-flex;align-items:center;justify-content:center;line-height:1;text-transform:none;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;font-feature-settings:'liga';vertical-align:middle;font-size:20px;font-variation-settings:'opsz' 24,'wght' 500,'FILL' 0,'GRAD' 0}
+button,a{font-family:inherit;text-decoration:none;color:inherit}
+
+/* GNB */
+.gnb{height:64px;background:var(--navy);color:#fff;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.05)}
+.gnb-inner{max-width:1320px;margin:0 auto;height:100%;padding:0 32px;display:flex;align-items:center;gap:28px}
+.gnb-logo{font-family:var(--font-display);font-size:22px;font-weight:800;letter-spacing:-.04em;line-height:1;text-decoration:none}
+.gnb-logo .We{color:#fff}.gnb-logo .Swim{color:var(--aqua-hover)}
+.gnb-nav{display:flex;gap:2px}
+.gnb-nav a{padding:8px 14px;font-size:14px;font-weight:600;color:rgba(255,255,255,.5);border-radius:8px;transition:all .15s;text-decoration:none}
+.gnb-nav a:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.06)}
+.gnb-nav a.on{color:#fff;background:rgba(255,255,255,.1)}
+.gnb-right{display:flex;align-items:center;gap:6px;margin-left:auto}
+.icon-btn{width:38px;height:38px;border-radius:99px;border:none;background:transparent;color:rgba(255,255,255,.7);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:all .15s}
+.icon-btn:hover{background:rgba(255,255,255,.08);color:#fff}
+.icon-btn .ms{font-size:22px}
+.icon-btn .badge{position:absolute;top:5px;right:5px;background:var(--coral);color:#fff;font-size:9px;font-weight:800;min-width:14px;height:14px;padding:0 3px;border-radius:99px;display:flex;align-items:center;justify-content:center;border:2px solid var(--navy)}
+.gnb-avatar{width:36px;height:36px;border-radius:50%;background:var(--aqua);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;cursor:pointer;border:2px solid rgba(255,255,255,.15);transition:all .15s;flex-shrink:0}
+.gnb-hamburger{display:none;width:38px;height:38px;border-radius:8px;border:none;background:transparent;color:rgba(255,255,255,.85);cursor:pointer;flex-shrink:0;align-items:center;justify-content:center}
+.gnb-hamburger .ms{font-size:24px}
+
+/* 드로어 */
+.drw-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300}.drw-ov.on{display:block}
+.drw{position:fixed;top:0;right:-290px;width:280px;height:100dvh;background:var(--navy);z-index:301;display:flex;flex-direction:column;transition:right .25s ease;box-shadow:-4px 0 20px rgba(0,0,0,.25)}.drw.on{right:0}
+.drw-hd{display:flex;align-items:center;justify-content:space-between;padding:0 18px;height:64px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.1)}
+.drw-logo{font-weight:800;font-size:18px;letter-spacing:-.03em}.drw-logo .We{color:#fff}.drw-logo .Sw{color:#00A8B5}
+.drw-x{width:32px;height:32px;border-radius:7px;border:none;background:rgba(255,255,255,.1);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}.drw-x .ms{font-size:18px}
+.drw-bd{flex:1;overflow-y:auto;padding:10px}
+.drw-sec{font-size:10px;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.12em;text-transform:uppercase;padding:12px 12px 4px}
+.drw-it{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;font-size:15px;font-weight:700;color:rgba(255,255,255,.6);border:none;background:transparent;width:100%;font-family:inherit;text-align:left;cursor:pointer;transition:background .15s,color .15s}.drw-it:hover,.drw-it.on{background:rgba(255,255,255,.1);color:#fff}.drw-it .ms{font-size:20px}
+.drw-hr{height:1px;background:rgba(255,255,255,.08);margin:6px 0}
+
+/* 뒤로가기 */
+.back-wrap{max-width:1320px;margin:0 auto;padding:20px 32px 0}
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--gray-500);background:none;border:none;padding:0;cursor:pointer;transition:color .15s}
+.back-btn:hover{color:var(--navy)}
+.back-btn .ms{font-size:18px}
+
+/* 페이지 레이아웃 */
+.page{max-width:1320px;margin:0 auto;padding:16px 32px 80px;display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start}
+
+/* 프로필 히어로 */
+.profile-hero{background:#fff;border:1px solid var(--gray-200);border-radius:16px;overflow:hidden;margin-bottom:16px}
+.hero-cover{height:120px;background:linear-gradient(135deg,#0E2540 0%,var(--navy) 60%,#1F4870 100%);position:relative}
+.hero-cover::before{content:"";position:absolute;right:-40px;bottom:-50px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(0,168,181,.3) 0%,transparent 65%)}
+.hero-body{padding:0 24px 24px}
+.avatar-wrap{position:relative;margin-top:-36px;margin-bottom:12px}
+.profile-av{width:72px;height:72px;border-radius:50%;background:var(--aqua);color:#fff;display:flex;align-items:center;justify-content:center;font-size:28px;font-weight:800;border:4px solid #fff;box-shadow:0 2px 8px rgba(0,0,0,.1)}
+.hero-row{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.profile-name{font-size:22px;font-weight:800;color:var(--navy);letter-spacing:-.02em;margin-bottom:4px}
+.profile-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.level-badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:99px;background:var(--aqua-light);color:var(--aqua-dark)}
+.level-badge::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--aqua)}
+.profile-pool{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--gray-500)}
+.profile-pool .ms{font-size:14px;color:var(--aqua)}
+.profile-bio{font-size:13px;color:var(--gray-700);line-height:1.6;margin-bottom:16px;padding:12px;background:var(--bg);border-radius:8px}
+.action-row{display:flex;gap:8px;flex-wrap:wrap}
+.btn-report{padding:10px 16px;border-radius:8px;border:1px solid var(--gray-200);background:#fff;font-size:13px;font-weight:700;color:var(--gray-500);cursor:pointer;display:inline-flex;align-items:center;gap:5px;transition:all .15s}
+.btn-report:hover{border-color:var(--error);color:var(--error)}
+.btn-report .ms{font-size:15px}
+
+/* 통계 */
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid var(--gray-100);border-bottom:1px solid var(--gray-100)}
+.stat-item{padding:14px;text-align:center;border-right:1px solid var(--gray-100)}
+.stat-item:last-child{border-right:none}
+.stat-num{font-family:var(--font-display);font-size:20px;font-weight:800;color:var(--navy);letter-spacing:-.02em}
+.stat-label{font-size:11px;color:var(--gray-500);margin-top:2px}
+
+/* 소속 정보 */
+.affil-section{background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px;margin-bottom:16px}
+.sec-title{font-size:12px;font-weight:800;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.sec-title .ms{font-size:16px;color:var(--aqua)}
+.affil-item{display:flex;align-items:center;gap:10px;padding:10px;border-radius:8px;background:var(--aqua-whisper);border:1px solid var(--aqua-light);margin-bottom:8px}
+.affil-item:last-child{margin-bottom:0}
+.affil-ico{width:36px;height:36px;border-radius:9px;background:var(--aqua-light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.affil-ico .ms{font-size:20px;color:var(--aqua)}
+.affil-info{flex:1}
+.affil-name{font-size:14px;font-weight:700;color:var(--navy)}
+.affil-sub{font-size:11px;color:var(--gray-500);margin-top:2px}
+.affil-badge{font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;background:var(--aqua);color:#fff}
+
+/* 최근 공개 기록 */
+.records-section{background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px;margin-bottom:16px}
+.rec-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--gray-100)}
+.rec-item:last-child{border-bottom:none}
+.rec-ico{width:36px;height:36px;border-radius:9px;background:var(--mint-light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.rec-ico .ms{font-size:20px;color:#0A8F7C}
+.rec-info{flex:1}
+.rec-dist{font-size:15px;font-weight:800;color:var(--navy);font-family:var(--font-display)}
+.rec-dist span{font-size:12px;font-weight:500;color:var(--gray-500);margin-left:3px}
+.rec-meta{font-size:11px;color:var(--gray-500);margin-top:2px}
+.rec-memo{font-size:12px;color:var(--gray-700);margin-top:3px;line-height:1.45}
+
+/* 공개 게시글 */
+.posts-section{background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px}
+.pub-post{padding:10px 0;border-bottom:1px solid var(--gray-100);cursor:pointer;transition:color .12s}
+.pub-post:last-child{border-bottom:none}
+.pub-post:hover .pp-title{color:var(--aqua)}
+.pp-title{font-size:13px;font-weight:700;color:var(--navy);line-height:1.4;transition:color .12s}
+.pp-meta{font-size:11px;color:var(--gray-500);margin-top:4px;display:flex;align-items:center;gap:6px}
+.pp-meta .ms{font-size:13px}
+.pp-cat{display:inline-block;font-size:10px;font-weight:700;padding:1px 6px;border-radius:4px;background:var(--aqua-light);color:var(--aqua-dark);margin-bottom:3px}
+
+/* 우측 사이드바 */
+.sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:14px}
+.widget{background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px}
+.widget-title{font-size:12px;font-weight:800;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.widget-title .ms{font-size:16px;color:var(--aqua)}
+.badge-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.bdg-item{display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+.bdg-circle{width:40px;height:40px;border-radius:50%;background:var(--aqua-light);display:flex;align-items:center;justify-content:center;font-size:18px;border:2px solid var(--aqua)}
+.bdg-circle.inactive{background:var(--gray-100);border-color:var(--gray-200);opacity:.5}
+.bdg-label{font-size:9px;font-weight:700;color:var(--gray-500);text-align:center}
+.pool-badge{display:inline-flex;align-items:center;gap:4px;padding:8px 12px;border-radius:8px;background:var(--bg);border:1px solid var(--gray-200);font-size:12px;font-weight:700;color:var(--gray-700);cursor:pointer;transition:all .12s;width:100%;margin-bottom:6px}
+.pool-badge:last-child{margin-bottom:0}
+.pool-badge:hover{border-color:var(--aqua);color:var(--aqua-dark)}
+.pool-badge .ms{font-size:16px;color:var(--aqua)}
+
+/* 신고 모달 */
+.modal-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:400;align-items:center;justify-content:center}
+.modal-ov.open{display:flex}
+.modal{background:#fff;border-radius:16px;padding:24px;max-width:360px;width:90%}
+.modal-title{font-size:16px;font-weight:800;color:var(--navy);margin-bottom:6px}
+.modal-desc{font-size:13px;color:var(--gray-500);margin-bottom:16px;line-height:1.6}
+.report-options{display:flex;flex-direction:column;gap:6px;margin-bottom:16px}
+.report-opt{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:8px;border:1.5px solid var(--gray-200);cursor:pointer;font-size:13px;font-weight:600;color:var(--gray-700);transition:all .12s}
+.report-opt:hover{border-color:var(--coral);color:var(--coral);background:var(--coral-light)}
+.report-opt.on{border-color:var(--coral);color:var(--coral);background:var(--coral-light)}
+.report-opt .ms{font-size:16px}
+.modal-btns{display:flex;gap:8px}
+.btn-cancel{flex:1;padding:11px;border-radius:8px;border:1px solid var(--gray-200);background:#fff;font-size:14px;font-weight:700;color:var(--gray-700);cursor:pointer;transition:all .15s}
+.btn-cancel:hover{border-color:var(--gray-300)}
+.btn-submit-report{flex:2;padding:11px;border-radius:8px;border:none;background:var(--error);color:#fff;font-size:14px;font-weight:700;cursor:pointer;transition:all .15s;opacity:.5}
+.btn-submit-report.active{opacity:1}
+
+@media(max-width:1180px){.page{grid-template-columns:1fr}.sidebar{display:none}}
+@media(max-width:880px){.gnb-nav{display:none}.gnb-hamburger{display:inline-flex}.page{padding:12px 16px 60px}.back-wrap{padding:14px 16px 0}}
+</style>
+</head>
+<body>
+
+<header class="gnb">
+  <div class="gnb-inner">
+    <a href="home.html" class="gnb-logo"><span class="We">We</span><span class="Swim">Swim</span></a>
+    <nav class="gnb-nav">
+      <a href="home.html">홈</a>
+      <a href="group.html">우리반</a>
+      <a href="record.html">기록</a>
+      <a href="my.html">마이</a>
+    </nav>
+    <div class="gnb-right">
+      <button class="icon-btn" aria-label="검색" onclick="location.href='search.html'"><span class="ms" aria-hidden="true">search</span></button>
+      <button class="icon-btn" aria-label="알림" onclick="location.href='notifications.html'"><span class="ms" aria-hidden="true">notifications</span><span class="badge">3</span></button>
+      <div class="gnb-avatar" title="이레인" onclick="location.href='my.html'">이</div>
+      <button class="gnb-hamburger" id="drwBtn" aria-label="메뉴"><span class="ms">menu</span></button>
+    </div>
+  </div>
+</header>
+
+<div class="drw-ov" id="drwOv"></div>
+<aside class="drw" id="drwPanel">
+  <div class="drw-hd"><div class="drw-logo"><span class="We">We</span><span class="Sw">Swim</span></div><button class="drw-x" id="drwClose"><span class="ms">close</span></button></div>
+  <div class="drw-bd">
+    <div class="drw-sec">메뉴</div>
+    <button class="drw-it" onclick="location.href='home.html'"><span class="ms">home</span>홈</button>
+    <button class="drw-it" onclick="location.href='group.html'"><span class="ms">groups</span>우리반</button>
+    <button class="drw-it" onclick="location.href='record.html'"><span class="ms">pool</span>기록</button>
+    <button class="drw-it" onclick="location.href='my.html'"><span class="ms">account_circle</span>마이</button>
+    <div class="drw-hr"></div>
+    <div class="drw-sec">기타</div>
+    <button class="drw-it" onclick="location.href='notifications.html'"><span class="ms">notifications</span>알림</button>
+    <button class="drw-it" onclick="location.href='my-settings.html'"><span class="ms">settings</span>설정</button>
+  </div>
+</aside>
+
+<div class="back-wrap">
+  <button class="back-btn" onclick="history.back()"><span class="ms" aria-hidden="true">arrow_back</span>뒤로가기</button>
+</div>
+
+<div class="page">
+  <div>
+    <!-- 프로필 히어로 카드 -->
+    <div class="profile-hero">
+      <div class="hero-cover"></div>
+      <div class="hero-body">
+        <div class="hero-row">
+          <div>
+            <div class="avatar-wrap"><div class="profile-av">김</div></div>
+            <div class="profile-name">김수영</div>
+            <div class="profile-meta">
+              <span class="level-badge">중급</span>
+              <span class="profile-pool"><span class="ms" aria-hidden="true">pool</span>잠실실내수영장</span>
+            </div>
+          </div>
+          <div style="padding-top:16px">
+            <button class="btn-report" id="reportBtn"><span class="ms" aria-hidden="true">flag</span>신고</button>
+          </div>
+        </div>
+        <div class="profile-bio">잠실 중급반 월수금 새벽반. 자유형 위주로 수영해요 🏊 마스터즈 대회 준비 중입니다!</div>
+        <!-- 통계 -->
+        <div class="stats-row">
+          <div class="stat-item"><div class="stat-num">232</div><div class="stat-label">활동일</div></div>
+          <div class="stat-item"><div class="stat-num">1,842</div><div class="stat-label">누적 거리 (km)</div></div>
+          <div class="stat-item"><div class="stat-num">47</div><div class="stat-label">게시글</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 소속 정보 -->
+    <div class="affil-section">
+      <div class="sec-title"><span class="ms" aria-hidden="true">groups</span>현재 소속 반</div>
+      <div class="affil-item">
+        <div class="affil-ico"><span class="ms" aria-hidden="true">groups</span></div>
+        <div class="affil-info">
+          <div class="affil-name">잠실실내수영장 중급반</div>
+          <div class="affil-sub">월·수·금 07:00 · 멤버 12명</div>
+        </div>
+        <span class="affil-badge">활동중</span>
+      </div>
+    </div>
+
+    <!-- 공개 기록 -->
+    <div class="records-section">
+      <div class="sec-title"><span class="ms" aria-hidden="true">pool</span>최근 공개 기록</div>
+      <div class="rec-item">
+        <div class="rec-ico"><span class="ms" aria-hidden="true">pool</span></div>
+        <div class="rec-info">
+          <div class="rec-dist">2,000<span>m · 자유형</span></div>
+          <div class="rec-meta">2025년 5월 30일</div>
+          <div class="rec-memo">오늘 턴 동작이 많이 나아진 것 같다!</div>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-ico"><span class="ms" aria-hidden="true">pool</span></div>
+        <div class="rec-info">
+          <div class="rec-dist">1,500<span>m · 혼합</span></div>
+          <div class="rec-meta">2025년 5월 28일</div>
+          <div class="rec-memo">배영 연습 위주로 수영함</div>
+        </div>
+      </div>
+      <div class="rec-item">
+        <div class="rec-ico"><span class="ms" aria-hidden="true">pool</span></div>
+        <div class="rec-info">
+          <div class="rec-dist">1,000<span>m · 자유형</span></div>
+          <div class="rec-meta">2025년 5월 26일</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 공개 게시글 -->
+    <div class="posts-section">
+      <div class="sec-title" style="margin-bottom:10px"><span class="ms" aria-hidden="true">article</span>작성한 글 <span style="font-size:11px;color:var(--gray-500);font-weight:600;background:var(--gray-100);padding:2px 7px;border-radius:99px">47</span></div>
+      <div class="pub-post" onclick="location.href='community-post.html'">
+        <div class="pp-cat">정보방</div>
+        <div class="pp-title">숨돌리기 훈련 꿀팁 — 25m마다 날숨 완전히 비우기</div>
+        <div class="pp-meta"><span class="ms" aria-hidden="true">favorite</span>47<span class="ms" aria-hidden="true">mode_comment</span>12<span class="ms" aria-hidden="true">schedule</span>23분 전</div>
+      </div>
+      <div class="pub-post" onclick="location.href='community-post.html'">
+        <div class="pp-cat">정보방</div>
+        <div class="pp-title">마스터즈 대회 첫 출전 준비물 총정리</div>
+        <div class="pp-meta"><span class="ms" aria-hidden="true">favorite</span>22<span class="ms" aria-hidden="true">mode_comment</span>14<span class="ms" aria-hidden="true">schedule</span>어제</div>
+      </div>
+      <div class="pub-post" onclick="location.href='community-post.html'">
+        <div class="pp-cat">우리 수영장</div>
+        <div class="pp-title">잠실 vs 송파 — 시설/혼잡도/물온도 솔직 비교</div>
+        <div class="pp-meta"><span class="ms" aria-hidden="true">favorite</span>28<span class="ms" aria-hidden="true">mode_comment</span>19<span class="ms" aria-hidden="true">schedule</span>3일 전</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 우측 사이드바 -->
+  <aside class="sidebar">
+    <div class="widget">
+      <div class="widget-title"><span class="ms" aria-hidden="true">military_tech</span>보유 뱃지</div>
+      <div class="badge-grid">
+        <div class="bdg-item"><div class="bdg-circle">🏊</div><div class="bdg-label">첫 수영</div></div>
+        <div class="bdg-item"><div class="bdg-circle">🌊</div><div class="bdg-label">제주 횡단</div></div>
+        <div class="bdg-item"><div class="bdg-circle">🥇</div><div class="bdg-label">Gold ×3</div></div>
+        <div class="bdg-item"><div class="bdg-circle">🔥</div><div class="bdg-label">6연속</div></div>
+        <div class="bdg-item"><div class="bdg-circle">✍️</div><div class="bdg-label">첫 글</div></div>
+        <div class="bdg-item"><div class="bdg-circle inactive">🏅</div><div class="bdg-label">오픈워터</div></div>
+        <div class="bdg-item"><div class="bdg-circle inactive">🎖️</div><div class="bdg-label">대회 완주</div></div>
+        <div class="bdg-item"><div class="bdg-circle inactive">💎</div><div class="bdg-label">Diamond</div></div>
+      </div>
+    </div>
+    <div class="widget">
+      <div class="widget-title"><span class="ms" aria-hidden="true">history</span>소속 이력</div>
+      <div class="pool-badge"><span class="ms" aria-hidden="true">pool</span>잠실 중급반 (현재)</div>
+      <div class="pool-badge" style="opacity:.6"><span class="ms" aria-hidden="true">pool</span>목동 초급반 (전)</div>
+    </div>
+  </aside>
+</div>
+
+<!-- 신고 모달 -->
+<div class="modal-ov" id="reportModal">
+  <div class="modal">
+    <div class="modal-title">이 유저를 신고하는 이유는?</div>
+    <div class="modal-desc">신고 내용은 운영팀에서 검토 후 처리됩니다.<br>허위 신고는 제재를 받을 수 있어요.</div>
+    <div class="report-options">
+      <div class="report-opt" data-r="spam"><span class="ms" aria-hidden="true">block</span>스팸 / 홍보성 계정</div>
+      <div class="report-opt" data-r="abuse"><span class="ms" aria-hidden="true">sentiment_very_dissatisfied</span>욕설 / 비방</div>
+      <div class="report-opt" data-r="fake"><span class="ms" aria-hidden="true">person_off</span>허위 정보 / 사칭</div>
+      <div class="report-opt" data-r="other"><span class="ms" aria-hidden="true">more_horiz</span>기타</div>
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" id="cancelReport">취소</button>
+      <button class="btn-submit-report" id="submitReport" disabled>신고하기</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// 드로어
+(function(){
+  const btn=document.getElementById('drwBtn'),drw=document.getElementById('drwPanel'),ov=document.getElementById('drwOv'),cls=document.getElementById('drwClose');
+  if(!btn||!drw) return;
+  function open(){drw.classList.add('on');ov.classList.add('on');document.body.style.overflow='hidden'}
+  function close(){drw.classList.remove('on');ov.classList.remove('on');document.body.style.overflow=''}
+  btn.addEventListener('click',open); ov.addEventListener('click',close); if(cls) cls.addEventListener('click',close);
+})();
+
+// 신고 모달
+const reportModal = document.getElementById('reportModal');
+document.getElementById('reportBtn').addEventListener('click', ()=> reportModal.classList.add('open'));
+document.getElementById('cancelReport').addEventListener('click', ()=>{ reportModal.classList.remove('open'); document.querySelectorAll('.report-opt').forEach(o=>o.classList.remove('on')); document.getElementById('submitReport').disabled=true; });
+document.querySelectorAll('.report-opt').forEach(opt=>{
+  opt.addEventListener('click', ()=>{
+    document.querySelectorAll('.report-opt').forEach(o=>o.classList.remove('on'));
+    opt.classList.add('on');
+    const btn = document.getElementById('submitReport');
+    btn.disabled = false;
+    btn.classList.add('active');
+  });
+});
+document.getElementById('submitReport').addEventListener('click', ()=>{
+  reportModal.classList.remove('open');
+  alert('신고가 접수되었습니다. 검토 후 처리됩니다.');
+});
+reportModal.addEventListener('click', e=>{ if(e.target===reportModal) reportModal.classList.remove('open'); });
+</script>
+</body>
+</html>

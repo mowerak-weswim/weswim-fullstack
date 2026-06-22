@@ -1,0 +1,1151 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<title>WeSwim — 회원가입</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet" />
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0,0" rel="stylesheet" />
+<style>
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+  :root{
+    --navy:#1B3A5C; --navy-dark:#142D47; --navy-light:#E8EEF4;
+    --aqua:#0096A0; --aqua-hover:#00A8B5; --aqua-dark:#006970;
+    --aqua-light:#E6F6F7; --aqua-whisper:#F2FBFC;
+    --coral:#E8734A; --coral-dark:#C45A33; --coral-light:#FDF0EB;
+    --mint:#7DD3C8; --mint-light:#E8F7F4;
+    --sun:#F4B740; --sun-light:#FCF1D8;
+    --bg:#F5F7FA; --white:#FFFFFF;
+    --gray-50:#F5F7FA; --gray-100:#ECEFF4; --gray-200:#D0D7E2;
+    --gray-300:#B4BECD; --gray-500:#6B7A99; --gray-700:#3D4A66;
+    --text-main:#1A1A2E;
+    --error:#E54B4B; --success:#00A37A;
+    --r-sm:6px; --r-md:8px; --r-lg:10px; --r-xl:12px; --r-2xl:16px; --r-full:999px;
+    --shadow-1:0 1px 2px rgba(20,45,71,.04);
+    --shadow-2:0 4px 16px rgba(20,45,71,.06);
+    --font-sans:'Pretendard Variable','Pretendard','Helvetica Neue','Apple SD Gothic Neo',sans-serif;
+    --font-display:'Helvetica Neue','Pretendard Variable','Pretendard',sans-serif;
+  }
+  html,body{height:100%}
+  body{font-family:var(--font-sans);color:var(--text-main);background:var(--bg);-webkit-font-smoothing:antialiased;font-feature-settings:"ss06","ss03"}
+
+  .ms{font-family:'Material Symbols Rounded';font-weight:500;font-style:normal;display:inline-flex;align-items:center;justify-content:center;line-height:1;text-transform:none;letter-spacing:normal;white-space:nowrap;direction:ltr;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale;font-feature-settings:'liga';vertical-align:middle;font-size:20px;font-variation-settings:'opsz' 24,'wght' 500,'FILL' 0,'GRAD' 0}
+
+  /* ============ Layout ============ */
+  .shell{
+    min-height:100vh;
+    display:grid;
+    grid-template-columns:minmax(440px, 480px) 1fr;
+  }
+
+  /* ============ LEFT — Brand + Stepper ============ */
+  .brand{
+    position:relative;
+    background:linear-gradient(160deg,var(--navy) 0%, #0E2540 60%, #061a30 100%);
+    color:#fff;padding:40px 48px 48px;overflow:hidden;
+    display:flex;flex-direction:column;
+    min-height:100vh;
+  }
+  .brand::before{
+    content:"";position:absolute;width:520px;height:520px;
+    right:-200px;bottom:-200px;border-radius:50%;
+    background:radial-gradient(circle at 30% 30%, rgba(0,168,181,.4) 0%, transparent 60%);
+    filter:blur(8px);
+  }
+  .brand::after{
+    content:"";position:absolute;width:200px;height:200px;
+    left:-60px;top:200px;border-radius:50%;
+    background:radial-gradient(circle, rgba(232,115,74,.18) 0%, transparent 65%);
+    filter:blur(4px);
+  }
+  .brand > *{position:relative;z-index:2}
+
+  .logo{font-family:var(--font-display);font-size:24px;font-weight:800;letter-spacing:-.04em;line-height:1;margin-bottom:8px}
+  .logo .We{color:#fff} .logo .Swim{color:var(--aqua-hover)}
+  .brand-tag{font-size:12px;color:rgba(255,255,255,.45);letter-spacing:.02em;margin-bottom:48px}
+
+  .stepper-eyebrow{
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-weight:700;color:rgba(255,255,255,.4);margin-bottom:20px;
+  }
+  .stepper-title{
+    font-family:var(--font-display);
+    font-size:34px;font-weight:800;letter-spacing:-.025em;
+    line-height:1.15;margin-bottom:40px;color:#fff;
+  }
+  .stepper-title .accent{color:var(--aqua-hover)}
+
+  .stepper{display:flex;flex-direction:column;gap:4px;flex:1}
+  .step{
+    display:flex;gap:14px;
+    padding:14px 12px;border-radius:10px;
+    transition:background .2s ease;
+    position:relative;cursor:pointer;
+  }
+  .step:hover:not(.current){background:rgba(255,255,255,.04)}
+  .step.current{background:rgba(0,168,181,.1)}
+  .step .num{
+    width:30px;height:30px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--font-display);font-size:13px;font-weight:700;
+    flex-shrink:0;transition:all .2s ease;
+  }
+  .step.done .num{background:var(--aqua);color:#fff}
+  .step.current .num{
+    background:rgba(255,255,255,.08);color:#fff;
+    border:2px solid var(--aqua-hover);
+    box-shadow:0 0 0 4px rgba(0,168,181,.15);
+  }
+  .step.wait .num{background:rgba(255,255,255,.06);color:rgba(255,255,255,.3)}
+  .step .num .ms{font-size:16px;color:#fff}
+
+  .step .info{flex:1;min-width:0;padding-top:5px}
+  .step .t{font-size:14px;font-weight:700;color:rgba(255,255,255,.5);margin-bottom:2px;letter-spacing:-.005em}
+  .step.done .t{color:rgba(255,255,255,.6)}
+  .step.current .t{color:#fff}
+  .step.wait .t{color:rgba(255,255,255,.3)}
+  .step .s{font-size:12px;color:rgba(255,255,255,.4);line-height:1.45}
+
+  /* connector line */
+  .step + .step::before{
+    content:"";position:absolute;
+    left:27px;top:-3px;width:2px;height:7px;
+    background:rgba(255,255,255,.1);
+  }
+  .step.done + .step::before, .step.done + .step.current::before{background:var(--aqua)}
+
+  .brand-bot{
+    margin-top:24px;padding-top:24px;border-top:1px solid rgba(255,255,255,.08);
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:12px;color:rgba(255,255,255,.4);
+  }
+  .brand-bot a{color:var(--aqua-hover);text-decoration:none;font-weight:600}
+
+  /* ============ RIGHT — Form ============ */
+  .form-side{
+    background:var(--white);
+    padding:32px 64px 48px;
+    display:flex;flex-direction:column;
+    min-height:100vh;
+  }
+  .form-top{
+    display:flex;align-items:center;justify-content:space-between;
+    margin-bottom:8px;
+  }
+  .btn-back{
+    display:inline-flex;align-items:center;gap:6px;
+    border:none;background:transparent;
+    font-size:13px;color:var(--gray-500);font-weight:600;
+    cursor:pointer;padding:8px 10px;border-radius:8px;font-family:inherit;
+  }
+  .btn-back:hover{background:var(--gray-100);color:var(--navy)}
+  .btn-back:disabled{opacity:.3;cursor:not-allowed}
+  .form-top .help{font-size:13px;color:var(--gray-500)}
+  .form-top .help a{color:var(--aqua);font-weight:700;text-decoration:none;margin-left:6px}
+
+  .progress{
+    height:3px;background:var(--gray-100);border-radius:2px;
+    overflow:hidden;margin:16px 0 4px;
+  }
+  .progress-fill{height:100%;background:var(--aqua);width:25%;transition:width .35s ease}
+  .progress-meta{
+    display:flex;justify-content:space-between;align-items:center;
+    font-size:11px;font-weight:700;letter-spacing:.06em;
+    color:var(--gray-500);text-transform:uppercase;
+  }
+
+  .form-card{
+    max-width:520px;width:100%;
+    margin:32px auto 0;flex:1;
+    display:flex;flex-direction:column;
+  }
+  .form-card h1{
+    font-size:30px;font-weight:800;color:var(--navy);
+    letter-spacing:-.025em;margin-bottom:8px;
+  }
+  .form-card .sub{font-size:14px;color:var(--gray-500);line-height:1.55;margin-bottom:32px}
+
+  /* hidden step panels */
+  .panel{display:none;flex-direction:column;flex:1}
+  .panel.active{display:flex}
+
+  /* ============ Field & Input ============ */
+  .field{margin-bottom:18px}
+  .label{display:block;font-size:12px;font-weight:700;color:var(--gray-500);margin-bottom:8px;letter-spacing:.02em}
+  .input{
+    display:flex;align-items:center;gap:10px;width:100%;height:48px;
+    background:var(--white);border:1.5px solid var(--gray-200);border-radius:10px;
+    padding:0 14px;transition:border-color .15s ease, box-shadow .15s ease;
+  }
+  .input:focus-within{outline:none;border-color:var(--aqua);box-shadow:0 0 0 4px var(--aqua-light)}
+  .input.err{border-color:var(--error);box-shadow:0 0 0 4px #FBE2E2}
+  .input.ok{border-color:var(--aqua);box-shadow:0 0 0 4px var(--aqua-light)}
+  .input input, .input select{flex:1;height:100%;border:none;outline:none;background:transparent;font-size:14px;font-family:inherit;color:var(--text-main)}
+  .input input::placeholder{color:var(--gray-300)}
+  .input .ms{color:var(--gray-500);font-size:18px;flex-shrink:0}
+  .input button.toggle-eye{border:none;background:transparent;cursor:pointer;padding:4px;color:var(--gray-500);display:inline-flex;align-items:center}
+  .input.select{cursor:pointer}
+  .input select{cursor:pointer;appearance:none;background-image:none;padding-right:0}
+  .input.select::after{content:"expand_more";font-family:'Material Symbols Rounded';font-size:18px;color:var(--gray-500);flex-shrink:0}
+
+  .feedback{display:none;align-items:center;gap:5px;margin-top:6px;font-size:12px;font-weight:500}
+  .feedback.show{display:flex}
+  .feedback.ok{color:var(--aqua-dark)}
+  .feedback.err{color:var(--error)}
+  .feedback .ms{font-size:14px}
+
+  /* Password strength */
+  .strength{margin-top:8px}
+  .strength-bars{display:flex;gap:4px;margin-bottom:6px}
+  .strength-bars .seg{height:4px;flex:1;background:var(--gray-200);border-radius:2px;transition:background .2s ease}
+  .strength-bars[data-level="1"] .seg:nth-child(1){background:var(--error)}
+  .strength-bars[data-level="2"] .seg:nth-child(-n+2){background:var(--warn)}
+  .strength-bars[data-level="3"] .seg{background:var(--aqua)}
+  .strength-text{font-size:11px;font-weight:600;color:var(--gray-500)}
+  .strength-bars[data-level="1"] + .strength-text{color:var(--error)}
+  .strength-bars[data-level="2"] + .strength-text{color:#A87102}
+  .strength-bars[data-level="3"] + .strength-text{color:var(--aqua-dark)}
+
+  /* ============ Buttons ============ */
+  .actions{margin-top:auto;padding-top:32px;display:flex;gap:12px}
+  .btn{
+    height:52px;border:none;border-radius:10px;
+    font-size:15px;font-weight:700;font-family:inherit;cursor:pointer;
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    transition:all .15s ease;flex:1;
+  }
+  .btn-primary{background:var(--aqua);color:#fff}
+  .btn-primary:hover:not(:disabled){background:var(--aqua-hover);transform:translateY(-1px);box-shadow:0 6px 16px rgba(0,150,160,.24)}
+  .btn-primary:disabled{opacity:.4;cursor:not-allowed}
+  .btn-accent{background:var(--coral);color:#fff}
+  .btn-accent:hover{background:var(--coral-dark);transform:translateY(-1px);box-shadow:0 6px 16px rgba(232,115,74,.24)}
+  .btn-secondary{background:var(--gray-100);color:var(--gray-700)}
+  .btn-secondary:hover{background:var(--gray-200)}
+  .btn-ghost{background:transparent;color:var(--aqua-dark);border:1.5px solid var(--gray-200)}
+  .btn-ghost:hover{border-color:var(--aqua);background:var(--aqua-whisper)}
+
+  /* ============ Step 2 — Cards ============ */
+  .role-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px}
+  .role-card{
+    background:#fff;border:1.5px solid var(--gray-200);border-radius:14px;
+    padding:24px 20px;cursor:pointer;transition:all .15s ease;
+    display:flex;flex-direction:column;gap:12px;
+    position:relative;
+  }
+  .role-card:hover{border-color:var(--aqua);background:var(--aqua-whisper)}
+  .role-card.on{border-color:var(--aqua);background:var(--aqua-light);box-shadow:0 0 0 4px var(--aqua-whisper)}
+  .role-card .ico{
+    width:48px;height:48px;border-radius:12px;
+    background:var(--navy-light);display:flex;align-items:center;justify-content:center;
+    transition:all .15s ease;
+  }
+  .role-card .ico .ms{font-size:26px;color:var(--navy)}
+  .role-card.on .ico{background:var(--aqua);}
+  .role-card.on .ico .ms{color:#fff}
+  .role-card .role-name{font-size:16px;font-weight:800;color:var(--navy);letter-spacing:-.01em}
+  .role-card .role-sub{font-size:12px;color:var(--gray-500);line-height:1.5}
+  .role-card .check{
+    position:absolute;top:14px;right:14px;
+    width:22px;height:22px;border-radius:50%;
+    background:var(--aqua);display:none;align-items:center;justify-content:center;
+  }
+  .role-card .check .ms{font-size:14px;color:#fff}
+  .role-card.on .check{display:flex}
+
+  .notice{
+    background:var(--aqua-light);border-left:3px solid var(--aqua);
+    border-radius:8px;padding:12px 14px;
+    font-size:12px;color:var(--aqua-dark);line-height:1.55;
+    display:none;
+  }
+  .notice.show{display:block}
+  .notice b{font-weight:700}
+
+  /* ============ Step 3 — Pool selection ============ */
+  .region-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px}
+  .pool-list{
+    border:1px solid var(--gray-200);border-radius:10px;
+    max-height:260px;overflow-y:auto;background:#fff;margin-top:10px;
+  }
+  .pool-item{
+    display:flex;align-items:center;gap:12px;
+    padding:14px 16px;cursor:pointer;
+    border-bottom:1px solid var(--gray-100);
+    transition:background .12s ease;
+  }
+  .pool-item:last-child{border-bottom:none}
+  .pool-item:hover{background:var(--aqua-whisper)}
+  .pool-item.on{background:var(--aqua-light)}
+  .pool-item .p-ico{
+    width:36px;height:36px;border-radius:8px;
+    background:var(--gray-100);display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;
+  }
+  .pool-item.on .p-ico{background:var(--aqua)}
+  .pool-item .p-ico .ms{font-size:20px;color:var(--gray-500)}
+  .pool-item.on .p-ico .ms{color:#fff}
+  .pool-item .p-info{flex:1;min-width:0}
+  .pool-item .p-name{font-size:14px;font-weight:700;color:var(--text-main);margin-bottom:2px}
+  .pool-item.on .p-name{color:var(--aqua-dark)}
+  .pool-item .p-addr{font-size:12px;color:var(--gray-500)}
+  .pool-item .p-check{font-size:22px;color:transparent}
+  .pool-item.on .p-check{color:var(--aqua)}
+
+  .pool-link{
+    display:inline-flex;align-items:center;gap:4px;
+    margin-top:14px;font-size:13px;color:var(--aqua);font-weight:600;
+    cursor:pointer;text-decoration:none;
+  }
+  .pool-link:hover{text-decoration:underline}
+  .pool-link .ms{font-size:16px}
+
+  .request-form{
+    display:none;
+    margin-top:14px;background:var(--aqua-whisper);
+    border-radius:10px;padding:16px;border:1px dashed var(--aqua);
+  }
+  .request-form.show{display:block}
+  .request-form .field:last-of-type{margin-bottom:12px}
+
+  /* ============ Step 4 — Class selection ============ */
+  .chip-row{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+  .chip{
+    padding:9px 18px;border-radius:999px;
+    font-size:13px;font-weight:600;
+    border:1.5px solid var(--gray-200);color:var(--gray-500);
+    background:#fff;cursor:pointer;
+    transition:all .12s ease;
+    font-family:inherit;
+  }
+  .chip:hover{border-color:var(--aqua);color:var(--aqua-dark)}
+  .chip.on{border-color:var(--aqua);background:var(--aqua-light);color:var(--aqua-dark);font-weight:700}
+
+  .day-row{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:8px}
+  .day{
+    height:46px;border-radius:10px;
+    font-size:13px;font-weight:600;
+    border:1.5px solid var(--gray-200);color:var(--gray-500);
+    background:#fff;cursor:pointer;transition:all .12s ease;
+    font-family:inherit;
+  }
+  .day:hover{border-color:var(--aqua);color:var(--aqua-dark)}
+  .day.on{border-color:var(--aqua);background:var(--aqua-light);color:var(--aqua-dark);font-weight:700}
+
+  .result{display:none;margin-top:18px;border-radius:12px;padding:18px 20px;animation:slideIn .3s ease}
+  .result.show{display:block}
+  @keyframes slideIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .result.found{background:var(--aqua-light);border:1.5px solid var(--aqua)}
+  .result.waiting{background:var(--coral-light);border:1.5px solid var(--coral)}
+  .result .r-head{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+  .result .r-ico{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .result.found .r-ico{background:var(--aqua)} .result.waiting .r-ico{background:var(--coral)}
+  .result .r-ico .ms{font-size:18px;color:#fff}
+  .result .r-title{font-size:14px;font-weight:800;color:var(--aqua-dark)}
+  .result.waiting .r-title{color:var(--coral-dark)}
+  .result .r-body{font-size:13px;color:var(--navy);line-height:1.5;padding-left:42px}
+  .result .r-body b{font-weight:700;color:var(--aqua-dark)}
+  .result.waiting .r-body b{color:var(--coral-dark)}
+
+  /* For demo — toggle path */
+  .demo-toggle{
+    display:flex;gap:6px;margin-top:14px;
+    font-size:11px;color:var(--gray-500);
+  }
+  .demo-toggle button{
+    border:1px dashed var(--gray-300);background:transparent;
+    padding:4px 10px;border-radius:99px;
+    font-size:11px;color:var(--gray-500);cursor:pointer;font-family:inherit;
+  }
+  .demo-toggle button.on{border-color:var(--aqua);color:var(--aqua);border-style:solid}
+
+  /* ============ Step 5 — Complete ============ */
+  .complete{
+    flex:1;display:flex;flex-direction:column;justify-content:center;
+    align-items:stretch;text-align:center;
+  }
+  .complete-icon{
+    width:88px;height:88px;border-radius:50%;
+    background:var(--aqua);margin:0 auto 24px;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 0 0 8px var(--aqua-light), 0 0 0 16px var(--aqua-whisper);
+  }
+  .complete-icon .ms{font-size:48px;color:#fff;font-variation-settings:'wght' 600}
+  .complete h1{font-size:30px;font-weight:800;color:var(--navy);letter-spacing:-.025em;margin-bottom:8px;text-align:center}
+  .complete .sub{font-size:14px;color:var(--gray-500);margin-bottom:32px;text-align:center}
+  .complete-cards{display:grid;gap:10px;margin-bottom:32px;text-align:left}
+  .c-card{
+    background:var(--bg);border-radius:12px;padding:16px 18px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;
+  }
+  .c-card .c-label{font-size:11px;font-weight:700;color:var(--gray-500);letter-spacing:.06em;text-transform:uppercase;margin-bottom:4px}
+  .c-card .c-value{font-size:14px;font-weight:700;color:var(--text-main)}
+  .c-card .c-value .pill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:99px;background:var(--aqua);color:#fff;font-size:11px;font-weight:700;margin-left:6px}
+  .c-card .c-extra{font-size:12px;color:var(--gray-500);font-weight:500}
+  .complete .actions{margin-top:0;padding-top:0}
+
+  /* Responsive */
+  @media (max-width: 960px){
+    .shell{grid-template-columns:1fr}
+    .brand{min-height:auto;padding:32px 28px 36px}
+    .stepper-title{font-size:24px;margin-bottom:28px}
+    .stepper{flex:0}
+    .brand-bot{margin-top:28px}
+    .form-side{padding:32px 24px;min-height:auto}
+    .form-card{margin-top:24px}
+    .role-grid{grid-template-columns:1fr}
+  }
+
+  /* ===== 유사 수영장 목록 (Step 3) ===== */
+  .similar-pools{display:none;margin:10px 0 4px}
+  .similar-pools.show{display:block}
+  .sp-label{font-size:11px;font-weight:700;color:var(--gray-500);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+  .sp-label .ms{font-size:14px;color:var(--aqua)}
+  .sp-list{border:1px solid var(--gray-200);border-radius:10px;overflow:hidden;margin-bottom:8px;background:#fff}
+  .sp-item{display:flex;align-items:center;gap:10px;padding:11px 13px;border-bottom:1px solid var(--gray-100);transition:background .12s;cursor:default}
+  .sp-item:last-child{border-bottom:none}
+  .sp-item:hover{background:var(--aqua-whisper)}
+  .sp-ico{width:28px;height:28px;border-radius:6px;background:var(--aqua-light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .sp-ico .ms{font-size:15px;color:var(--aqua)}
+  .sp-info{flex:1;min-width:0}
+  .sp-name{font-size:13px;font-weight:700;color:var(--navy)}
+  .sp-addr{font-size:11px;color:var(--gray-500);margin-top:1px}
+  .sp-select-btn{padding:5px 10px;border-radius:6px;border:1.5px solid var(--aqua);background:#fff;font-size:11px;font-weight:700;color:var(--aqua-dark);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .12s}
+  .sp-select-btn:hover{background:var(--aqua);color:#fff}
+  .sp-new-btn{display:flex;align-items:center;gap:5px;width:100%;padding:9px 10px;border:1.5px dashed var(--gray-200);border-radius:8px;background:transparent;font-size:12px;font-weight:600;color:var(--gray-500);cursor:pointer;transition:all .15s;margin-top:6px;font-family:inherit}
+  .sp-new-btn:hover{border-color:var(--aqua);color:var(--aqua-dark);background:var(--aqua-whisper)}
+  .sp-new-btn .ms{font-size:15px}
+  /* ===== pending 배지 ===== */
+  .pending-badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;background:var(--sun-light,#FCF1D8);color:var(--sun-dark,#9B6D0A);border:1px solid var(--sun,#F4B740);margin-left:5px;vertical-align:middle}
+  .pending-badge .ms{font-size:11px;animation:pendingPulse 1.6s ease-in-out infinite}
+  @keyframes pendingPulse{0%,100%{opacity:1}50%{opacity:.35}}
+  /* ===== 등록 직후 인라인 안내 ===== */
+  .reg-inline-notice{display:none;margin-top:10px;background:var(--aqua-whisper);border:1px solid var(--aqua-light);border-radius:8px;padding:10px 12px}
+  .reg-inline-notice.show{display:block}
+  .rin-line1{font-size:13px;font-weight:600;color:var(--navy);margin-bottom:3px;display:flex;align-items:center;gap:5px}
+  .rin-line1 .ms{font-size:15px;color:var(--aqua)}
+  .rin-line2{font-size:11px;color:var(--gray-500);line-height:1.55}
+  /* ===== 토스트 2줄형 ===== */
+  .toast-multi{position:fixed;top:88px;left:50%;transform:translateX(-50%) translateY(-12px);z-index:500;background:var(--navy,#1B3A5C);color:#fff;border-radius:14px;padding:14px 18px;display:flex;align-items:flex-start;gap:10px;font-size:13px;box-shadow:0 12px 32px rgba(20,45,71,.32);opacity:0;pointer-events:none;transition:all .3s cubic-bezier(.22,.61,.36,1);min-width:280px;max-width:380px;width:max-content}
+  .toast-multi.show{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
+  .tm-ico{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px}
+  .tm-ico.ok{background:var(--aqua,#0096A0)}.tm-ico.warn{background:var(--coral,#E8734A)}
+  .tm-ico .ms{font-size:14px;color:#fff}
+  .tm-title{font-weight:700;margin-bottom:3px}
+  .tm-sub{font-size:12px;color:rgba(255,255,255,.72);line-height:1.55}
+
+</style>
+</head>
+<body>
+
+<main class="shell" data-screen-label="02 Signup (PC)">
+
+  <!-- ====== LEFT — Brand + Stepper ====== -->
+  <aside class="brand">
+    <div class="logo"><span class="We">We</span><span class="Swim">Swim</span></div>
+    <div class="brand-tag">나만의 레인, 우리들의 수영장</div>
+
+    <div class="stepper-eyebrow">Sign up · 4 Steps</div>
+    <h2 class="stepper-title">
+      <span class="accent">3분</span>이면 충분해요.<br/>
+      레인방까지 함께 가요.
+    </h2>
+
+    <div class="stepper" id="stepper">
+      <div class="step current" data-step="1">
+        <div class="num">1</div>
+        <div class="info"><div class="t">기본 정보</div><div class="s">닉네임 · 이메일 · 비밀번호</div></div>
+      </div>
+      <div class="step wait" data-step="2">
+        <div class="num">2</div>
+        <div class="info"><div class="t">회원 유형</div><div class="s">일반 / 강사</div></div>
+      </div>
+      <div class="step wait" data-step="3">
+        <div class="num">3</div>
+        <div class="info"><div class="t">수영장 선택</div><div class="s">지역 → 수영장</div></div>
+      </div>
+      <div class="step wait" data-step="4">
+        <div class="num">4</div>
+        <div class="info"><div class="t">강습반 선택</div><div class="s">레벨 · 요일 · 시간</div></div>
+      </div>
+    </div>
+
+    <div class="brand-bot">
+      <span>© 2026 WeSwim</span>
+      <span>이미 회원이신가요? <a href="login.html">로그인</a></span>
+    </div>
+  </aside>
+
+
+  <!-- ====== RIGHT — Form Area ====== -->
+  <section class="form-side">
+
+    <div class="form-top">
+      <button class="btn-back" id="btnBack" disabled>
+        <span class="ms" aria-hidden="true">arrow_back</span> 이전
+      </button>
+      <div class="help">도움이 필요하신가요? <a href="#help">고객센터</a></div>
+    </div>
+
+    <div class="progress"><div class="progress-fill" id="progressFill"></div></div>
+    <div class="progress-meta">
+      <span id="stepLabel">Step 1 / 4</span>
+      <span id="stepKr">기본 정보</span>
+    </div>
+
+
+    <div class="form-card">
+
+      <!-- ============ STEP 1 — Basic Info ============ -->
+      <div class="panel active" data-panel="1">
+        <h1>기본 정보를 입력해주세요</h1>
+        <p class="sub">레인방에 들어가려면 닉네임, 이메일, 비밀번호가 필요해요.</p>
+
+        <div class="field">
+          <label class="label" for="nickname">닉네임</label>
+          <div class="input" id="nicknameWrap">
+            <span class="ms" aria-hidden="true">face</span>
+            <input type="text" id="nickname" placeholder="4~20자 (한글·영문·숫자)" maxlength="20" />
+          </div>
+          <div class="feedback" id="nicknameFb"><span class="ms">check_circle</span><span></span></div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="email">이메일</label>
+          <div class="input" id="emailWrap">
+            <span class="ms" aria-hidden="true">mail</span>
+            <input type="email" id="email" placeholder="이메일 주소" autocomplete="email" />
+          </div>
+          <div class="feedback" id="emailFb"><span class="ms">check_circle</span><span></span></div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="password">비밀번호</label>
+          <div class="input" id="pwWrap">
+            <span class="ms" aria-hidden="true">lock</span>
+            <input type="password" id="password" placeholder="8자 이상, 영문+숫자 포함" />
+            <button type="button" class="toggle-eye" id="toggleEye"><span class="ms" id="eyeIcon">visibility</span></button>
+          </div>
+          <div class="strength" id="strengthBox" style="display:none">
+            <div class="strength-bars" id="strengthBars" data-level="0">
+              <div class="seg"></div><div class="seg"></div><div class="seg"></div>
+            </div>
+            <div class="strength-text" id="strengthText">너무 짧아요</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label" for="password2">비밀번호 확인</label>
+          <div class="input" id="pw2Wrap">
+            <span class="ms" aria-hidden="true">lock_reset</span>
+            <input type="password" id="password2" placeholder="비밀번호 재입력" />
+          </div>
+          <div class="feedback" id="pw2Fb"><span class="ms">check_circle</span><span></span></div>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="next1" disabled>다음 단계로</button>
+        </div>
+      </div>
+
+      <!-- ============ STEP 2 — Role ============ -->
+      <div class="panel" data-panel="2">
+        <h1>어떤 분이신가요?</h1>
+        <p class="sub">회원 유형은 가입 후에도 마이페이지에서 언제든 변경할 수 있어요.</p>
+
+        <div class="role-grid">
+          <div class="role-card" data-role="member">
+            <div class="check"><span class="ms">check</span></div>
+            <div class="ico"><span class="ms">pool</span></div>
+            <div>
+              <div class="role-name">일반 회원</div>
+              <div class="role-sub">수영을 즐기는 수강생 / 자유 수영러</div>
+            </div>
+          </div>
+          <div class="role-card" data-role="instructor">
+            <div class="check"><span class="ms">check</span></div>
+            <div class="ico"><span class="ms">workspace_premium</span></div>
+            <div>
+              <div class="role-name">강사 회원</div>
+              <div class="role-sub">수영 강습을 지도하는 강사</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="notice" id="instructorNotice">
+          <b>강사 뱃지는 자기신고제예요.</b> 강사실 게시판에 글을 쓸 수 있고, 강사 마크가 함께 표시돼요.
+          허위 신고가 누적되면 이용이 제한될 수 있어요.
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="next2" disabled>다음 단계로</button>
+        </div>
+      </div>
+
+      <!-- ============ STEP 3 — Pool ============ -->
+      <div class="panel" data-panel="3">
+        <h1>수영장을 선택해주세요</h1>
+        <p class="sub">지역을 먼저 선택한 뒤 수영장을 찾아보세요. 없으면 직접 등록 요청할 수 있어요.</p>
+
+        <div class="region-row">
+          <div class="field" style="margin-bottom:0">
+            <label class="label">시 / 도</label>
+            <div class="input select">
+              <span class="ms" aria-hidden="true">location_on</span>
+              <select id="region1"><option value="seoul" selected>서울특별시</option><option>경기도</option><option>인천광역시</option><option>부산광역시</option></select>
+            </div>
+          </div>
+          <div class="field" style="margin-bottom:0">
+            <label class="label">시 / 군 / 구</label>
+            <div class="input select">
+              <span class="ms" aria-hidden="true">apartment</span>
+              <select id="region2"><option value="songpa" selected>송파구</option><option>강남구</option><option>강동구</option><option>노원구</option><option>양천구</option></select>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">수영장 검색</label>
+          <div class="input">
+            <span class="ms" aria-hidden="true">search</span>
+            <input type="text" id="poolSearch" placeholder="수영장 이름 또는 지역으로 검색" />
+          </div>
+        </div>
+
+        <div class="pool-list" id="poolList">
+          <div class="pool-item on" data-pool="잠실실내수영장">
+            <div class="p-ico"><span class="ms" aria-hidden="true">pool</span></div>
+            <div class="p-info"><div class="p-name">잠실실내수영장</div><div class="p-addr">서울 송파구 올림픽로 424</div></div>
+            <span class="ms p-check" aria-hidden="true">check_circle</span>
+          </div>
+          <div class="pool-item" data-pool="목동실내수영장">
+            <div class="p-ico"><span class="ms" aria-hidden="true">pool</span></div>
+            <div class="p-info"><div class="p-name">목동실내수영장</div><div class="p-addr">서울 양천구 목동동로 309</div></div>
+            <span class="ms p-check" aria-hidden="true">check_circle</span>
+          </div>
+          <div class="pool-item" data-pool="강동국민체육센터">
+            <div class="p-ico"><span class="ms" aria-hidden="true">pool</span></div>
+            <div class="p-info"><div class="p-name">강동국민체육센터</div><div class="p-addr">서울 강동구 상일로 9</div></div>
+            <span class="ms p-check" aria-hidden="true">check_circle</span>
+          </div>
+          <div class="pool-item" data-pool="노원문화체육센터">
+            <div class="p-ico"><span class="ms" aria-hidden="true">pool</span></div>
+            <div class="p-info"><div class="p-name">노원문화체육센터</div><div class="p-addr">서울 노원구 동일로 1330</div></div>
+            <span class="ms p-check" aria-hidden="true">check_circle</span>
+          </div>
+        </div>
+
+        <a class="pool-link" id="reqLink"><span class="ms">add_location_alt</span> 우리 수영장이 없나요? 등록 요청하기</a>
+
+        <!-- 유사 수영장 목록 -->
+        <div class="similar-pools" id="similarPools">
+          <div class="sp-label"><span class="ms" aria-hidden="true">search</span>혹시 이 수영장을 찾으시나요?</div>
+          <div class="sp-list" id="spList"></div>
+          <button class="sp-new-btn" id="spNewBtn">
+            <span class="ms" aria-hidden="true">add_location_alt</span>찾는 수영장이 없어요 — 직접 새로 등록하기
+          </button>
+        </div>
+
+        <!-- 등록 직후 인라인 안내 -->
+        <div class="reg-inline-notice" id="regInlineNotice">
+          <div class="rin-line1"><span class="ms" aria-hidden="true">check_circle</span>등록됐어요. 지금 이 수영장으로 반 설정을 이어갈 수 있어요.</div>
+          <div class="rin-line2">다른 회원이 검색에서 찾으려면 확인 후 목록에 공개돼요.</div>
+        </div>
+
+        <div class="request-form" id="reqForm">
+          <div style="font-size:12px;color:var(--gray-500);margin-bottom:12px;display:flex;align-items:center;gap:5px">
+            <span class="ms" style="font-size:15px;color:var(--aqua)" aria-hidden="true">info</span>
+            이름과 주소를 입력해주세요. 등록 후 <b>확인 절차</b>를 거쳐 전체 목록에 공개됩니다.
+          </div>
+          <div class="field">
+            <label class="label">수영장 이름</label>
+            <div class="input"><input type="text" id="reqPoolName" placeholder="예: 한강시민수영장" /></div>
+          </div>
+          <div class="field">
+            <label class="label">주소</label>
+            <div class="input"><input type="text" id="reqPoolAddr" placeholder="시/도, 구/군 포함 주소" /></div>
+          </div>
+          <button class="btn btn-ghost" id="reqSubmitBtn" style="flex:none;height:42px;padding:0 18px;font-size:13px;opacity:.5" disabled>등록 요청하기</button>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="next3">다음 단계로</button>
+        </div>
+      </div>
+
+      <!-- ============ STEP 4 — Class ============ -->
+      <div class="panel" data-panel="4">
+        <h1>강습반을 선택해주세요</h1>
+        <p class="sub">레벨, 요일, 시간을 선택하면 동일 조합의 레인방을 찾아드려요.</p>
+
+        <div class="field">
+          <label class="label">레벨</label>
+          <div class="chip-row" id="levelRow">
+            <button class="chip" data-level="입문">입문</button>
+            <button class="chip on" data-level="초급">초급</button>
+            <button class="chip" data-level="중급">중급</button>
+            <button class="chip" data-level="상급">상급</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">요일 (복수 선택 가능)</label>
+          <div class="day-row" id="dayRow">
+            <button class="day on" data-day="월">월</button>
+            <button class="day" data-day="화">화</button>
+            <button class="day on" data-day="수">수</button>
+            <button class="day" data-day="목">목</button>
+            <button class="day on" data-day="금">금</button>
+            <button class="day" data-day="토">토</button>
+            <button class="day" data-day="일">일</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">시간</label>
+          <div class="input select">
+            <span class="ms" aria-hidden="true">schedule</span>
+            <select id="timeSel">
+              <option>05:30</option><option>06:00</option><option>06:30</option>
+              <option selected>07:00</option><option>07:30</option><option>08:00</option>
+              <option>09:00</option><option>10:00</option>
+              <option>18:00</option><option>19:00</option><option>20:00</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="result found" id="resultFound">
+          <div class="r-head">
+            <div class="r-ico"><span class="ms">check</span></div>
+            <div class="r-title">레인방이 있어요!</div>
+          </div>
+          <div class="r-body"><b>잠실실내수영장 · 초급 · 월수금 07:00</b><br/>현재 <b>4명</b>이 활동 중이에요</div>
+        </div>
+
+        <div class="result waiting" id="resultWaiting">
+          <div class="r-head">
+            <div class="r-ico"><span class="ms">groups_2</span></div>
+            <div class="r-title">아직 이 시간대 반이 없어요</div>
+          </div>
+          <div class="r-body"><b>오리발 대기방</b>을 만들어드릴게요. 멤버가 <b>2명 이상</b>이 되면 자동으로 활성화돼요.</div>
+        </div>
+
+        <div class="demo-toggle">
+          <span>· 데모용 결과 전환:</span>
+          <button class="on" id="demoFound">반 있음</button>
+          <button id="demoWaiting">반 없음</button>
+        </div>
+
+        <div class="actions" id="step4Actions">
+          <button class="btn btn-ghost" id="findBtn" style="flex:none;padding:0 28px">반 찾기</button>
+          <button class="btn btn-primary" id="enterBtn">레인방 입장하기</button>
+        </div>
+      </div>
+
+      <!-- ============ STEP 5 — Complete ============ -->
+      <div class="panel" data-panel="5">
+        <div class="complete">
+          <div class="complete-icon"><span class="ms" id="completeIco">check</span></div>
+          <h1 id="completeTitle">레인방에 입장했어요!</h1>
+          <p class="sub" id="completeSub">잠실실내수영장 · 초급 · 월수금 07:00</p>
+
+          <div class="complete-cards">
+            <div class="c-card">
+              <div>
+                <div class="c-label">소속 레인방</div>
+                <div class="c-value">잠실실내수영장 초급반 · 월수금 07:00</div>
+              </div>
+              <span class="ms" style="color:var(--aqua);font-size:22px">pool</span>
+            </div>
+            <div class="c-card">
+              <div>
+                <div class="c-label">현재 멤버</div>
+                <div class="c-value">4명 활동 중 <span class="pill">+ 나</span></div>
+              </div>
+              <span class="ms" style="color:var(--aqua);font-size:22px">groups</span>
+            </div>
+            <div class="c-card">
+              <div>
+                <div class="c-label">레인 등급</div>
+                <div class="c-value">초급 <span class="c-extra"> · 언제든지 변경 가능</span></div>
+              </div>
+              <span class="ms" style="color:var(--aqua);font-size:22px">workspace_premium</span>
+            </div>
+          </div>
+
+          <div class="actions">
+            <button class="btn btn-secondary" style="flex:1">홈 둘러보기</button>
+            <button class="btn btn-primary" style="flex:2"><span class="ms">pool</span> 레인방 바로 가기</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<script>
+  // ============ State ============
+  const state = {step:1, role:null, pool:'잠실실내수영장', level:'초급', days:['월','수','금'], path:'found'};
+  const STEPS = 5;
+  const STEP_KR = {1:'기본 정보', 2:'회원 유형', 3:'수영장 선택', 4:'강습반 선택', 5:'완료'};
+
+  // ============ Step Navigation ============
+  function renderStep(){
+    document.querySelectorAll('.panel').forEach(p=>p.classList.toggle('active', +p.dataset.panel === state.step));
+    // stepper
+    document.querySelectorAll('#stepper .step').forEach(s=>{
+      const n = +s.dataset.step;
+      s.classList.remove('done','current','wait');
+      if(n < state.step) { s.classList.add('done'); s.querySelector('.num').innerHTML = '<span class="ms">check</span>'; }
+      else if(n === state.step) { s.classList.add('current'); s.querySelector('.num').textContent = n; }
+      else { s.classList.add('wait'); s.querySelector('.num').textContent = n; }
+    });
+    // progress
+    const pct = state.step >= STEPS ? 100 : (state.step / 4) * 100;
+    document.getElementById('progressFill').style.width = pct + '%';
+    document.getElementById('stepLabel').textContent = state.step === 5 ? '완료' : `Step ${state.step} / 4`;
+    document.getElementById('stepKr').textContent = STEP_KR[state.step];
+    document.getElementById('btnBack').disabled = state.step <= 1 || state.step === 5;
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  document.getElementById('btnBack')?.addEventListener('click', ()=>{
+    if(state.step > 1){ state.step--; renderStep(); }
+  });
+
+  function gotoNext(){ state.step++; renderStep(); }
+
+  // ============ Step 1 — Validation ============
+  const nick = document.getElementById('nickname');
+  const email = document.getElementById('email');
+  const pw = document.getElementById('password');
+  const pw2 = document.getElementById('password2');
+  const next1 = document.getElementById('next1');
+  const validity = {nick:false, email:false, pw:false, pw2:false};
+
+  function showFb(id, ok, msg){
+    const fb = document.getElementById(id);
+    fb.classList.add('show');
+    fb.classList.toggle('ok', ok);
+    fb.classList.toggle('err', !ok);
+    fb.querySelector('span:last-child').textContent = msg;
+    fb.querySelector('.ms').textContent = ok ? 'check_circle' : 'error';
+  }
+  function setInputState(id, ok){
+    const el = document.getElementById(id);
+    el.classList.remove('err','ok');
+    el.classList.add(ok ? 'ok' : 'err');
+  }
+
+  nick.addEventListener('blur', ()=>{
+    const v = nick.value.trim();
+    if(v.length < 4){ validity.nick=false; setInputState('nicknameWrap',false); showFb('nicknameFb',false,'4자 이상 입력해주세요'); }
+    else { validity.nick=true; setInputState('nicknameWrap',true); showFb('nicknameFb',true,'사용 가능한 닉네임이에요'); }
+    updateNext1();
+  });
+  email.addEventListener('blur', ()=>{
+    const v = email.value.trim();
+    const ok = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
+    if(!ok){ validity.email=false; setInputState('emailWrap',false); showFb('emailFb',false,'올바른 이메일 형식을 입력해주세요'); }
+    else { validity.email=true; setInputState('emailWrap',true); showFb('emailFb',true,'사용 가능한 이메일이에요'); }
+    updateNext1();
+  });
+
+  function pwStrength(v){
+    if(v.length < 8) return 1;
+    const hasAlpha = /[a-zA-Z]/.test(v), hasNum = /\d/.test(v), hasSp = /[^a-zA-Z0-9]/.test(v);
+    if(hasAlpha && hasNum && hasSp && v.length >= 10) return 3;
+    if(hasAlpha && hasNum) return 2;
+    return 1;
+  }
+  pw.addEventListener('input', ()=>{
+    document.getElementById('strengthBox').style.display = pw.value ? 'block' : 'none';
+    const lvl = pwStrength(pw.value);
+    document.getElementById('strengthBars').dataset.level = lvl;
+    document.getElementById('strengthText').textContent = lvl===1 ? '너무 짧아요 (8자 이상, 영문+숫자)' : lvl===2 ? '보통 수준이에요' : '강한 비밀번호예요';
+    validity.pw = lvl >= 2;
+    if(pw2.value) pw2.dispatchEvent(new Event('blur'));
+    updateNext1();
+  });
+  pw2.addEventListener('blur', ()=>{
+    if(!pw2.value){ validity.pw2=false; document.getElementById('pw2Fb').classList.remove('show'); updateNext1(); return; }
+    const ok = pw2.value === pw.value && validity.pw;
+    validity.pw2 = ok;
+    setInputState('pw2Wrap', ok);
+    showFb('pw2Fb', ok, ok ? '비밀번호가 일치해요' : '비밀번호가 일치하지 않아요');
+    updateNext1();
+  });
+
+  function updateNext1(){
+    next1.disabled = !(validity.nick && validity.email && validity.pw && validity.pw2);
+  }
+  next1.addEventListener('click', gotoNext);
+
+  // toggle eye
+  document.getElementById('toggleEye')?.addEventListener('click', ()=>{
+    const isPw = pw.type === 'password';
+    pw.type = isPw ? 'text' : 'password';
+    document.getElementById('eyeIcon').textContent = isPw ? 'visibility_off' : 'visibility';
+  });
+
+  // ============ Step 2 — Role ============
+  const next2 = document.getElementById('next2');
+  document.querySelectorAll('.role-card').forEach(c=>{
+    c.addEventListener('click', ()=>{
+      document.querySelectorAll('.role-card').forEach(x=>x.classList.remove('on'));
+      c.classList.add('on');
+      state.role = c.dataset.role;
+      document.getElementById('instructorNotice').classList.toggle('show', state.role === 'instructor');
+      next2.disabled = false;
+    });
+  });
+  next2.addEventListener('click', gotoNext);
+
+  // ============ Step 3 — Pool ============
+  document.querySelectorAll('.pool-item').forEach(item=>{
+    item.addEventListener('click', ()=>{
+      document.querySelectorAll('.pool-item').forEach(x=>x.classList.remove('on'));
+      item.classList.add('on');
+      state.pool = item.dataset.pool;
+    });
+  });
+
+  /* 한도 카운터 */
+  let pendingCount = 0;
+  let totalCount = 0;
+  const MAX_PENDING = 2;
+  const MAX_TOTAL = 15;
+
+  function showToastMulti(type, title, sub){
+    const el = document.getElementById('toastMulti');
+    const ico = document.getElementById('tmIco');
+    document.getElementById('tmTitle').textContent = title;
+    document.getElementById('tmSub').textContent = sub;
+    ico.className = 'tm-ico ' + (type === 'ok' ? 'ok' : 'warn');
+    ico.querySelector('.ms').textContent = type === 'ok' ? 'check' : 'warning';
+    el.classList.add('show');
+    setTimeout(() => el.classList.remove('show'), 4500);
+  }
+
+  /* 유사 수영장 데이터 (시뮬레이션) */
+  const SIMILAR_POOLS = [
+    {name:'잠실실내수영장', addr:'서울 송파구 올림픽로 424'},
+    {name:'잠실한강수영장', addr:'서울 송파구 강변북로 139'},
+    {name:'잠실종합운동장 수영장', addr:'서울 송파구 올림픽로 25'},
+    {name:'올림픽공원 수영장', addr:'서울 송파구 올림픽로 424'},
+    {name:'목동종합운동장 수영장', addr:'서울 양천구 목동동로 310'},
+  ];
+
+  /* 수영장 검색 인풋 → 유사 목록 표시 */
+  const poolSearchInp = document.getElementById('poolSearch');
+  if(poolSearchInp){
+    poolSearchInp.addEventListener('input', function(){
+      const q = this.value.trim();
+      renderSimilarPools(q);
+    });
+  }
+
+  function renderSimilarPools(query){
+    const wrap = document.getElementById('similarPools');
+    const list = document.getElementById('spList');
+    if(!wrap || !list) return;
+    if(!query || query.length < 2){ wrap.classList.remove('show'); return; }
+    const matches = SIMILAR_POOLS.filter(p =>
+      p.name.includes(query) || p.addr.includes(query)
+    ).slice(0, 5);
+    if(matches.length === 0){ wrap.classList.remove('show'); return; }
+    list.innerHTML = matches.map(p => `
+      <div class="sp-item">
+        <div class="sp-ico"><span class="ms" aria-hidden="true">pool</span></div>
+        <div class="sp-info">
+          <div class="sp-name">${p.name}</div>
+          <div class="sp-addr">${p.addr}</div>
+        </div>
+        <button class="sp-select-btn" onclick="selectSimilarPool('${p.name}')">이 수영장 선택</button>
+      </div>`).join('');
+    wrap.classList.add('show');
+  }
+
+  window.selectSimilarPool = function(name){
+    if(poolSearchInp) poolSearchInp.value = name;
+    document.getElementById('similarPools').classList.remove('show');
+    /* pool-item 중 해당 이름 자동 선택 */
+    let found = false;
+    document.querySelectorAll('.pool-item').forEach(item => {
+      if(item.dataset.pool === name){
+        item.click(); found = true;
+      }
+    });
+    if(!found){
+      /* 목록에 없으면 임시 추가 */
+      addPendingPoolItem(name, '');
+    }
+  };
+
+  /* reqLink 클릭 → 유사 목록 먼저, 이미 열려 있으면 닫기 */
+  document.getElementById('reqLink')?.addEventListener('click', ()=>{
+    const form = document.getElementById('reqForm');
+    const sp = document.getElementById('similarPools');
+    if(form.classList.contains('show')){
+      form.classList.remove('show');
+    } else {
+      /* 유사 목록이 없으면 폼 바로 */
+      const q = poolSearchInp ? poolSearchInp.value.trim() : '';
+      if(q.length >= 2){
+        renderSimilarPools(q);
+        sp.classList.add('show');
+      } else {
+        form.classList.add('show');
+      }
+    }
+  });
+
+  /* "그래도 새로 등록" → 폼 열기 */
+  document.getElementById('spNewBtn')?.addEventListener('click', ()=>{
+    document.getElementById('similarPools').classList.remove('show');
+    document.getElementById('reqForm').classList.add('show');
+  });
+
+  /* reqForm 인풋 유효성 */
+  const reqPoolName = document.getElementById('reqPoolName');
+  const reqPoolAddr = document.getElementById('reqPoolAddr');
+  const reqSubmitBtn = document.getElementById('reqSubmitBtn');
+  function updateReqBtn(){
+    const ok = reqPoolName?.value.trim() && reqPoolAddr?.value.trim();
+    if(reqSubmitBtn){ reqSubmitBtn.disabled = !ok; reqSubmitBtn.style.opacity = ok ? '1' : '.5'; }
+  }
+  reqPoolName?.addEventListener('input', updateReqBtn);
+  reqPoolAddr?.addEventListener('input', updateReqBtn);
+
+  function addPendingPoolItem(name, addr){
+    const poolList = document.querySelector('.pool-list');
+    if(!poolList) return;
+    const item = document.createElement('div');
+    item.className = 'pool-item pending';
+    item.dataset.pool = name;
+    item.innerHTML = `
+      <div class="p-ico"><span class="ms" aria-hidden="true">pool</span></div>
+      <div class="p-info">
+        <div class="p-name">${name}<span class="pending-badge"><span class="ms" aria-hidden="true">schedule</span>등록 확인 중</span></div>
+        <div class="p-addr">${addr || '주소 확인 중'}</div>
+      </div>
+      <span class="ms p-check" aria-hidden="true">check_circle</span>`;
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.pool-item').forEach(x => x.classList.remove('on'));
+      item.classList.add('on');
+      state.pool = name;
+    });
+    poolList.insertBefore(item, poolList.firstChild);
+    item.click();
+  }
+
+  /* 등록 요청 제출 */
+  reqSubmitBtn?.addEventListener('click', ()=>{
+    const name = reqPoolName.value.trim();
+    const addr = reqPoolAddr.value.trim();
+    if(!name || !addr) return;
+
+    /* 한도 분기 */
+    if(totalCount >= MAX_TOTAL){
+      document.getElementById('reqForm').classList.remove('show');
+      showToastMulti('warn', '등록 횟수 한도에 도달했어요', '수영장 신규 등록은 계정당 최대 15회까지 가능해요.');
+      return;
+    }
+    if(pendingCount >= MAX_PENDING){
+      document.getElementById('reqForm').classList.remove('show');
+      showToastMulti('warn', '진행 중인 등록이 많아요', '수영장 신규 등록은 동시에 2건까지 가능해요. 공개된 뒤 다시 요청할 수 있어요.');
+      return;
+    }
+
+    pendingCount++;
+    totalCount++;
+    document.getElementById('reqForm').classList.remove('show');
+    addPendingPoolItem(name, addr);
+    document.getElementById('regInlineNotice').classList.add('show');
+    showToastMulti('ok', `'${name}' 등록됐어요.`, '지금 이 수영장으로 반 설정을 이어갈 수 있어요. 다른 회원이 검색에서 찾으려면 확인 후 목록에 공개돼요.');
+    reqPoolName.value = '';
+    reqPoolAddr.value = '';
+    updateReqBtn();
+  });
+
+  document.getElementById('next3')?.addEventListener('click', gotoNext);
+
+  // ============ Step 4 — Class ============
+  document.querySelectorAll('#levelRow .chip').forEach(c=>{
+    c.addEventListener('click', ()=>{
+      document.querySelectorAll('#levelRow .chip').forEach(x=>x.classList.remove('on'));
+      c.classList.add('on');
+      state.level = c.dataset.level;
+    });
+  });
+  document.querySelectorAll('#dayRow .day').forEach(d=>{
+    d.addEventListener('click', ()=>{
+      d.classList.toggle('on');
+      state.days = Array.from(document.querySelectorAll('#dayRow .day.on')).map(x=>x.dataset.day);
+    });
+  });
+
+  function showResult(path){
+    state.path = path;
+    document.getElementById('resultFound').classList.toggle('show', path === 'found');
+    document.getElementById('resultWaiting').classList.toggle('show', path === 'waiting');
+    // adjust enter btn
+    const enter = document.getElementById('enterBtn');
+    if(path === 'found'){
+      enter.textContent = '레인방 입장하기';
+      enter.classList.remove('btn-accent'); enter.classList.add('btn-primary');
+    } else {
+      enter.textContent = '오리발 대기방 만들기';
+      enter.classList.remove('btn-primary'); enter.classList.add('btn-accent');
+    }
+  }
+  document.getElementById('findBtn')?.addEventListener('click', ()=> showResult(state.path));
+  document.getElementById('demoFound')?.addEventListener('click', ()=>{
+    document.getElementById('demoFound').classList.add('on');
+    document.getElementById('demoWaiting').classList.remove('on');
+    showResult('found');
+  });
+  document.getElementById('demoWaiting')?.addEventListener('click', ()=>{
+    document.getElementById('demoWaiting').classList.add('on');
+    document.getElementById('demoFound').classList.remove('on');
+    showResult('waiting');
+  });
+  document.getElementById('enterBtn')?.addEventListener('click', ()=>{
+    // update complete screen content based on path
+    if(state.path === 'found'){
+      document.getElementById('completeTitle').textContent = '레인방에 입장했어요!';
+      document.getElementById('completeSub').textContent = `${state.pool} · ${state.level} · ${state.days.join('')} ${document.getElementById('timeSel').value}`;
+    } else {
+      document.getElementById('completeTitle').textContent = '오리발 대기방에 입장했어요!';
+      document.getElementById('completeSub').textContent = '멤버가 2명 이상이 되면 자동으로 활성화돼요';
+      document.getElementById('completeIco').textContent = 'hourglass_top';
+    }
+    gotoNext();
+  });
+
+  // ============ Free Step Navigation (stepper click) ============
+  document.querySelectorAll('#stepper .step').forEach(s=>{
+    s.addEventListener('click', ()=>{
+      state.step = +s.dataset.step;
+      renderStep();
+    });
+  });
+
+  // init
+  showResult('found');
+  renderStep();
+</script>
+
+<div class="toast-multi" id="toastMulti">
+  <div class="tm-ico ok" id="tmIco"><span class="ms" aria-hidden="true">check</span></div>
+  <div>
+    <div class="tm-title" id="tmTitle"></div>
+    <div class="tm-sub" id="tmSub"></div>
+  </div>
+</div>
+</body>
+</html>

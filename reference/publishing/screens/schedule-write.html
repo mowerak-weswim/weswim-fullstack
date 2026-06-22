@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8"/><title>WeSwim — 일정 등록</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<link href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,500,0,0&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#1B3A5C;--navy-dark:#142D47;--navy-light:#E8EEF4;
+  --aqua:#0096A0;--aqua-hover:#00A8B5;--aqua-dark:#006970;
+  --aqua-light:#E6F6F7;--aqua-whisper:#F2FBFC;
+  --coral:#E8734A;--coral-dark:#C45A33;--coral-light:#FDF0EB;
+  --sun:#F4B740;--sun-light:#FCF1D8;--sun-dark:#9B6D0A;
+  --mint:#7DD3C8;--mint-light:#E8F7F4;
+  --bg:#F5F7FA;--white:#FFFFFF;
+  --gray-100:#ECEFF4;--gray-200:#D0D7E2;--gray-300:#B4BECD;
+  --gray-500:#6B7A99;--gray-700:#3D4A66;--text-main:#1A1A2E;
+  --error:#E54B4B;
+  --font-sans:'Pretendard Variable','Pretendard','Helvetica Neue','Apple SD Gothic Neo',sans-serif;
+  --font-display:'Helvetica Neue','Pretendard Variable','Pretendard',sans-serif;
+}
+html,body{height:100%}
+body{font-family:var(--font-sans);color:var(--text-main);background:var(--bg);-webkit-font-smoothing:antialiased}
+.ms{font-family:'Material Symbols Rounded';font-weight:500;font-style:normal;display:inline-flex;align-items:center;justify-content:center;line-height:1;text-transform:none;white-space:nowrap;direction:ltr;font-feature-settings:'liga';vertical-align:middle;font-size:20px;font-variation-settings:'opsz' 24,'wght' 500,'FILL' 0,'GRAD' 0}
+button{font-family:inherit;cursor:pointer}
+a{color:inherit;text-decoration:none}
+input,select,textarea{font-family:inherit}
+
+/* GNB */
+.gnb{height:64px;background:var(--navy);color:#fff;position:sticky;top:0;z-index:100;border-bottom:1px solid rgba(255,255,255,.05)}
+.gnb-inner{max-width:1320px;margin:0 auto;height:100%;padding:0 32px;display:flex;align-items:center;gap:28px}
+.gnb-logo{font-family:var(--font-display);font-size:22px;font-weight:800;letter-spacing:-.04em;text-decoration:none}
+.gnb-logo .We{color:#fff}.gnb-logo .Swim{color:var(--aqua-hover)}
+.gnb-nav{display:flex;gap:2px}
+.gnb-nav a{padding:8px 14px;font-size:14px;font-weight:600;color:rgba(255,255,255,.5);border-radius:8px;transition:all .15s;text-decoration:none}
+.gnb-nav a:hover{color:rgba(255,255,255,.85);background:rgba(255,255,255,.06)}
+.gnb-nav a.on{color:#fff;background:rgba(255,255,255,.1)}
+.gnb-right{display:flex;align-items:center;gap:6px;margin-left:auto}
+.icon-btn{width:38px;height:38px;border-radius:99px;border:none;background:transparent;color:rgba(255,255,255,.7);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;position:relative;transition:all .15s}
+.icon-btn:hover{background:rgba(255,255,255,.08);color:#fff}
+.icon-btn .ms{font-size:22px}
+.icon-btn .badge{position:absolute;top:5px;right:5px;background:var(--coral);color:#fff;font-size:9px;font-weight:800;min-width:14px;height:14px;padding:0 3px;border-radius:99px;display:flex;align-items:center;justify-content:center;border:2px solid var(--navy)}
+.gnb-avatar{width:36px;height:36px;border-radius:50%;background:var(--aqua);color:#fff;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;cursor:pointer;border:2px solid rgba(255,255,255,.15);flex-shrink:0}
+.gnb-hamburger{display:none;width:38px;height:38px;border-radius:8px;border:none;background:transparent;color:rgba(255,255,255,.85);cursor:pointer;flex-shrink:0;align-items:center;justify-content:center}
+.gnb-hamburger .ms{font-size:24px}
+
+/* 드로어 */
+.drw-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:300}.drw-ov.on{display:block}
+.drw{position:fixed;top:0;right:-290px;width:280px;height:100dvh;background:var(--navy);z-index:301;display:flex;flex-direction:column;transition:right .25s ease;box-shadow:-4px 0 20px rgba(0,0,0,.25)}.drw.on{right:0}
+.drw-hd{display:flex;align-items:center;justify-content:space-between;padding:0 18px;height:64px;flex-shrink:0;border-bottom:1px solid rgba(255,255,255,.1)}
+.drw-logo{font-weight:800;font-size:18px;letter-spacing:-.03em}.drw-logo .We{color:#fff}.drw-logo .Sw{color:#00A8B5}
+.drw-x{width:32px;height:32px;border-radius:7px;border:none;background:rgba(255,255,255,.1);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center}.drw-x .ms{font-size:18px}
+.drw-bd{flex:1;overflow-y:auto;padding:10px}
+.drw-sec{font-size:10px;font-weight:700;color:rgba(255,255,255,.35);letter-spacing:.12em;text-transform:uppercase;padding:12px 12px 4px}
+.drw-it{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:10px;font-size:15px;font-weight:700;color:rgba(255,255,255,.6);border:none;background:transparent;width:100%;font-family:inherit;text-align:left;cursor:pointer;transition:background .15s,color .15s}.drw-it:hover,.drw-it.on{background:rgba(255,255,255,.1);color:#fff}.drw-it .ms{font-size:20px}
+.drw-hr{height:1px;background:rgba(255,255,255,.08);margin:6px 0}
+
+/* 페이지 */
+.back-wrap{max-width:680px;margin:0 auto;padding:20px 24px 0}
+.back-btn{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:600;color:var(--gray-500);background:none;border:none;padding:0;cursor:pointer;transition:color .15s}
+.back-btn:hover{color:var(--navy)}.back-btn .ms{font-size:18px}
+.page{max-width:680px;margin:0 auto;padding:16px 24px 80px}
+
+/* 타입 선택 */
+.type-select{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px}
+.type-card{border:2px solid var(--gray-200);border-radius:12px;padding:16px;cursor:pointer;transition:all .15s;background:#fff;text-align:left}
+.type-card:hover{border-color:var(--gray-300)}
+.type-card.on.notice{border-color:var(--aqua);background:var(--aqua-whisper)}
+.type-card.on.vote{border-color:var(--coral);background:var(--coral-light)}
+.tc-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;margin-bottom:10px}
+.tc-icon.notice{background:var(--aqua-light)}.tc-icon.notice .ms{font-size:22px;color:var(--aqua)}
+.tc-icon.vote{background:var(--sun-light)}.tc-icon.vote .ms{font-size:22px;color:var(--sun-dark)}
+.tc-name{font-size:14px;font-weight:800;color:var(--navy);margin-bottom:4px}
+.tc-desc{font-size:12px;color:var(--gray-500);line-height:1.55}
+.tc-badge{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;margin-bottom:8px}
+.tc-badge.notice{background:var(--aqua-light);color:var(--aqua-dark)}
+.tc-badge.vote{background:var(--sun-light);color:var(--sun-dark)}
+.on.notice .tc-badge.notice{background:var(--aqua);color:#fff}
+.on.vote .tc-badge.vote{background:var(--coral);color:#fff}
+
+/* 폼 섹션 */
+.form-section{display:none}
+.form-section.show{display:block}
+.form-card{background:#fff;border:1px solid var(--gray-200);border-radius:14px;padding:20px;margin-bottom:16px}
+.form-group{margin-bottom:16px}
+.form-group:last-child{margin-bottom:0}
+.form-label{font-size:12px;font-weight:700;color:var(--gray-500);margin-bottom:6px;display:flex;align-items:center;gap:4px}
+.form-label .req{color:var(--coral);margin-left:2px}
+.form-input{width:100%;height:44px;border:1.5px solid var(--gray-200);border-radius:8px;padding:0 14px;font-size:14px;color:var(--text-main);background:#fff;transition:border-color .15s;outline:none}
+.form-input:focus{border-color:var(--aqua);box-shadow:0 0 0 3px var(--aqua-light)}
+.form-textarea{width:100%;border:1.5px solid var(--gray-200);border-radius:8px;padding:12px 14px;font-size:14px;color:var(--text-main);background:#fff;resize:none;line-height:1.6;transition:border-color .15s;outline:none}
+.form-textarea:focus{border-color:var(--aqua);box-shadow:0 0 0 3px var(--aqua-light)}
+.form-select{width:100%;height:44px;border:1.5px solid var(--gray-200);border-radius:8px;padding:0 14px;font-size:14px;color:var(--text-main);background:#fff;appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='%236B7A99'%3E%3Cpath d='M7 10l5 5 5-5z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;cursor:pointer;transition:border-color .15s;outline:none}
+.form-select:focus{border-color:var(--aqua);box-shadow:0 0 0 3px var(--aqua-light)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.form-hint{font-size:11px;color:var(--gray-500);margin-top:5px;display:flex;align-items:center;gap:4px}
+.form-hint .ms{font-size:13px}
+.char-counter{margin-left:auto;font-weight:500}
+
+/* 알림 체크박스 */
+.notify-options{display:flex;flex-wrap:wrap;gap:6px}
+.notify-chip{display:inline-flex;align-items:center;gap:5px;padding:6px 12px;border-radius:99px;border:1.5px solid var(--gray-200);background:#fff;font-size:12px;font-weight:600;color:var(--gray-500);cursor:pointer;transition:all .15s}
+.notify-chip input{display:none}
+.notify-chip.checked{border-color:var(--aqua);background:var(--aqua-light);color:var(--aqua-dark)}
+.notify-chip .ms{font-size:14px}
+
+/* 투표 옵션 */
+.vote-options{display:flex;flex-direction:column;gap:8px;margin-bottom:10px}
+.vote-opt-row{display:flex;align-items:center;gap:8px}
+.vote-opt-input{flex:1;height:40px;border:1.5px solid var(--gray-200);border-radius:8px;padding:0 12px;font-size:13px;color:var(--text-main);background:#fff;transition:border-color .15s;outline:none}
+.vote-opt-input:focus{border-color:var(--aqua);box-shadow:0 0 0 3px var(--aqua-light)}
+.vote-opt-del{width:32px;height:32px;border-radius:8px;border:1.5px solid var(--gray-200);background:#fff;color:var(--gray-500);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;transition:all .12s;flex-shrink:0}
+.vote-opt-del:hover{border-color:var(--error);color:var(--error);background:var(--coral-light)}
+.vote-opt-del .ms{font-size:16px}
+.add-opt-btn{display:flex;align-items:center;gap:6px;padding:9px 14px;border:1.5px dashed var(--gray-200);border-radius:8px;background:transparent;font-size:13px;font-weight:600;color:var(--gray-500);cursor:pointer;transition:all .15s;width:100%}
+.add-opt-btn:hover{border-color:var(--aqua);color:var(--aqua-dark);background:var(--aqua-whisper)}
+.add-opt-btn .ms{font-size:18px}
+
+/* 토글 */
+.toggle-row{display:flex;align-items:center;justify-content:space-between;padding:12px 0;border-bottom:1px solid var(--gray-100)}
+.toggle-row:last-child{border-bottom:none;padding-bottom:0}
+.toggle-info{flex:1}
+.toggle-label{font-size:13px;font-weight:700;color:var(--text-main)}
+.toggle-desc{font-size:11px;color:var(--gray-500);margin-top:2px}
+.toggle{position:relative;width:44px;height:24px;flex-shrink:0}
+.toggle input{opacity:0;width:0;height:0;position:absolute}
+.toggle-track{position:absolute;inset:0;background:var(--gray-200);border-radius:99px;transition:background .2s;cursor:pointer}
+.toggle input:checked+.toggle-track{background:var(--aqua)}
+.toggle-thumb{position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:transform .2s;pointer-events:none;box-shadow:0 1px 3px rgba(0,0,0,.15)}
+.toggle input:checked~.toggle-thumb{transform:translateX(20px)}
+
+/* 비용 인풋 */
+.input-with-unit{position:relative}
+.input-with-unit .form-input{padding-right:36px}
+.input-unit{position:absolute;right:14px;top:50%;transform:translateY(-50%);font-size:13px;font-weight:600;color:var(--gray-500);pointer-events:none}
+
+/* 섹션 제목 */
+.section-title{font-size:13px;font-weight:800;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.section-title .ms{font-size:18px;color:var(--aqua)}
+.section-title.vote-color .ms{color:var(--coral)}
+
+/* 하단 버튼 */
+.bottom-bar{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid var(--gray-200);padding:12px 24px 24px;display:flex;gap:10px;max-width:680px;margin:0 auto;z-index:50}
+.btn{display:flex;align-items:center;justify-content:center;gap:6px;padding:13px;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer;transition:all .15s;border:none;font-family:inherit}
+.btn-ghost{background:#fff;color:var(--gray-700);border:1.5px solid var(--gray-200);flex:1}
+.btn-ghost:hover{border-color:var(--gray-300)}
+.btn-aqua{background:var(--aqua);color:#fff;flex:2;opacity:.5}
+.btn-aqua.active{opacity:1}
+.btn-aqua:hover.active{background:var(--aqua-hover)}
+.btn-coral{background:var(--coral);color:#fff;flex:2;opacity:.5}
+.btn-coral.active{opacity:1}
+.btn-coral:hover.active{background:var(--coral-dark)}
+.btn .ms{font-size:18px}
+
+/* 미리보기 배너 */
+.preview-banner{background:var(--navy-light);border:1px solid var(--gray-200);border-radius:10px;padding:12px 14px;margin-bottom:16px;display:flex;align-items:center;gap:10px;font-size:12px;color:var(--navy)}
+.preview-banner .ms{font-size:18px;color:var(--aqua);flex-shrink:0}
+
+/* 반응형 */
+@media(max-width:880px){.gnb-nav{display:none}.gnb-hamburger{display:inline-flex}.page,.back-wrap{padding-left:16px;padding-right:16px}.form-row{grid-template-columns:1fr}.bottom-bar{left:0;right:0;max-width:100%}}
+</style>
+</head>
+<body>
+
+<header class="gnb">
+  <div class="gnb-inner">
+    <a href="home.html" class="gnb-logo"><span class="We">We</span><span class="Swim">Swim</span></a>
+    <nav class="gnb-nav">
+      <a href="home.html">홈</a><a href="group.html" class="on">우리반</a><a href="record.html">기록</a><a href="my.html">마이</a>
+    </nav>
+    <div class="gnb-right">
+      <button class="icon-btn" onclick="location.href='search.html'"><span class="ms" aria-hidden="true">search</span></button>
+      <button class="icon-btn" onclick="location.href='notifications.html'"><span class="ms" aria-hidden="true">notifications</span><span class="badge">3</span></button>
+      <div class="gnb-avatar" onclick="location.href='my.html'">이</div>
+      <button class="gnb-hamburger" id="drwBtn" aria-label="메뉴"><span class="ms">menu</span></button>
+    </div>
+  </div>
+</header>
+
+<div class="drw-ov" id="drwOv"></div>
+<aside class="drw" id="drwPanel">
+  <div class="drw-hd"><div class="drw-logo"><span class="We">We</span><span class="Sw">Swim</span></div><button class="drw-x" id="drwClose"><span class="ms">close</span></button></div>
+  <div class="drw-bd">
+    <div class="drw-sec">메뉴</div>
+    <button class="drw-it" onclick="location.href='home.html'"><span class="ms">home</span>홈</button>
+    <button class="drw-it on" onclick="location.href='group.html'"><span class="ms">groups</span>우리반</button>
+    <button class="drw-it" onclick="location.href='record.html'"><span class="ms">pool</span>기록</button>
+    <button class="drw-it" onclick="location.href='my.html'"><span class="ms">account_circle</span>마이</button>
+    <div class="drw-hr"></div>
+    <div class="drw-sec">기타</div>
+    <button class="drw-it" onclick="location.href='notifications.html'"><span class="ms">notifications</span>알림</button>
+    <button class="drw-it" onclick="location.href='my-settings.html'"><span class="ms">settings</span>설정</button>
+  </div>
+</aside>
+
+<div class="back-wrap">
+  <button class="back-btn" onclick="location.href='group.html'"><span class="ms" aria-hidden="true">arrow_back</span>공지·벙개</button>
+</div>
+
+<div class="page">
+
+  <!-- 타입 선택 -->
+  <div class="type-select" id="typeSelect">
+    <div class="type-card notice" id="cardNotice" onclick="selectType('notice')">
+      <span class="tc-badge notice">타입 A</span>
+      <div class="tc-icon notice"><span class="ms" aria-hidden="true">event</span></div>
+      <div class="tc-name">일정 공지</div>
+      <div class="tc-desc">날짜·장소가 확정된 일정. 멤버가 참석 여부만 응답해요.</div>
+    </div>
+    <div class="type-card vote" id="cardVote" onclick="selectType('vote')">
+      <span class="tc-badge vote">타입 B</span>
+      <div class="tc-icon vote"><span class="ms" aria-hidden="true">how_to_vote</span></div>
+      <div class="tc-name">일정 투표</div>
+      <div class="tc-desc">날짜·장소·메뉴 중 미정 항목을 멤버들과 함께 결정해요.</div>
+    </div>
+  </div>
+
+  <!-- 공통 폼 (타입 선택 후 표시) -->
+  <div class="form-section" id="formSection">
+
+    <div class="preview-banner" id="previewBanner">
+      <span class="ms" aria-hidden="true">event</span>
+      <span id="previewText">일정 공지 — 날짜와 장소를 입력해주세요.</span>
+    </div>
+
+    <!-- 기본 정보 -->
+    <div class="form-card">
+      <div class="section-title"><span class="ms" aria-hidden="true">edit_note</span>기본 정보</div>
+      <div class="form-group">
+        <div class="form-label">제목<span class="req">*</span></div>
+        <input class="form-input" type="text" id="titleInput" placeholder="예: 5월 정기 회식, 6월 워크숍 날짜 투표" maxlength="50"/>
+        <div class="form-hint"><span class="ms" aria-hidden="true">info</span>최대 50자<span class="char-counter" id="titleCount">0/50</span></div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">내용</div>
+        <textarea class="form-textarea" id="contentInput" rows="3" maxlength="500" placeholder="상세 설명을 입력해주세요."></textarea>
+        <div class="form-hint"><span class="char-counter" id="contentCount">0/500</span></div>
+      </div>
+    </div>
+
+    <!-- 일정 공지 전용: 날짜·장소·비용 -->
+    <div class="form-card" id="noticeFields">
+      <div class="section-title"><span class="ms" aria-hidden="true">calendar_month</span>일정 정보</div>
+      <div class="form-row">
+        <div class="form-group">
+          <div class="form-label">날짜<span class="req">*</span></div>
+          <input class="form-input" type="date" id="noticeDate" min="2026-06-01"/>
+        </div>
+        <div class="form-group">
+          <div class="form-label">시간</div>
+          <select class="form-select" id="noticeTime">
+            <option value="">시간 선택</option>
+            <option>06:00</option><option>07:00</option><option>08:00</option>
+            <option>09:00</option><option>12:00</option><option>18:00</option>
+            <option>19:00</option><option>20:00</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">장소</div>
+        <input class="form-input" type="text" id="noticePlace" placeholder="예: 잠실역 3번 출구 앞 삼겹살집"/>
+      </div>
+      <div class="form-group">
+        <div class="form-label">참가 비용</div>
+        <div class="input-with-unit">
+          <input class="form-input" type="number" id="noticeCost" placeholder="0" min="0" step="1000"/>
+          <span class="input-unit">원</span>
+        </div>
+        <div class="form-hint"><span class="ms" aria-hidden="true">info</span>0원 또는 비워두면 "무료"로 표시됩니다</div>
+      </div>
+    </div>
+
+    <!-- 투표 전용: 투표 옵션 -->
+    <div class="form-card" id="voteFields" style="display:none">
+      <div class="section-title vote-color"><span class="ms" aria-hidden="true">how_to_vote</span>투표 항목</div>
+      <div class="vote-options" id="voteOptions">
+        <div class="vote-opt-row">
+          <input class="vote-opt-input" type="text" placeholder="항목 1" maxlength="30"/>
+          <button class="vote-opt-del" disabled><span class="ms" aria-hidden="true">close</span></button>
+        </div>
+        <div class="vote-opt-row">
+          <input class="vote-opt-input" type="text" placeholder="항목 2" maxlength="30"/>
+          <button class="vote-opt-del" disabled><span class="ms" aria-hidden="true">close</span></button>
+        </div>
+      </div>
+      <button class="add-opt-btn" id="addOptBtn"><span class="ms" aria-hidden="true">add</span>항목 추가 (최대 5개)</button>
+
+      <div style="margin-top:16px;border-top:1px solid var(--gray-100);padding-top:16px">
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <div class="toggle-label">중복 선택 허용</div>
+            <div class="toggle-desc">멤버가 여러 항목을 동시에 선택할 수 있어요</div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="multiSelect" checked/>
+            <div class="toggle-track"></div>
+            <div class="toggle-thumb"></div>
+          </label>
+        </div>
+        <div class="toggle-row">
+          <div class="toggle-info">
+            <div class="toggle-label">익명 투표</div>
+            <div class="toggle-desc">누가 어떤 항목을 선택했는지 비공개로 처리해요</div>
+          </div>
+          <label class="toggle">
+            <input type="checkbox" id="anonymousVote"/>
+            <div class="toggle-track"></div>
+            <div class="toggle-thumb"></div>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- 응답 마감일 + 알림 (공통) -->
+    <div class="form-card">
+      <div class="section-title"><span class="ms" aria-hidden="true">schedule</span>마감 및 알림 설정</div>
+      <div class="form-group">
+        <div class="form-label">응답 마감일<span class="req">*</span></div>
+        <input class="form-input" type="date" id="deadlineDate" min="2026-06-01"/>
+        <div class="form-hint"><span class="ms" aria-hidden="true">info</span>기본값: 일정 날짜 2일 전으로 자동 설정됩니다</div>
+      </div>
+      <div class="form-group">
+        <div class="form-label">알림 발송 시점</div>
+        <div class="notify-options">
+          <label class="notify-chip checked" id="nc-now">
+            <input type="checkbox" checked/><span class="ms" aria-hidden="true">notifications</span>등록 즉시
+          </label>
+          <label class="notify-chip" id="nc-d3">
+            <input type="checkbox"/><span class="ms" aria-hidden="true">notifications</span>D-3
+          </label>
+          <label class="notify-chip checked" id="nc-d1">
+            <input type="checkbox" checked/><span class="ms" aria-hidden="true">notifications</span>D-1
+          </label>
+          <label class="notify-chip" id="nc-day">
+            <input type="checkbox"/><span class="ms" aria-hidden="true">notifications</span>당일
+          </label>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /form-section -->
+</div><!-- /page -->
+
+<!-- 하단 버튼 -->
+<div class="bottom-bar" id="bottomBar" style="display:none">
+  <button class="btn btn-ghost" onclick="location.href='group.html'">취소</button>
+  <button class="btn btn-aqua" id="submitBtn" onclick="handleSubmit()">
+    <span class="ms" aria-hidden="true">send</span><span id="submitLabel">일정 등록하기</span>
+  </button>
+</div>
+
+<script>
+let currentType = null;
+let optCount = 2;
+const MAX_OPT = 5;
+
+function selectType(type){
+  currentType = type;
+  document.getElementById('cardNotice').classList.toggle('on', type==='notice');
+  document.getElementById('cardVote').classList.toggle('on', type==='vote');
+  document.getElementById('formSection').classList.add('show');
+  document.getElementById('bottomBar').style.display='flex';
+
+  const isVote = type === 'vote';
+  document.getElementById('noticeFields').style.display = isVote ? 'none' : 'block';
+  document.getElementById('voteFields').style.display = isVote ? 'block' : 'none';
+  document.getElementById('previewText').textContent = isVote
+    ? '일정 투표 — 투표 항목을 2~5개 입력해주세요.'
+    : '일정 공지 — 날짜와 장소를 입력해주세요.';
+  document.getElementById('previewBanner').querySelector('.ms').textContent = isVote ? 'how_to_vote' : 'event';
+
+  const submitBtn = document.getElementById('submitBtn');
+  submitBtn.className = isVote ? 'btn btn-coral' : 'btn btn-aqua';
+  document.getElementById('submitLabel').textContent = isVote ? '투표 등록하기' : '일정 등록하기';
+
+  document.getElementById('titleInput').focus();
+  checkValidity();
+}
+
+/* 글자수 카운터 */
+document.getElementById('titleInput').addEventListener('input', function(){
+  document.getElementById('titleCount').textContent = this.value.length + '/50';
+  checkValidity();
+});
+document.getElementById('contentInput').addEventListener('input', function(){
+  document.getElementById('contentCount').textContent = this.value.length + '/500';
+});
+
+/* 알림 칩 토글 */
+document.querySelectorAll('.notify-chip').forEach(chip=>{
+  chip.addEventListener('click', ()=>{
+    const inp = chip.querySelector('input');
+    inp.checked = !inp.checked;
+    chip.classList.toggle('checked', inp.checked);
+  });
+});
+
+/* 투표 옵션 추가 */
+document.getElementById('addOptBtn').addEventListener('click', ()=>{
+  if(optCount >= MAX_OPT) return;
+  optCount++;
+  const row = document.createElement('div');
+  row.className = 'vote-opt-row';
+  row.innerHTML = `<input class="vote-opt-input" type="text" placeholder="항목 ${optCount}" maxlength="30"/>
+    <button class="vote-opt-del" onclick="removeOpt(this)"><span class="ms" aria-hidden="true">close</span></button>`;
+  document.getElementById('voteOptions').appendChild(row);
+  if(optCount >= MAX_OPT) document.getElementById('addOptBtn').style.display='none';
+  updateDelBtns();
+  row.querySelector('input').focus();
+  checkValidity();
+});
+
+function removeOpt(btn){
+  btn.closest('.vote-opt-row').remove();
+  optCount--;
+  document.getElementById('addOptBtn').style.display='flex';
+  updateDelBtns();
+  checkValidity();
+}
+
+function updateDelBtns(){
+  const rows = document.querySelectorAll('.vote-opt-row');
+  rows.forEach((row,i)=>{
+    const del = row.querySelector('.vote-opt-del');
+    del.disabled = rows.length <= 2;
+  });
+}
+
+/* 유효성 체크 */
+function checkValidity(){
+  const title = document.getElementById('titleInput').value.trim();
+  const btn = document.getElementById('submitBtn');
+  let valid = title.length > 0;
+  if(currentType === 'notice'){
+    valid = valid && document.getElementById('noticeDate').value !== '';
+  } else if(currentType === 'vote'){
+    const opts = [...document.querySelectorAll('.vote-opt-input')].filter(i=>i.value.trim());
+    valid = valid && opts.length >= 2;
+  }
+  btn.classList.toggle('active', valid);
+}
+
+document.getElementById('noticeDate').addEventListener('change', function(){
+  /* 마감일 자동 D-2 세팅 */
+  const d = new Date(this.value);
+  d.setDate(d.getDate()-2);
+  const dd = d.toISOString().slice(0,10);
+  document.getElementById('deadlineDate').value = dd;
+  checkValidity();
+});
+
+document.querySelectorAll('.vote-opt-input').forEach(inp=>{
+  inp.addEventListener('input', checkValidity);
+});
+
+function handleSubmit(){
+  const btn = document.getElementById('submitBtn');
+  if(!btn.classList.contains('active')) return;
+  /* 실제 서비스에서는 API 호출 */
+  const type = currentType;
+  const title = document.getElementById('titleInput').value.trim();
+  alert(`[${type==='notice'?'일정 공지':'일정 투표'}] "${title}" 이(가) 등록되었습니다!\n전체 멤버에게 알림이 발송되었어요.`);
+  location.href = 'group.html';
+}
+
+/* 드로어 */
+(function(){
+  const btn=document.getElementById('drwBtn'),drw=document.getElementById('drwPanel'),ov=document.getElementById('drwOv'),cls=document.getElementById('drwClose');
+  if(!btn||!drw) return;
+  function open(){drw.classList.add('on');ov.classList.add('on');document.body.style.overflow='hidden'}
+  function close(){drw.classList.remove('on');ov.classList.remove('on');document.body.style.overflow=''}
+  btn.addEventListener('click',open);ov.addEventListener('click',close);if(cls) cls.addEventListener('click',close);
+})();
+</script>
+</body>
+</html>

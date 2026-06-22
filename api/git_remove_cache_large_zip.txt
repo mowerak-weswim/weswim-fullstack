@@ -1,0 +1,1 @@
+find . -type f -name "*.zip" -size +10M -not -path '*/.git/*' -exec git rm --cached --ignore-unmatch {} +

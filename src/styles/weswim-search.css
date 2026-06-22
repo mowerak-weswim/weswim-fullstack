@@ -1,0 +1,115 @@
+﻿/* Pub layout — GNB/reset excluded */
+
+
+
+button,a{font-family:inherit;text-decoration:none;color:inherit}
+
+/* GNB */
+/* 寃???명뭼 (GNB ?뺤옣?? */
+
+/* ?쒕줈??*/
+
+/* 寃???섏씠吏 蹂몃Ц */
+.search-screen .page{max-width:1320px;margin:0 auto;padding:24px 32px 80px;display:grid;grid-template-columns:1fr 300px;gap:24px;align-items:start}
+.search-screen .main-col{min-width:0}
+
+/* 寃???????*/
+.search-type-tabs{display:flex;gap:0;border:1px solid var(--gray-200);border-radius:10px;overflow:hidden;background:#fff;margin-bottom:20px}
+.stt{flex:1;padding:10px;font-size:13px;font-weight:700;color:var(--gray-500);border:none;background:transparent;cursor:pointer;transition:all .15s;display:flex;align-items:center;justify-content:center;gap:5px;font-family:inherit;border-right:1px solid var(--gray-200)}
+.stt:last-child{border-right:none}
+.stt:hover{background:var(--bg);color:var(--navy)}
+.stt.on{background:var(--navy);color:#fff}
+.stt .ms{font-size:16px}
+
+/* 理쒓렐 寃??/ 異붿쿇 寃??*/
+.suggest-block{background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px 18px;margin-bottom:16px}
+.sb-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.sb-head-title{font-size:13px;font-weight:800;color:var(--navy)}
+.sb-head-clear{font-size:12px;color:var(--gray-500);cursor:pointer;border:none;background:transparent;font-family:inherit}
+.sb-head-clear:hover{color:var(--error)}
+.recent-list{display:flex;flex-direction:column;gap:2px}
+.recent-item{display:flex;align-items:center;gap:10px;padding:9px 8px;border-radius:8px;cursor:pointer;transition:background .12s}
+.recent-item:hover{background:var(--bg)}
+.recent-item .ri-ico{width:30px;height:30px;border-radius:8px;background:var(--gray-100);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.recent-item .ri-ico .ms{font-size:16px;color:var(--gray-500)}
+.recent-item .ri-text{flex:1;font-size:14px;color:var(--text-main)}
+.recent-item .ri-del{width:24px;height:24px;border-radius:99px;border:none;background:transparent;color:var(--gray-300);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .12s}
+.recent-item .ri-del:hover{background:var(--gray-100);color:var(--gray-700)}
+.recent-item .ri-del .ms{font-size:14px}
+
+.hot-tags{display:flex;flex-wrap:wrap;gap:6px}
+.hot-tag{font-size:12px;font-weight:700;padding:6px 12px;border-radius:99px;background:var(--bg);border:1px solid var(--gray-200);color:var(--gray-700);cursor:pointer;transition:all .12s;display:inline-flex;align-items:center;gap:5px}
+.hot-tag:hover{border-color:var(--aqua);color:var(--aqua-dark);background:var(--aqua-light)}
+.hot-tag .rank{font-size:10px;font-weight:800;color:var(--coral);min-width:14px}
+.hot-tag.up::after{content:"\2191";font-size:10px;color:var(--coral)}
+.hot-tag.new::after{content:"NEW";font-size:9px;font-weight:800;color:var(--coral);background:var(--coral-light);padding:1px 4px;border-radius:4px;margin-left:2px}
+
+/* 寃??寃곌낵 */
+.result-block{display:none}
+.result-block.active{display:block}
+.result-section{margin-bottom:20px}
+.rs-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.rs-title{font-size:13px;font-weight:800;color:var(--navy);display:flex;align-items:center;gap:6px}
+.rs-title .ms{font-size:16px;color:var(--aqua)}
+.rs-count{font-size:11px;color:var(--gray-500);font-weight:600;background:var(--gray-100);padding:2px 8px;border-radius:99px}
+.rs-more{font-size:12px;font-weight:600;color:var(--aqua-dark);cursor:pointer;border:none;background:transparent;font-family:inherit}
+
+/* 寃뚯떆湲 寃곌낵 移대뱶 */
+.res-post{background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px;margin-bottom:8px;cursor:pointer;transition:all .15s}
+.res-post:hover{border-color:var(--aqua);transform:translateY(-1px);box-shadow:0 4px 12px rgba(20,45,71,.05)}
+.res-post .rp-cat{display:inline-flex;align-items:center;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:700;background:var(--aqua-light);color:var(--aqua-dark);margin-bottom:6px}
+.res-post .rp-title{font-size:15px;font-weight:700;color:var(--navy);margin-bottom:4px;line-height:1.4}
+.res-post .rp-title .hl{color:var(--coral);background:var(--coral-light);padding:0 2px;border-radius:3px}
+.res-post .rp-
+.res-post .rp-meta{display:flex;align-items:center;gap:8px;font-size:11px;color:var(--gray-500)}
+.res-post .rp-meta .ms{font-size:13px}
+
+/* ?좎? 寃곌낵 移대뱶 */
+.res-user{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#fff;border:1px solid var(--gray-200);border-radius:10px;margin-bottom:6px;cursor:pointer;transition:all .15s}
+.res-user:hover{border-color:var(--aqua);background:var(--aqua-whisper)}
+.res-user .ru-av{width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#fff;flex-shrink:0}
+.res-user .ru-av.aq{background:var(--aqua)}.res-user .ru-av.co{background:var(--coral)}.res-user .ru-av.nv{background:var(--navy)}
+.res-user .ru-info{flex:1}
+.res-user .ru-name{font-size:14px;font-weight:700;color:var(--navy)}
+.res-user .ru-name .hl{color:var(--coral)}
+.res-user .ru-sub{font-size:12px;color:var(--gray-500);margin-top:2px}
+.res-user .ru-badge{display:inline-flex;align-items:center;gap:3px;font-size:10px;font-weight:700;padding:2px 7px;border-radius:99px;background:var(--aqua-light);color:var(--aqua-dark)}
+.res-user .ru-arrow{color:var(--gray-300);font-size:18px}
+
+/* ?섏쁺??寃곌낵 移대뱶 */
+.res-pool{display:flex;align-items:center;gap:12px;padding:12px 14px;background:#fff;border:1px solid var(--gray-200);border-radius:10px;margin-bottom:6px;cursor:pointer;transition:all .15s}
+.res-pool:hover{border-color:var(--aqua);background:var(--aqua-whisper)}
+.res-pool .rp-ico{width:40px;height:40px;border-radius:10px;background:var(--aqua-light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.res-pool .rp-ico .ms{font-size:22px;color:var(--aqua)}
+.res-pool .rp-info{flex:1}
+.res-pool .rp-pname{font-size:14px;font-weight:700;color:var(--navy)}
+.res-pool .rp-pname .hl{color:var(--coral)}
+.res-pool .rp-paddr{font-size:12px;color:var(--gray-500);margin-top:2px}
+.res-pool .rp-tag{font-size:11px;color:var(--aqua-dark);background:var(--aqua-light);padding:2px 7px;border-radius:99px;font-weight:700}
+
+/* Empty State */
+.empty-state{display:flex;flex-direction:column;align-items:center;padding:48px 20px;text-align:center}
+.empty-state .es-ico{font-size:48px;color:var(--gray-200);margin-bottom:12px}
+.empty-state .es-t{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:6px}
+.empty-state .es-s{font-size:13px;color:var(--gray-500);line-height:1.6}
+
+/* ?곗륫 ?ъ씠?쒕컮 */
+.search-screen .sidebar{position:sticky;top:88px;display:flex;flex-direction:column;gap:14px}
+.widget{background:#fff;border:1px solid var(--gray-200);border-radius:12px;padding:16px}
+.widget-title{font-size:12px;font-weight:800;color:var(--navy);margin-bottom:12px;display:flex;align-items:center;gap:6px}
+.widget-title .ms{font-size:16px;color:var(--aqua)}
+.pool-item{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--gray-100);cursor:pointer}
+.pool-item:last-child{border-bottom:none}
+.pool-item:hover .pi-name{color:var(--aqua)}
+.pi-ico{width:32px;height:32px;border-radius:8px;background:var(--aqua-light);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pi-ico .ms{font-size:16px;color:var(--aqua)}
+.pi-name{font-size:13px;font-weight:700;color:var(--navy);transition:color .12s}
+.pi-addr{font-size:11px;color:var(--gray-500)}
+
+.search-screen .gnb-search-clear{position:absolute;right:10px;top:50%;transform:translateY(-50%);width:28px;height:28px;border-radius:50%;border:none;background:rgba(255,255,255,.1);color:rgba(255,255,255,.7);cursor:pointer;display:none;align-items:center;justify-content:center}
+.search-screen .gnb-search-clear.show{display:flex}
+.search-screen .gnb-search-clear:hover{background:rgba(255,255,255,.2)}
+
+@media(max-width:1180px){.search-screen .page{grid-template-columns:1fr}.search-screen .sidebar{display:none}}
+@media(max-width:880px){.search-screen .page{padding:16px 16px 60px}.search-screen .gnb-inner{padding:0 16px}.search-type-tabs{overflow-x:auto}}
+
