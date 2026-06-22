@@ -5,7 +5,9 @@ import sys
 import os
 
 # 현재 api 폴더의 상위 디렉토리를 시스템 경로에 추가
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+current_dir = os.path.dirname(os.path.abspath(__file__))
+parent_dir = os.path.dirname(current_dir)
+sys.path.append(parent_dir)
 
 from app.api.router import api_router
 from app.core.config import settings
