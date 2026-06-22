@@ -4,10 +4,11 @@ from fastapi.middleware.cors import CORSMiddleware
 import sys
 import os
 
-# 현재 api 폴더의 상위 디렉토리를 시스템 경로에 추가
+# Vercel 환경에서 루트 폴더(app이 있는 경로)를 인식할 수 있도록 경로 최상단에 추가
 current_dir = os.path.dirname(os.path.abspath(__file__))
-parent_dir = os.path.dirname(current_dir)
-sys.path.append(parent_dir)
+root_dir = os.path.dirname(current_dir)
+if root_dir not in sys.path:
+    sys.path.insert(0, root_dir)
 
 from app.api.router import api_router
 from app.core.config import settings
