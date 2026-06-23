@@ -2,7 +2,7 @@
 $ErrorActionPreference = "Stop"
 $Root = Split-Path -Parent $PSScriptRoot
 # $Python = Join-Path $Root ".venv\Scripts\python.exe"
-$Python = Join-Path $Root "..\..\.p14v_weswim\Scripts\python.exe"
+$Python = Join-Path $Root "..\.p14v_weswim\Scripts\python.exe"
 
 if (-not (Test-Path $Python)) {
     Write-Host "Creating .venv ..."

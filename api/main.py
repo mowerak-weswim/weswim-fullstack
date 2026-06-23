@@ -4,6 +4,13 @@ from fastapi.middleware.cors import CORSMiddleware
 import sys
 import os
 
+from pathlib import Path
+from dotenv import load_dotenv
+# main.py가 'api' 폴더 안에 있고, .env.local이 프로젝트 root에 있으므로 한 단계 위(parent)를 가리킵니다.
+env_path = Path(__file__).resolve().parent.parent / ".env.local"
+load_dotenv(dotenv_path=env_path)
+
+
 # 현재 파일(main.py)이 있는 'api' 폴더 자체를 파이썬 경로에 추가
 current_dir = os.path.dirname(os.path.abspath(__file__))
 if current_dir not in sys.path:
